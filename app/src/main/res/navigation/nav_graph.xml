@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/introFragment">
+
+    <fragment
+        android:id="@+id/introFragment"
+        android:name="huji.postpc.find.pic.aword.IntroFragment"
+        android:label="fragment_intro"
+        tools:layout="@layout/fragment_intro" >
+        <action
+            android:id="@+id/action_introFragment_to_gameModeFragment"
+            app:destination="@id/gameModeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameModeFragment"
+        android:name="huji.postpc.find.pic.aword.GameModeFragment"
+        android:label="fragment_game_mode"
+        tools:layout="@layout/fragment_game_mode" >
+        <action
+            android:id="@+id/action_gameModeFragment_to_chooseCategoryFragment"
+            app:destination="@id/chooseCategoryFragment" />
+        <action
+            android:id="@+id/action_gameModeFragment_to_introFragment"
+            app:destination="@id/introFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseCategoryFragment"
+        android:name="huji.postpc.find.pic.aword.ChooseCategoryFragment"
+        android:label="fragment_choose_category"
+        tools:layout="@layout/fragment_choose_category" >
+        <action
+            android:id="@+id/action_chooseCategoryFragment_to_levelsFragment"
+            app:destination="@id/levelsFragment" />
+        <action
+            android:id="@+id/action_chooseCategoryFragment_to_gameModeFragment"
+            app:destination="@id/gameModeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/levelsFragment"
+        android:name="huji.postpc.find.pic.aword.LevelsFragment"
+        android:label="fragment_levels"
+        tools:layout="@layout/fragment_levels" >
+        <action
+            android:id="@+id/action_levelsFragment_to_gameFragment"
+            app:destination="@id/gameFragment" />
+        <action
+            android:id="@+id/action_levelsFragment_to_chooseCategoryFragment"
+            app:destination="@id/chooseCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="huji.postpc.find.pic.aword.GameFragment"
+        android:label="fragment_game"
+        tools:layout="@layout/fragment_game" >
+        <action
+            android:id="@+id/action_gameFragment_self"
+            app:destination="@id/gameFragment" />
+    </fragment>
+</navigation>
