@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1008474016367",
+    "project_id": "picaword-51613",
+    "storage_bucket": "picaword-51613.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1008474016367:android:277d13c44179695e719b9a",
+        "android_client_info": {
+          "package_name": "huji.postpc.find.pic.aword"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1008474016367-k30v75s5v4pqjf237ptv1cj0s2j9ov3v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCl86o88sQNhPv6VExWj6W7ul5lGxMDc_Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1008474016367-k30v75s5v4pqjf237ptv1cj0s2j9ov3v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
