@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/introFragment">
+    app:startDestination="@id/gameFragment">
 
     <fragment
         android:id="@+id/introFragment"
-        android:name="huji.postpc.find.pic.aword.IntroFragment"
+        android:name="huji.postpc.find.pic.aword.flow.IntroFragment"
         android:label="fragment_intro"
         tools:layout="@layout/fragment_intro" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/gameModeFragment"
-        android:name="huji.postpc.find.pic.aword.GameModeFragment"
+        android:name="huji.postpc.find.pic.aword.flow.GameModeFragment"
         android:label="fragment_game_mode"
         tools:layout="@layout/fragment_game_mode" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/chooseCategoryFragment"
-        android:name="huji.postpc.find.pic.aword.ChooseCategoryFragment"
+        android:name="huji.postpc.find.pic.aword.flow.ChooseCategoryFragment"
         android:label="fragment_choose_category"
         tools:layout="@layout/fragment_choose_category" >
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/levelsFragment"
-        android:name="huji.postpc.find.pic.aword.LevelsFragment"
+        android:name="huji.postpc.find.pic.aword.flow.LevelsFragment"
         android:label="fragment_levels"
         tools:layout="@layout/fragment_levels" >
         <action
@@ -52,9 +52,9 @@
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
-        android:name="huji.postpc.find.pic.aword.GameFragment"
+        android:name="huji.postpc.find.pic.aword.game.GameFragmentSound"
         android:label="fragment_game"
-        tools:layout="@layout/fragment_game" >
+        tools:layout="@layout/fragment_game_sound" >
         <action
             android:id="@+id/action_gameFragment_self"
             app:destination="@id/gameFragment" />
