@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/app/src/main/java/huji/postpc/find/pic/aword/game/Camera.kt" />
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Ron/Desktop/postpc_final_project/app/src/main/res/layout/fragment_choose_category.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Ron/Desktop/postpc_final_project/app/src/main/res/layout/fragment_game.xml" value="0.20520833333333333" />
+      </map>
+    </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>
