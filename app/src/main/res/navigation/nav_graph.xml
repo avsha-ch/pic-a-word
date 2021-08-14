@@ -9,7 +9,7 @@
         android:id="@+id/introFragment"
         android:name="huji.postpc.find.pic.aword.flow.IntroFragment"
         android:label="fragment_intro"
-        tools:layout="@layout/fragment_intro" >
+        tools:layout="@layout/fragment_intro">
         <action
             android:id="@+id/action_introFragment_to_gameModeFragment"
             app:destination="@id/gameModeFragment" />
@@ -18,7 +18,7 @@
         android:id="@+id/gameModeFragment"
         android:name="huji.postpc.find.pic.aword.flow.GameModeFragment"
         android:label="fragment_game_mode"
-        tools:layout="@layout/fragment_game_mode" >
+        tools:layout="@layout/fragment_game_mode">
         <action
             android:id="@+id/action_gameModeFragment_to_chooseCategoryFragment"
             app:destination="@id/chooseCategoryFragment" />
@@ -30,7 +30,7 @@
         android:id="@+id/chooseCategoryFragment"
         android:name="huji.postpc.find.pic.aword.flow.ChooseCategoryFragment"
         android:label="fragment_choose_category"
-        tools:layout="@layout/fragment_choose_category" >
+        tools:layout="@layout/fragment_choose_category">
         <action
             android:id="@+id/action_chooseCategoryFragment_to_levelsFragment"
             app:destination="@id/levelsFragment" />
@@ -42,7 +42,7 @@
         android:id="@+id/levelsFragment"
         android:name="huji.postpc.find.pic.aword.flow.LevelsFragment"
         android:label="fragment_levels"
-        tools:layout="@layout/fragment_levels" >
+        tools:layout="@layout/fragment_levels">
         <action
             android:id="@+id/action_levelsFragment_to_gameFragment"
             app:destination="@id/gameFragment" />
@@ -52,9 +52,9 @@
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
-        android:name="huji.postpc.find.pic.aword.game.GameFragmentSound"
+        android:name="huji.postpc.find.pic.aword.game.GameFragment"
         android:label="fragment_game"
-        tools:layout="@layout/fragment_game_sound" >
+        tools:layout="@layout/fragment_game">
         <action
             android:id="@+id/action_gameFragment_self"
             app:destination="@id/gameFragment" />
