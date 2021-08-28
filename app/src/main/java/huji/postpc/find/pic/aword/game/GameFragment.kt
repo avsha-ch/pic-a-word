@@ -55,11 +55,12 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             }
         }
 
-        // set button on-click listener to play the text via TTS
-        val playButton: ImageButton = view.findViewById(R.id.img_button_hear_word)
-        playButton.setOnClickListener {
-            tts.speak(wordTextView.text.toString(), TextToSpeech.QUEUE_FLUSH, null, null)
-        }
+        // TODO removed the old image button - link this function to the menu button in appbar
+//        // set button on-click listener to play the text via TTS
+//        val playButton: ImageButton = view.findViewById(R.id.img_button_hear_word)
+//        playButton.setOnClickListener {
+//            tts.speak(wordTextView.text.toString(), TextToSpeech.QUEUE_FLUSH, null, null)
+//        }
 
         // Request camera permissions if not already granted
         if (!allPermissionsGranted()) {
