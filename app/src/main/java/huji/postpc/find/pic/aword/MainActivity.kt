@@ -3,6 +3,7 @@ package huji.postpc.find.pic.aword
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 
@@ -34,8 +35,9 @@ class MainActivity : AppCompatActivity() {
 
     fun speak(text : String){
         if (!ttsInitialized){
+            // Todo better toast message
+            Toast.makeText(applicationContext, "TTS not ready yet!", Toast.LENGTH_SHORT).show()
             return
-            // TODO maybe show a quick toast
         }
         // else, use the TTS object to speak the given text
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
