@@ -154,14 +154,25 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             override fun onCaptureSuccess(image: ImageProxy) {
                 Log.e("ImageCapture", "Photo capture success: ${image.imageInfo.timestamp}")
 
-                val mediaImage = image.image            // unclear error on image - "This declaration is opt-in and its usage should be marked with". Does not cause code to crash.
+                val mediaImage = image.image            // unclear "error" on image - "This declaration is opt-in and its usage should be marked with". Does not cause code to crash.
                 if (mediaImage != null){
                     val inputImageForMLKIT = InputImage.fromMediaImage(mediaImage, image.imageInfo.rotationDegrees)
                     Log.e("ImageCapture", "inputImage prepared: ${image.imageInfo.timestamp}")
 
-                    labeler.process(inputImageForMLKIT).addOnSuccessListener { labels ->
+                    // classify captured image
+                    labeler.process(inputImageForMLKIT)
+                        .addOnSuccessListener { labels ->
+                        Log.e("ImageLabel", "received labels!")
                         // TODO: check we got the correct label
-                        Log.e("ImageLabel", "received labels!: ${labels}")
+                        // idea - only labels with confidence over the given threshold are received in 'labels'.
+                        //  maybe consider checking if the label we are looking for is in one of the returned labels
+                        //  (even if not the one with the highest confidence)
+                        for (label in labels) {
+                            val text = label.text
+                            val confidence = label.confidence
+                            val index = label.index
+                            Log.e("ImageLabel", "text: ${text}\n, conf: ${confidence}\n, index: ${index}")
+                        }
                     }
                     .addOnFailureListener { e ->
                         Log.e("ImageLabel", "failed to label. ${e}")
