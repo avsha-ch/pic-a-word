@@ -168,6 +168,8 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                     }
                 }
 
+                // close image when done with it. after this nothing can be done with the captured image
+                image.close()
             }
 
             override fun onError(exception: ImageCaptureException) {
