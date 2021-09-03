@@ -13,8 +13,14 @@ import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.label.ImageLabeler
+import com.google.mlkit.vision.label.ImageLabeling
+import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
 import huji.postpc.find.pic.aword.MainActivity
 import huji.postpc.find.pic.aword.R
+import kotlinx.android.synthetic.*
 import java.util.concurrent.ExecutorService
 
 
@@ -30,8 +36,13 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var cameraViewFinder: PreviewView
 
+    // mlkit image labeler
+    private lateinit var labeler: ImageLabeler
+
+    // UI components
     private lateinit var bottomAppBar: BottomAppBar
     private lateinit var wordTextView: TextView
+    private lateinit var captureButton: FloatingActionButton
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,6 +60,13 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             setUpCamera()
         }
 
+
+        // setup labeler
+        val labelingOptions = ImageLabelerOptions.Builder()
+            .setConfidenceThreshold(0.7f)
+            .build()
+        labeler = ImageLabeling.getClient(labelingOptions)
+
         // Find text view with the level's word
         wordTextView = view.findViewById(R.id.word_text_view)
 
@@ -64,6 +82,10 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                 else -> false
             }
         }
+
+        // Set click listener for capture picture button
+        captureButton = view.findViewById(R.id.capture_button)
+        captureButton.setOnClickListener { captureImage() }
 
     }
 
@@ -120,6 +142,41 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         }
     }
 
+    private fun captureImage(){
+        // Get a stable reference of the modifiable image capture use case
+        val imageCapture = imageCapture ?: return
+        // TODO: question for Ron: at the end of 'setUpCamera' there is a line that says it returns an executor,
+        //  I didn't understand where this executor was saved so I did the same call again for the takePicture function here
+        val mainExecutor = ContextCompat.getMainExecutor(requireContext())
+
+        // capture a picture and store it in memory only (image is not(!) saved to local disk)
+        imageCapture.takePicture(mainExecutor, object : ImageCapture.OnImageCapturedCallback() {
+            override fun onCaptureSuccess(image: ImageProxy) {
+                Log.e("ImageCapture", "Photo capture success: ${image.imageInfo.timestamp}")
+
+                val mediaImage = image.image            // unclear error on image - "This declaration is opt-in and its usage should be marked with". Does not cause code to crash.
+                if (mediaImage != null){
+                    val inputImageForMLKIT = InputImage.fromMediaImage(mediaImage, image.imageInfo.rotationDegrees)
+                    Log.e("ImageCapture", "inputImage prepared: ${image.imageInfo.timestamp}")
+
+                    labeler.process(inputImageForMLKIT).addOnSuccessListener { labels ->
+                        // TODO: check we got the correct label
+                        Log.e("ImageLabel", "received labels!: ${labels}")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("ImageLabel", "failed to label. ${e}")
+                    }
+                }
+
+            }
+
+            override fun onError(exception: ImageCaptureException) {
+                super.onError(exception)
+                Log.e("CameraXBasic", "Photo capture failed: ${exception.message}", exception)
+            }
+        })
+
+    }
     private fun allPermissionsGranted() =
         REQUIRED_PERMISSIONS.all { ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED }
 
