@@ -22,6 +22,7 @@ import huji.postpc.find.pic.aword.MainActivity
 import huji.postpc.find.pic.aword.R
 import kotlinx.android.synthetic.*
 import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 
 class GameFragment : Fragment(R.layout.fragment_game) {
@@ -48,6 +49,9 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Initialize our background executor, which is used for camera options that are blocking
+        cameraExecutor = Executors.newSingleThreadExecutor()
+
         cameraViewFinder = view.findViewById(R.id.camera_view_finder)
         // Request camera permissions if not already granted
         if (!allPermissionsGranted()) {
@@ -55,6 +59,8 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                 ActivityCompat.requestPermissions(it, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
             }
         }
+
+        // Wait for the views to be properly laid out
         cameraViewFinder.post {
             // Set up the camera and its use cases
             setUpCamera()
@@ -145,12 +151,9 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     private fun captureImage(){
         // Get a stable reference of the modifiable image capture use case
         val imageCapture = imageCapture ?: return
-        // TODO: question for Ron: at the end of 'setUpCamera' there is a line that says it returns an executor,
-        //  I didn't understand where this executor was saved so I did the same call again for the takePicture function here
-        val mainExecutor = ContextCompat.getMainExecutor(requireContext())
 
         // capture a picture and store it in memory only (image is not(!) saved to local disk)
-        imageCapture.takePicture(mainExecutor, object : ImageCapture.OnImageCapturedCallback() {
+        imageCapture.takePicture(cameraExecutor, object : ImageCapture.OnImageCapturedCallback() {
             override fun onCaptureSuccess(image: ImageProxy) {
                 Log.e("ImageCapture", "Photo capture success: ${image.imageInfo.timestamp}")
 
