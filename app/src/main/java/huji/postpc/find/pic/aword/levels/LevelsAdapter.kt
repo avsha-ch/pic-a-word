@@ -4,30 +4,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.annotation.IdRes
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import huji.postpc.find.pic.aword.R
+import huji.postpc.find.pic.aword.data.loadDataSet
+import huji.postpc.find.pic.aword.models.Level
 
-class LevelsAdapter(private val category: String) : RecyclerView.Adapter<LevelsAdapter.LevelViewHolder>() {
+
+class LevelsAdapter(@IdRes private val category: Int) : RecyclerView.Adapter<LevelsAdapter.LevelViewHolder>() {
+
+
 
     // Todo
-    private var levels = mutableListOf<String>()
+    private var levels = listOf<Level>()
 
     init {
-        levels = when (category) {
-            "Food" -> {
-                mutableListOf("Coffee", "Cookie")
-            }
-            "Vehicles" -> {
-                mutableListOf("Wheel", "Bus", "Bicycle")
-            }
-            "Animals" -> {
-                mutableListOf("Dog", "Cat", "Bird")
-            }
-            else -> {
-                mutableListOf<String>()
-            }
-        }
+        levels = loadDataSet(category)
+
     }
 
     class LevelViewHolder(val view: View): RecyclerView.ViewHolder(view) {
@@ -43,12 +37,14 @@ class LevelsAdapter(private val category: String) : RecyclerView.Adapter<LevelsA
     }
 
     override fun onBindViewHolder(holder: LevelViewHolder, position: Int) {
+        // Get context in order to use getString from resources (R)
+        val context = holder.itemView.context
+        // Select the bound item in position, which is a level
         val item = levels[position]
-        holder.button.text = item.toString()
+        holder.button.text = context.getString(item.nameResId)
         holder.button.setOnClickListener {
             val action = LevelsFragmentDirections.actionLevelsFragmentToGameFragment(word = holder.button.text.toString())
             holder.view.findNavController().navigate(action)
-
         }
 
     }

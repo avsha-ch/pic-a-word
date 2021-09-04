@@ -1,5 +1,106 @@
 <resources>
     <string name="app_name">PicAWord</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Categories names -->
+    <string name="category_house">Around the house</string>
+    <string name="category_food">Food</string>
+    <string name="category_vehicles">Vehicles</string>
+    <string name="category_body">Human Body</string>
+    <string name="category_animals">Animals</string>
+    <string name="category_clothing">Clothing</string>
+    <string name="category_misc">Miscellaneous</string>
+
+    <!-- Levels names -->
+
+    <!-- Around the house levels -->
+    <string name="level_sink">Sink</string>
+    <string name="level_bathroom">Bathroom</string>
+    <string name="level_chair">Chair</string>
+    <string name="level_clock">Clock</string>
+    <string name="level_desk">Desk</string>
+    <string name="level_cutlery">Cutlery</string>
+    <string name="level_pillow">Pillow</string>
+    <string name="level_plant">Plant</string>
+    <string name="level_cup">Cup</string>
+    <string name="level_wall">Wall</string>
+    <string name="level_shelf">Shelf</string>
+    <string name="level_computer">Computer</string>
+    <string name="level_newspaper">Newspaper</string>
+    <string name="level_mobile_phone">Mobile phone</string>
+    <string name="level_lego">Lego</string>
+    <string name="level_money">Money</string>
+    <!-- Food levels -->
+    <string name="level_hotdog">Hotdog</string>
+    <string name="level_couscous">Couscous</string>
+    <string name="level_cookie">Cookie</string>
+    <string name="level_cola">Cola</string>
+    <string name="level_coffee">Coffee</string>
+    <string name="level_fruit">Fruit</string>
+    <string name="level_pizza">Pizza</string>
+    <string name="level_wine">Wine</string>
+    <string name="level_bread">Bread</string>
+    <string name="level_vegetable">Vegetable</string>
+    <string name="level_cake">Cake</string>
+    <string name="level_pie">Pie</string>
+    <!-- Vehicles levels -->
+    <string name="level_tractor">Tractor</string>
+    <string name="level_bus">Bus</string>
+    <string name="level_bicycle">Bicycle</string>
+    <string name="level_boat">Boat</string>
+    <string name="level_vehicle">Vehicle</string>
+    <string name="level_wheel">Wheel</string>
+    <string name="level_van">Van</string>
+    <string name="level_sailboat">Sailboat</string>
+    <string name="level_car">Car</string>
+    <string name="level_skateboard">Skateboard</string>
+    <!-- Human body levels -->
+    <string name="level_beard">Beard</string>
+    <string name="level_smile">Smile</string>
+    <string name="level_mouth">Mouth</string>
+    <string name="level_foot">Foot</string>
+    <string name="level_ear">Ear</string>
+    <string name="level_eyelash">Eyelash</string>
+    <string name="level_hair">Hair</string>
+    <string name="level_hand">Hand</string>
+    <!-- Animals levels -->
+    <string name="level_bird">Bird</string>
+    <string name="level_bear">Bear</string>
+    <string name="level_cat">Cat</string>
+    <string name="level_horse">Horse</string>
+    <string name="level_pet">Pet</string>
+    <string name="level_duck">Duck</string>
+    <string name="level_turtle">Turtle</string>
+    <string name="level_dog">Dog</string>
+    <string name="level_butterfly">Butterfly</string>
+    <!-- Clothing levels -->
+    <string name="level_sunglasses">Sunglasses</string>
+    <string name="level_necklace">Necklace</string>
+    <string name="level_dress">Dress</string>
+    <string name="level_tie">Tie</string>
+    <string name="level_hat">Hat</string>
+    <string name="level_jacket">Jacket</string>
+    <string name="level_beanie">Beanie</string>
+    <string name="level_jersey">Jersey</string>
+    <string name="level_scarf">Scarf</string>
+    <string name="level_jewellery">Jewellery</string>
+    <string name="level_shoe">Shoe</string>
+    <string name="level_sneakers">Sneakers</string>
+    <string name="level_ring">Ring</string>
+    <string name="level_jeans">Jeans</string>
+    <string name="level_umbrella">Umbrella</string>
+    <string name="level_glasses">Glasses</string>
+    <string name="level_bag">Bag</string>
+    <string name="level_helmet">Helmet</string>
+    <!-- Miscellaneous levels -->
+    <string name="level_rock">Rock</string>
+    <string name="level_toy">Toy</string>
+    <string name="level_balloon">Balloon</string>
+    <string name="level_branch">Branch</string>
+    <string name="level_surfboard">Surfboard</string>
+    <string name="level_hanukkah">Hanukkah</string>
+    <string name="level_clown">Clown</string>
+    <string name="level_whiteboard">Whiteboard</string>
+    <string name="level_flag">Flag</string>
+
+
 </resources>

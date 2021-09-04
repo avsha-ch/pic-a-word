@@ -20,7 +20,6 @@ import com.google.mlkit.vision.label.ImageLabeling
 import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
 import huji.postpc.find.pic.aword.MainActivity
 import huji.postpc.find.pic.aword.R
-import kotlinx.android.synthetic.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -45,6 +44,18 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     private lateinit var wordTextView: TextView
     private lateinit var captureButton: FloatingActionButton
 
+    // Word to display for this game-level
+    private lateinit var word : String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        arguments?.let {
+            word = it.getString("word").toString()
+        }
+    }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,21 +71,16 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             }
         }
 
-        // Wait for the views to be properly laid out
-        cameraViewFinder.post {
-            // Set up the camera and its use cases
-            setUpCamera()
-        }
-
+        // Wait for the views to be properly laid out and then set up camera and use cases
+        cameraViewFinder.post { setUpCamera() }
 
         // setup labeler
-        val labelingOptions = ImageLabelerOptions.Builder()
-            .setConfidenceThreshold(0.7f)
-            .build()
+        val labelingOptions = ImageLabelerOptions.Builder().setConfidenceThreshold(0.7f).build()
         labeler = ImageLabeling.getClient(labelingOptions)
 
         // Find text view with the level's word
         wordTextView = view.findViewById(R.id.word_text_view)
+        wordTextView.text = word
 
         // Set click listeners for bottom app bar menu items
         bottomAppBar = view.findViewById(R.id.bottom_app_bar)
@@ -149,50 +155,46 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     }
 
     private fun captureImage(){
-        // Get a stable reference of the modifiable image capture use case
-        val imageCapture = imageCapture ?: return
 
-        // capture a picture and store it in memory only (image is not(!) saved to local disk)
-        imageCapture.takePicture(cameraExecutor, object : ImageCapture.OnImageCapturedCallback() {
-            override fun onCaptureSuccess(image: ImageProxy) {
-                Log.e("ImageCapture", "Photo capture success: ${image.imageInfo.timestamp}")
+        imageCapture?.let { imageCapture ->
 
-                val mediaImage = image.image            // unclear "error" on image - "This declaration is opt-in and its usage should be marked with". Does not cause code to crash.
-                if (mediaImage != null){
-                    val inputImageForMLKIT = InputImage.fromMediaImage(mediaImage, image.imageInfo.rotationDegrees)
-                    Log.e("ImageCapture", "inputImage prepared: ${image.imageInfo.timestamp}")
+            // capture a picture and store it in memory only (image is not(!) saved to local disk)
+            imageCapture.takePicture(cameraExecutor, object : ImageCapture.OnImageCapturedCallback() {
+                    override fun onCaptureSuccess(imageProxy: ImageProxy) {
+                        Log.e("ImageCapture", "Photo capture success: ${imageProxy.imageInfo.timestamp}")
+                        // unclear "error" on image - "This declaration is opt-in and its usage should be marked with". Does not cause code to crash.
+                        val mediaImage = imageProxy.image
+                        if (mediaImage != null){
+                            val inputImageForMLKIT = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
+                            Log.e("ImageCapture", "inputImage prepared: ${imageProxy.imageInfo.timestamp}")
 
-                    // classify captured image
-                    labeler.process(inputImageForMLKIT)
-                        .addOnSuccessListener { labels ->
-                        Log.e("ImageLabel", "received labels!")
-                        // TODO: check we got the correct label
-                        // idea - only labels with confidence over the given threshold are received in 'labels'.
-                        //  maybe consider checking if the label we are looking for is in one of the returned labels
-                        //  (even if not the one with the highest confidence)
-                        for (label in labels) {
-                            val text = label.text
-                            val confidence = label.confidence
-                            val index = label.index
-                            Log.e("ImageLabel", "text: ${text}\n, conf: ${confidence}\n, index: ${index}")
+                            // classify captured image
+                            labeler.process(inputImageForMLKIT).addOnSuccessListener { labels ->
+                                Log.e("ImageLabel", "received labels!")
+                                // TODO: check we got the correct label
+                                // idea - only labels with confidence over the given threshold are received in 'labels'.
+                                //  maybe consider checking if the label we are looking for is in one of the returned labels(even if not the one with the highest confidence)
+                                for (label in labels) {
+                                    val text = label.text
+                                    val confidence = label.confidence
+                                    val index = label.index
+                                    Log.e("ImageLabel", "text: ${text}\n, conf: ${confidence}\n, index: ${index}")
+                                }
+                            }.addOnFailureListener { e -> Log.e("ImageLabel", "failed to label. ${e}") }
                         }
+                        // close image when done with it. after this nothing can be done with the captured image
+                        imageProxy.close()
                     }
-                    .addOnFailureListener { e ->
-                        Log.e("ImageLabel", "failed to label. ${e}")
+
+                    override fun onError(exception: ImageCaptureException) {
+                        super.onError(exception)
+                        Log.e("CameraXBasic", "Photo capture failed: ${exception.message}", exception)
                     }
                 }
-
-                // close image when done with it. after this nothing can be done with the captured image
-                image.close()
-            }
-
-            override fun onError(exception: ImageCaptureException) {
-                super.onError(exception)
-                Log.e("CameraXBasic", "Photo capture failed: ${exception.message}", exception)
-            }
-        })
-
+            )
+        }
     }
+
     private fun allPermissionsGranted() =
         REQUIRED_PERMISSIONS.all { ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED }
 

@@ -14,6 +14,7 @@ import huji.postpc.find.pic.aword.category.CategoryAdapter
 
 class LevelsFragment : Fragment(R.layout.fragment_levels) {
 
+    private var categoryResourceId : Int = 0
     private lateinit var category: String
     private lateinit var recyclerView: RecyclerView
 
@@ -21,13 +22,14 @@ class LevelsFragment : Fragment(R.layout.fragment_levels) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
-            category = it.getString("category").toString()
+            categoryResourceId = it.get("category") as Int
+            category = getString(categoryResourceId)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerView = view.findViewById(R.id.levels_recycler_view)
-        recyclerView.layoutManager = GridLayoutManager(activity,4)
-        recyclerView.adapter = LevelsAdapter(category)
+        recyclerView.layoutManager = GridLayoutManager(activity,3)
+        recyclerView.adapter = LevelsAdapter(categoryResourceId)
     }
 }
