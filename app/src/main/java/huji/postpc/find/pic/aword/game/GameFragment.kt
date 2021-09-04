@@ -112,7 +112,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             // Build and bind the camera use cases
             bindCameraUseCases()
         }
-        // Returns an Executor that runs on the main thread
+        // After this, cameraProvider is guaranteed to be available
         cameraProviderFuture.addListener(runnable, ContextCompat.getMainExecutor(requireContext()))
     }
 

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/gameFragment">
+    app:startDestination="@id/chooseCategoryFragment">
 
     <fragment
         android:id="@+id/introFragment"
@@ -28,9 +28,9 @@
     </fragment>
     <fragment
         android:id="@+id/chooseCategoryFragment"
-        android:name="huji.postpc.find.pic.aword.flow.ChooseCategoryFragment"
+        android:name="huji.postpc.find.pic.aword.category.CategoryFragment"
         android:label="fragment_choose_category"
-        tools:layout="@layout/fragment_choose_category">
+        tools:layout="@layout/fragment_category">
         <action
             android:id="@+id/action_chooseCategoryFragment_to_levelsFragment"
             app:destination="@id/levelsFragment" />
@@ -40,21 +40,28 @@
     </fragment>
     <fragment
         android:id="@+id/levelsFragment"
-        android:name="huji.postpc.find.pic.aword.flow.LevelsFragment"
+        android:name="huji.postpc.find.pic.aword.levels.LevelsFragment"
         android:label="fragment_levels"
         tools:layout="@layout/fragment_levels">
+        <argument
+            android:name="category"
+            app:argType="string" />
         <action
             android:id="@+id/action_levelsFragment_to_gameFragment"
             app:destination="@id/gameFragment" />
         <action
             android:id="@+id/action_levelsFragment_to_chooseCategoryFragment"
             app:destination="@id/chooseCategoryFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
         android:name="huji.postpc.find.pic.aword.game.GameFragment"
         android:label="fragment_game"
         tools:layout="@layout/fragment_game">
+        <argument
+            android:name="word"
+            app:argType="string"/>
         <action
             android:id="@+id/action_gameFragment_self"
             app:destination="@id/gameFragment" />
