@@ -69,8 +69,6 @@ class FirestoreDatabaseManager(context : Context) {
         var uploadTask = riversRef.putFile(file)
 
         // Observe state change events such as progress, pause, and resume
-        // You'll need to import com.google.firebase.storage.ktx.component1 and
-        // com.google.firebase.storage.ktx.component2
         uploadTask.addOnProgressListener { (bytesTransferred, totalByteCount) ->
             val progress = (100.0 * bytesTransferred) / totalByteCount
             Log.d(UPLOAD_IMAGE_PROGRESS_TAG, "Upload is $progress% done")
