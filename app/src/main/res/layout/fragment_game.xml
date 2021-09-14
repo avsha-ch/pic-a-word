@@ -35,15 +35,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/word_text_view" />
 
-            <ImageView
-                android:id="@+id/game_image"
-                android:layout_width="match_parent"
-                android:layout_height="600dp"
-                android:alpha="0.8"
-                android:src="@drawable/shoes_stencil"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/word_text_view">
-            </ImageView>
+<!--            <ImageView-->
+<!--                android:id="@+id/game_image"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="600dp"-->
+<!--                android:alpha="0.8"-->
+<!--                android:src="@drawable/shoes_stencil"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/word_text_view">-->
+<!--            </ImageView>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

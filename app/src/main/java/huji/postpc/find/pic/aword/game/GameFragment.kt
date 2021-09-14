@@ -7,14 +7,18 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.label.ImageLabel
 import com.google.mlkit.vision.label.ImageLabeler
 import com.google.mlkit.vision.label.ImageLabeling
 import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
@@ -36,8 +40,8 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var cameraViewFinder: PreviewView
 
-    // mlkit image labeler
-    private lateinit var labeler: ImageLabeler
+//    // mlkit image labeler
+//    private lateinit var labeler: ImageLabeler
 
     // UI components
     private lateinit var bottomAppBar: BottomAppBar
@@ -45,7 +49,9 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     private lateinit var captureButton: FloatingActionButton
 
     // Word to display for this game-level
-    private lateinit var word : String
+    private lateinit var word: String
+
+    private val gameViewModel: GameViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +60,6 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             word = it.getString("word").toString()
         }
     }
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,9 +79,9 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         // Wait for the views to be properly laid out and then set up camera and use cases
         cameraViewFinder.post { setUpCamera() }
 
-        // setup labeler
-        val labelingOptions = ImageLabelerOptions.Builder().setConfidenceThreshold(0.7f).build()
-        labeler = ImageLabeling.getClient(labelingOptions)
+//        // setup labeler
+//        val labelingOptions = ImageLabelerOptions.Builder().setConfidenceThreshold(0.7f).build()
+//        labeler = ImageLabeling.getClient(labelingOptions)
 
         // Find text view with the level's word
         wordTextView = view.findViewById(R.id.word_text_view)
@@ -99,9 +104,18 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         captureButton = view.findViewById(R.id.capture_button)
         captureButton.setOnClickListener { captureImage() }
 
+        // Set an observer for the labeler live data
+        val labelObserver = Observer<ImageLabel?> { label ->
+            if (label == null){
+                return@Observer
+            }
+            // Else, found the correct label!
+            Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
+
+        }
+        gameViewModel.labelLiveData.observe(viewLifecycleOwner, labelObserver)
+
     }
-
-
 
 
     private fun setUpCamera() {
@@ -154,43 +168,41 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         }
     }
 
-    private fun captureImage(){
+    private fun captureImage() {
 
         imageCapture?.let { imageCapture ->
 
             // capture a picture and store it in memory only (image is not(!) saved to local disk)
             imageCapture.takePicture(cameraExecutor, object : ImageCapture.OnImageCapturedCallback() {
-                    override fun onCaptureSuccess(imageProxy: ImageProxy) {
-                        Log.e("ImageCapture", "Photo capture success: ${imageProxy.imageInfo.timestamp}")
-                        // unclear "error" on image - "This declaration is opt-in and its usage should be marked with". Does not cause code to crash.
-                        val mediaImage = imageProxy.image
-                        if (mediaImage != null){
-                            val inputImageForMLKIT = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
-                            Log.e("ImageCapture", "inputImage prepared: ${imageProxy.imageInfo.timestamp}")
-
-                            // classify captured image
-                            labeler.process(inputImageForMLKIT).addOnSuccessListener { labels ->
-                                Log.e("ImageLabel", "received labels!")
-                                // TODO: check we got the correct label
-                                // idea - only labels with confidence over the given threshold are received in 'labels'.
-                                //  maybe consider checking if the label we are looking for is in one of the returned labels(even if not the one with the highest confidence)
-                                for (label in labels) {
-                                    val text = label.text
-                                    val confidence = label.confidence
-                                    val index = label.index
-                                    Log.e("ImageLabel", "text: ${text}\n, conf: ${confidence}\n, index: ${index}")
-                                }
-                            }.addOnFailureListener { e -> Log.e("ImageLabel", "failed to label. ${e}") }
-                        }
-                        // close image when done with it. after this nothing can be done with the captured image
-                        imageProxy.close()
+                override fun onCaptureSuccess(imageProxy: ImageProxy) {
+                    Log.e("ImageCapture", "Photo capture success: ${imageProxy.imageInfo.timestamp}")
+                    // unclear "error" on image - "This declaration is opt-in and its usage should be marked with". Does not cause code to crash.
+                    val mediaImage = imageProxy.image
+                    if (mediaImage != null) {
+                        val inputImageForMLKIT = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
+                        Log.e("ImageCapture", "inputImage prepared: ${imageProxy.imageInfo.timestamp}")
+//                      // Label image
+                        gameViewModel.analyzeImage(inputImageForMLKIT, word)
+//                            // classify captured image
+//                            labeler.process(inputImageForMLKIT).addOnSuccessListener { labels ->
+//                                Log.e("ImageLabel", "received labels!")
+//                                for (label in labels) {
+//                                    val text = label.text
+//                                    val confidence = label.confidence
+//                                    val index = label.index
+//                                    Log.e("ImageLabel", "text: ${text}\n, conf: ${confidence}\n, index: ${index}")
+//                                }
+//                            }.addOnFailureListener { e -> Log.e("ImageLabel", "failed to label. ${e}") }
                     }
-
-                    override fun onError(exception: ImageCaptureException) {
-                        super.onError(exception)
-                        Log.e("CameraXBasic", "Photo capture failed: ${exception.message}", exception)
-                    }
+                    // close image when done with it. after this nothing can be done with the captured image
+                    imageProxy.close()
                 }
+
+                override fun onError(exception: ImageCaptureException) {
+                    super.onError(exception)
+                    Log.e("CameraXBasic", "Photo capture failed: ${exception.message}", exception)
+                }
+            }
             )
         }
     }
