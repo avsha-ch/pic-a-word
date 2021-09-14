@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="misty_rose">#FEE9E1</color>
+    <color name="azure">#E9F7F7</color>
+    <color name="lavender">#ECDEFF</color>
+    <color name="magic_mint">#A8EADB</color>
+    <color name="eton_blue">#86D0AB</color>
+    <color name="baby_eyes_blue">#9DC4FF</color>
+    <color name="royal_orange">#F68B43</color>
 </resources>

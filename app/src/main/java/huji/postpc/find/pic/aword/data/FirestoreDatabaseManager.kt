@@ -34,7 +34,7 @@ class FirestoreDatabaseManager(context : Context) {
     fun uploadImageFromImageView(imageView: ImageView, imageName: String){
 
         // Create Reference to imageName
-        var imageRef = userImages.child(imageName)
+        var imageRef = userImages?.child(imageName)
 
         // Get the data from an ImageView as bytes
         imageView.isDrawingCacheEnabled = true
@@ -44,10 +44,10 @@ class FirestoreDatabaseManager(context : Context) {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
 
-        var uploadTask = imageRef.putBytes(data)
-        uploadTask.addOnFailureListener {
+        var uploadTask = imageRef?.putBytes(data)
+        uploadTask?.addOnFailureListener {
             // Handle unsuccessful uploads
-        }.addOnSuccessListener { taskSnapshot ->
+        }?.addOnSuccessListener { taskSnapshot ->
             // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
             // ...
         }
@@ -112,13 +112,13 @@ class FirestoreDatabaseManager(context : Context) {
 
     fun downloadTemplateImage(imageView: ImageView, imageName : String) {
         // TODO: determine if imageName needs to include extension
-        var imageRef = templateRef.child(imageName)
+        var imageRef = templateRef?.child(imageName)
 
         // get images of max size of 1MB
         val ONE_MEGABYTE: Long = 1024 * 1024
-        imageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener {
+        imageRef?.getBytes(ONE_MEGABYTE)?.addOnSuccessListener {
             // Data for "images/island.jpg" is returned, use this as needed
-        }.addOnFailureListener {
+        }?.addOnFailureListener {
             // Handle any errors
         }
 

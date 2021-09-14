@@ -43,6 +43,7 @@ class LevelsAdapter(@IdRes private val category: Int) : RecyclerView.Adapter<Lev
         val item = levels[position]
         holder.button.text = context.getString(item.nameResId)
         holder.button.setOnClickListener {
+
             val action = LevelsFragmentDirections.actionLevelsFragmentToGameFragment(word = holder.button.text.toString())
             holder.view.findNavController().navigate(action)
         }
