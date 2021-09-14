@@ -12,19 +12,7 @@
         tools:layout="@layout/fragment_intro">
         <action
             android:id="@+id/action_introFragment_to_gameModeFragment"
-            app:destination="@id/gameModeFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/gameModeFragment"
-        android:name="huji.postpc.find.pic.aword.flow.GameModeFragment"
-        android:label="fragment_game_mode"
-        tools:layout="@layout/fragment_game_mode">
-        <action
-            android:id="@+id/action_gameModeFragment_to_chooseCategoryFragment"
             app:destination="@id/chooseCategoryFragment" />
-        <action
-            android:id="@+id/action_gameModeFragment_to_introFragment"
-            app:destination="@id/introFragment" />
     </fragment>
     <fragment
         android:id="@+id/chooseCategoryFragment"
@@ -36,7 +24,7 @@
             app:destination="@id/levelsFragment" />
         <action
             android:id="@+id/action_chooseCategoryFragment_to_gameModeFragment"
-            app:destination="@id/gameModeFragment" />
+            app:destination="@id/introFragment" />
     </fragment>
     <fragment
         android:id="@+id/levelsFragment"
