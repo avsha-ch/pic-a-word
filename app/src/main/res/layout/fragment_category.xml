@@ -5,11 +5,18 @@
     android:layout_height="match_parent"
     tools:context="category.CategoryFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/categories_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:padding="16dp" />
+    <!-- TODO: Update blank fragment layout -->
+    <Button
+        android:id="@+id/button"
+        android:layout_width="139dp"
+        android:layout_height="63dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="137dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/go_rectangle_button"
+        android:elevation="2dp"
+        android:text="GO"
+        />
 
 </FrameLayout>

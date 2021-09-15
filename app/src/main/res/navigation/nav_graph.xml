@@ -11,47 +11,83 @@
         android:label="fragment_intro"
         tools:layout="@layout/fragment_intro">
         <action
-            android:id="@+id/action_introFragment_to_gameModeFragment"
-            app:destination="@id/chooseCategoryFragment" />
+            android:id="@+id/action_introFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
     </fragment>
     <fragment
         android:id="@+id/chooseCategoryFragment"
-        android:name="huji.postpc.find.pic.aword.category.CategoryFragment"
+        android:name="huji.postpc.find.pic.aword.category.ChooseCategoryFragment"
         android:label="fragment_choose_category"
-        tools:layout="@layout/fragment_category">
+        tools:layout="@layout/fragment_choose_category">
         <action
-            android:id="@+id/action_chooseCategoryFragment_to_levelsFragment"
-            app:destination="@id/levelsFragment" />
+            android:id="@+id/action_chooseCategoryFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
         <action
-            android:id="@+id/action_chooseCategoryFragment_to_gameModeFragment"
-            app:destination="@id/introFragment" />
+            android:id="@+id/action_chooseCategoryFragment_to_myAreaFragment"
+            app:destination="@id/myAreaFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/levelsFragment"
-        android:name="huji.postpc.find.pic.aword.levels.LevelsFragment"
-        android:label="fragment_levels"
-        tools:layout="@layout/fragment_levels">
-        <argument
-            android:name="category"
-            app:argType="reference" />
-        <action
-            android:id="@+id/action_levelsFragment_to_gameFragment"
-            app:destination="@id/gameFragment" />
-        <action
-            android:id="@+id/action_levelsFragment_to_chooseCategoryFragment"
-            app:destination="@id/chooseCategoryFragment" />
 
-    </fragment>
     <fragment
         android:id="@+id/gameFragment"
         android:name="huji.postpc.find.pic.aword.game.GameFragment"
         android:label="fragment_game"
         tools:layout="@layout/fragment_game">
         <argument
-            android:name="word"
-            app:argType="string"/>
+            android:name="levelResId"
+            app:argType="reference"/>
         <action
-            android:id="@+id/action_gameFragment_self"
+            android:id="@+id/action_gameFragment_to_chooseCategoryFragment"
+            app:destination="@id/chooseCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="huji.postpc.find.pic.aword.category.CategoryFragment"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_categoryFragment_to_chooseCategoryFragment"
+            app:destination="@id/chooseCategoryFragment" />
+        <action
+            android:id="@+id/action_categoryFragment_to_gameFragment"
             app:destination="@id/gameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myAreaFragment"
+        android:name="huji.postpc.find.pic.aword.userarea.MyAreaFragment"
+        android:label="fragment_my_area"
+        tools:layout="@layout/fragment_my_area" >
+        <action
+            android:id="@+id/action_myAreaFragment_to_collectionFragment"
+            app:destination="@id/collectionFragment" />
+        <action
+            android:id="@+id/action_myAreaFragment_to_chooseCategoryFragment"
+            app:destination="@id/chooseCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/collectionFragment"
+        android:name="huji.postpc.find.pic.aword.userarea.CollectionFragment"
+        android:label="fragment_collection"
+        tools:layout="@layout/fragment_collection" >
+        <action
+            android:id="@+id/action_collectionFragment_to_chooseCategoryFragment"
+            app:destination="@id/chooseCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="huji.postpc.find.pic.aword.intro.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_chooseLanguageFragment"
+            app:destination="@id/chooseLanguageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseLanguageFragment"
+        android:name="huji.postpc.find.pic.aword.intro.ChooseLanguageFragment"
+        android:label="fragment_choose_language"
+        tools:layout="@layout/fragment_choose_language" >
+        <action
+            android:id="@+id/action_chooseLanguageFragment_to_chooseCategoryFragment"
+            app:destination="@id/chooseCategoryFragment" />
     </fragment>
 </navigation>

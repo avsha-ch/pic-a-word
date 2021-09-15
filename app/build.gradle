@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "huji.postpc.find.pic.aword"
-        minSdkVersion 21
+        minSdkVersion 28
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -76,7 +76,10 @@ dependencies {
     // CameraX View class
     implementation "androidx.camera:camera-view:1.0.0-alpha27"
 
-    // mlkit
+    // MLKit
     implementation 'com.google.mlkit:image-labeling:17.0.5'
+
+    // GSON
+    implementation 'com.google.code.gson:gson:2.8.7'
 
 }
