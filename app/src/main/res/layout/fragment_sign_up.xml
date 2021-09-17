@@ -14,8 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="47dp"
         android:layout_marginTop="108dp"
-        android:text="@string/login_header"
         android:fontFamily="@font/assistant_semibold"
+        android:text="@string/login_header"
         android:textSize="40sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,31 +23,57 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/assistant_semibold"
         android:text="@string/login_small_header"
-        android:fontFamily="@font/assistant_semibold"
         app:layout_constraintStart_toStartOf="@+id/login_header"
         app:layout_constraintTop_toBottomOf="@+id/login_header" />
 
-    <TextView
-        android:id="@+id/enter_username_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="124dp"
-        android:text="@string/login_message"
-        android:fontFamily="@font/assistant_semibold"
-        app:layout_constraintStart_toStartOf="@+id/login_header"
-        app:layout_constraintTop_toBottomOf="@+id/login_header" />
+<!--    <TextView-->
+<!--        android:id="@+id/enter_username_message"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="124dp"-->
+<!--        android:fontFamily="@font/assistant_semibold"-->
+<!--        android:text="@string/login_message"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/login_header"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/login_header" />-->
 
-    <EditText
-        android:id="@+id/editText"
+    <!--    <EditText-->
+    <!--        android:id="@+id/editText"-->
+    <!--        android:layout_width="279dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@drawable/edit_text"-->
+    <!--        android:hint="@string/login_username_placeholder"-->
+    <!--        android:fontFamily="@font/assistant_semibold"-->
+    <!--        android:padding="5dip"-->
+    <!--        app:layout_constraintStart_toStartOf="@+id/enter_username_message"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/enter_username_message" />-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/sign_up_text_field"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="279dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text"
-        android:hint="@string/login_username_placeholder"
-        android:fontFamily="@font/assistant_semibold"
-        android:padding="5dip"
-        app:layout_constraintStart_toStartOf="@+id/enter_username_message"
-        app:layout_constraintTop_toBottomOf="@+id/enter_username_message" />
+        android:hint="Username"
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxCornerRadiusBottomStart="20dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxCornerRadiusTopStart="20dp"
+        app:helperText="*Required"
+        android:layout_marginTop="100dp"
+        app:layout_constraintStart_toStartOf="@+id/login_header"
+        app:layout_constraintTop_toBottomOf="@+id/login_header"
+        app:startIconContentDescription="Username end icon"
+        app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/sign_up_button"
@@ -55,10 +81,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:background="@drawable/oval_green_button"
-        android:text="@string/sign_up_button_text"
         android:fontFamily="@font/assistant_semibold"
+        android:text="@string/sign_up_button_text"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintStart_toStartOf="@+id/sign_up_text_field"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_text_field" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

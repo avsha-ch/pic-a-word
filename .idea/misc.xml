@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Ron/Desktop/postpc_final_project/app/src/main/res/drawable/category_button.xml" value="0.67" />
         <entry key="..\:/Users/Ron/Desktop/postpc_final_project/app/src/main/res/drawable/go_rectangle_button.xml" value="0.3828125" />
+        <entry key="..\:/Users/Ron/Desktop/postpc_final_project/app/src/main/res/drawable/oval_green_button.xml" value="0.221875" />
         <entry key="..\:/Users/Ron/Desktop/postpc_final_project/app/src/main/res/layout/category_view.xml" value="0.190625" />
-        <entry key="..\:/Users/Ron/Desktop/postpc_final_project/app/src/main/res/layout/fragment_category.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Ron/Desktop/postpc_final_project/app/src/main/res/layout/fragment_category.xml" value="0.67" />
         <entry key="..\:/Users/Ron/Desktop/postpc_final_project/app/src/main/res/layout/fragment_choose_category.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Ron/Desktop/postpc_final_project/app/src/main/res/layout/fragment_choose_language.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ron/Desktop/postpc_final_project/app/src/main/res/layout/fragment_collection.xml" value="0.36666666666666664" />
@@ -18,26 +20,6 @@
         <entry key="..\:/Users/Ron/Desktop/postpc_final_project/app/src/main/res/layout/item_view.xml" value="0.33" />
         <entry key="..\:/Users/Ron/Desktop/postpc_final_project/app/src/main/res/layout/level_view.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Ron/Desktop/postpc_final_project/app/src/main/res/menu/bottom_app_bar.xml" value="0.19791666666666666" />
-        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.4197916666666667" />
-        <entry key="app/src/main/res/drawable/category_button.xml" value="0.23541666666666666" />
-        <entry key="app/src/main/res/drawable/edit_text.xml" value="0.5760148235852646" />
-        <entry key="app/src/main/res/drawable/go_rectangle_button.xml" value="0.4197916666666667" />
-        <entry key="app/src/main/res/drawable/ic_baseline_hearing_24.xml" value="0.4197916666666667" />
-        <entry key="app/src/main/res/drawable/oval_green_button.xml" value="0.4197916666666667" />
-        <entry key="app/src/main/res/drawable/sign_up_button.xml" value="0.4197916666666667" />
-        <entry key="app/src/main/res/font/assistant_semibold.xml" value="0.43385416666666665" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.4036458333333333" />
-        <entry key="app/src/main/res/layout/fragment_category.xml" value="0.4036458333333333" />
-        <entry key="app/src/main/res/layout/fragment_choose_category.xml" value="0.23853211009174313" />
-        <entry key="app/src/main/res/layout/fragment_choose_language.xml" value="0.3853211009174312" />
-        <entry key="app/src/main/res/layout/fragment_collection.xml" value="0.33177083333333335" />
-        <entry key="app/src/main/res/layout/fragment_game.xml" value="0.4036458333333333" />
-        <entry key="app/src/main/res/layout/fragment_intro.xml" value="0.2900454824917236" />
-        <entry key="app/src/main/res/layout/fragment_my_area.xml" value="0.4036458333333333" />
-        <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.2918945400602777" />
-        <entry key="app/src/main/res/layout/item_view.xml" value="0.3056383839305665" />
-        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.4197916666666667" />
-        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.4197916666666667" />
       </map>
     </option>
   </component>

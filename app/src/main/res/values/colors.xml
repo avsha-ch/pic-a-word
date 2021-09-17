@@ -7,11 +7,31 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="misty_rose">#FEE9E1</color>
-    <color name="azure">#E9F7F7</color>
-    <color name="lavender">#ECDEFF</color>
-    <color name="magic_mint">#A8EADB</color>
-    <color name="green">#86D0AB</color>
-    <color name="baby_eyes_blue">#9DC4FF</color>
+    <color name="misty_rose">#f8723e</color>
+    <color name="azure">#6dcaca</color>
+    <color name="lavender">#8b37ff</color>
+    <color name="magic_mint">#36ceac</color>
+    <color name="green">#3ea06f</color>
+    <color name="baby_eyes_blue">#0c6dff</color>
     <color name="royal_orange">#F68B43</color>
 </resources>
+
+
+
+<!--OLD colour hex codes before darkening -->
+<!--<resources>-->
+<!--<color name="purple_200">#FFBB86FC</color>-->
+<!--<color name="purple_500">#FF6200EE</color>-->
+<!--<color name="purple_700">#FF3700B3</color>-->
+<!--<color name="teal_200">#FF03DAC5</color>-->
+<!--<color name="teal_700">#FF018786</color>-->
+<!--<color name="black">#FF000000</color>-->
+<!--<color name="white">#FFFFFFFF</color>-->
+<!--<color name="misty_rose">#FEE9E1</color>-->
+<!--<color name="azure">#E9F7F7</color>-->
+<!--<color name="lavender">#ECDEFF</color>-->
+<!--<color name="magic_mint">#A8EADB</color>-->
+<!--<color name="green">#86D0AB</color>-->
+<!--<color name="baby_eyes_blue">#9DC4FF</color>-->
+<!--<color name="royal_orange">#F68B43</color>-->
+<!--</resources>-->

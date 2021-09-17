@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/chooseCategoryFragment">
+    app:startDestination="@id/signUpFragment">
 
     <fragment
         android:id="@+id/introFragment"
@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_intro">
         <action
             android:id="@+id/action_introFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            app:destination="@id/signUpFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
     </fragment>
     <fragment
         android:id="@+id/chooseCategoryFragment"
@@ -21,10 +25,16 @@
         tools:layout="@layout/fragment_choose_category">
         <action
             android:id="@+id/action_chooseCategoryFragment_to_categoryFragment"
-            app:destination="@id/categoryFragment" />
+            app:destination="@id/categoryFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
         <action
             android:id="@+id/action_chooseCategoryFragment_to_myAreaFragment"
-            app:destination="@id/myAreaFragment" />
+            app:destination="@id/myAreaFragment"
+
+            />
     </fragment>
 
     <fragment
@@ -34,7 +44,7 @@
         tools:layout="@layout/fragment_game">
         <argument
             android:name="levelResId"
-            app:argType="reference"/>
+            app:argType="reference" />
         <action
             android:id="@+id/action_gameFragment_to_chooseCategoryFragment"
             app:destination="@id/chooseCategoryFragment" />
@@ -43,19 +53,30 @@
         android:id="@+id/categoryFragment"
         android:name="huji.postpc.find.pic.aword.category.CategoryFragment"
         android:label="fragment_category"
-        tools:layout="@layout/fragment_category" >
+        tools:layout="@layout/fragment_category">
+        <argument
+            android:name="categoryNameResId"
+            app:argType="reference" />
         <action
             android:id="@+id/action_categoryFragment_to_chooseCategoryFragment"
-            app:destination="@id/chooseCategoryFragment" />
+            app:destination="@id/chooseCategoryFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
         <action
             android:id="@+id/action_categoryFragment_to_gameFragment"
-            app:destination="@id/gameFragment" />
+            app:destination="@id/gameFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
     </fragment>
     <fragment
         android:id="@+id/myAreaFragment"
         android:name="huji.postpc.find.pic.aword.userarea.MyAreaFragment"
         android:label="fragment_my_area"
-        tools:layout="@layout/fragment_my_area" >
+        tools:layout="@layout/fragment_my_area">
         <action
             android:id="@+id/action_myAreaFragment_to_collectionFragment"
             app:destination="@id/collectionFragment" />
@@ -67,7 +88,7 @@
         android:id="@+id/collectionFragment"
         android:name="huji.postpc.find.pic.aword.userarea.CollectionFragment"
         android:label="fragment_collection"
-        tools:layout="@layout/fragment_collection" >
+        tools:layout="@layout/fragment_collection">
         <action
             android:id="@+id/action_collectionFragment_to_chooseCategoryFragment"
             app:destination="@id/chooseCategoryFragment" />
@@ -76,18 +97,24 @@
         android:id="@+id/signUpFragment"
         android:name="huji.postpc.find.pic.aword.intro.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" >
+        tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUpFragment_to_chooseLanguageFragment"
-            app:destination="@id/chooseLanguageFragment" />
+            app:destination="@id/chooseLanguageFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/chooseLanguageFragment"
         android:name="huji.postpc.find.pic.aword.intro.ChooseLanguageFragment"
         android:label="fragment_choose_language"
-        tools:layout="@layout/fragment_choose_language" >
+        tools:layout="@layout/fragment_choose_language">
         <action
             android:id="@+id/action_chooseLanguageFragment_to_chooseCategoryFragment"
-            app:destination="@id/chooseCategoryFragment" />
+            app:destination="@id/chooseCategoryFragment"
+
+             />
     </fragment>
 </navigation>

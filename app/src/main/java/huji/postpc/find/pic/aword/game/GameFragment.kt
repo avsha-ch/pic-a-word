@@ -60,7 +60,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         arguments?.let {
 //            word = it.getString("word").toString()
             levelResId = it.get("levelResId") as Int
-            mainViewModel.currLevelResId = levelResId
+            mainViewModel.currLevelResId.value = levelResId
             word = getString(levelResId)
         }
     }
@@ -113,7 +113,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             // Else, found the correct label!
             Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
             // Set level completed if found a correct label
-            mainViewModel.setCurrLevelCompleted()
+//            mainViewModel.setCurrLevelCompleted()
 
         }
         gameViewModel.labelLiveData.observe(viewLifecycleOwner, labelObserver)
@@ -181,7 +181,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                 if (mediaImage != null) {
                     val inputImageForMLKIT = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
                     Log.e("ImageCapture", "inputImage prepared: ${imageProxy.imageInfo.timestamp}")
-    //                      // Label image
+                    // Label image
                     gameViewModel.analyzeImage(inputImageForMLKIT, word)
                 }
                 // close image when done with it. after this nothing can be done with the captured image

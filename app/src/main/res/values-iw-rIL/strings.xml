@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="category_house">מסביב לבית</string>
+    <string name="category_food">אוכל</string>
+    <string name="category_vehicles">רכבים</string>
+    <string name="category_body">גוף האדם</string>
+    <string name="category_animals">בעלי חיים</string>
+    <string name="category_clothing">לבוש</string>
+    <string name="category_misc">שונות</string>
+    <string name="go_button">צא!</string>
+    <string name="login_header">שלום!</string>
+    <string name="login_small_header">ברוכים הבאים.</string>
+    <string name="login_username_placeholder">"שם "</string>
+    <string name="sign_up_button_text">הירשם</string>
+    <string name="login_button_text">התחבר</string>
+    <string name="choose_language_header">תבחר שפה ילד קקה</string>
+</resources>
