@@ -42,9 +42,8 @@ class MyAreaAdapter(private val gameData: HashMap<Int, Category>) : RecyclerView
         holder.categoryProgressPercentage.text = "${category.progress + 20}%" // todo I know the fix, later urghh
         // Get the color matching this category
         val categoryColorResId = context.CATEGORY_COLOR_MAP[categoryNameResId]
-        holder.categoryProgressBar.progressTintList = categoryColorResId?.let { ColorStateList.valueOf(it) }
-//        holder.categoryProgressBar.backgroundTintList = categoryColorResId?.let { context.getColorStateList(it) }
-//        holder.categoryProgressBar.indeterminateTintList = categoryColorResId?.let { context.getColorStateList(it) }
+        holder.categoryProgressBar.progressTintList = categoryColorResId?.let { context.getColorStateList(it) }
+
     }
 
 }
