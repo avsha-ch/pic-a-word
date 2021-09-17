@@ -100,8 +100,7 @@
     <string name="level_clown" translatable="false">Clown</string>
     <string name="level_whiteboard" translatable="false">Whiteboard</string>
     <string name="level_flag" translatable="false">Flag</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+
 
     <!-- General -->
     <string name="go_button">GO!</string>

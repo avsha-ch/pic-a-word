@@ -1,6 +1,5 @@
 package huji.postpc.find.pic.aword.category
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +31,7 @@ class ChooseCategoryAdapter(private val gameData: HashMap<Int, Category>) : Recy
         val context = holder.itemView.context as MainActivity
         // Select the bound item in position, which is a category
         val category = categories[position]
-        val categoryNameResId = category.nameResourceId
+        val categoryNameResId = category.nameResId
         holder.button.text = context.getString(categoryNameResId)
         // Get the color matching this category
         val categoryColorResId = context.CATEGORY_COLOR_MAP[categoryNameResId]

@@ -61,7 +61,6 @@ class MainActivity : AppCompatActivity() {
 
     fun speak(text : String){
         if (!ttsInitialized){
-            // Todo better toast message
             Toast.makeText(applicationContext, "TTS not ready yet!", Toast.LENGTH_SHORT).show()
             return
         }

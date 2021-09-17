@@ -4,20 +4,25 @@ import androidx.annotation.StringRes
 
 import huji.postpc.find.pic.aword.data.loadDataSet
 
-class Category(@StringRes val nameResourceId: Int){
+class Category(@StringRes val nameResId: Int){
 
-//    val levels : List<Level> = loadDataSet(nameResourceId)
-    val levels : HashMap<Int, Level> = loadDataSet(nameResourceId)
+    val levels : HashMap<Int, Level> = loadDataSet(nameResId)
     private var levelsCompletedNum : Int = 0
     private var isCompleted : Boolean = false
+    var progress = 0
+    var levelsNum = 0
+
+    init {
+        levelsNum = levels.size
+    }
 
     fun markLevelCompleted(@StringRes levelResId: Int){
         // todo set level is completed
         levelsCompletedNum++
+        progress = if (levelsNum != 0) (levelsCompletedNum / levelsNum ) else 0
         if (levels.containsKey(levelResId)){
             levels[levelResId]!!.isCompleted  = true
         }
-        // TODO maybe do same logic here as we did in the todo items exercise, nice api and will be easy to write tests for it as a bonus to our project
     }
 
 }
