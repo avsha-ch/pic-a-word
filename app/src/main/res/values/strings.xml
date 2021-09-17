@@ -114,8 +114,11 @@
     <string name="login_username_placeholder">Username</string>
     <string name="sign_up_button_text">Sign Up</string>
     <string name="login_button_text">Login</string>
+    <string name="username_field_invalid">Between 3–10 alphabetic only characters!</string>
     <!-- Choose language -->
     <string name="choose_language_header">Choose the language you want to learn.</string>
+    <string name="username">Username</string>
+    <string name="text_field_required">*Required</string>
 
 
 </resources>

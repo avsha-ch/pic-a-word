@@ -14,4 +14,7 @@
     <string name="sign_up_button_text">הירשם</string>
     <string name="login_button_text">התחבר</string>
     <string name="choose_language_header">תבחר שפה ילד קקה</string>
+    <string name="username">שם</string>
+    <string name="text_field_required">*חובה</string>
+    <string name="username_field_invalid">תווים המכילים  3-10 אותיות בלבד!</string>
 </resources>

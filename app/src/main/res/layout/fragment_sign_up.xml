@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context="intro.SignUpFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/login_header"
         android:layout_width="wrap_content"
@@ -50,11 +49,11 @@
     <!--        app:layout_constraintTop_toBottomOf="@+id/enter_username_message" />-->
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/sign_up_text_field"
+        android:id="@+id/user_name_text_field"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="279dp"
         android:layout_height="wrap_content"
-        android:hint="Username"
+        android:hint="@string/username"
         app:boxCornerRadiusBottomEnd="20dp"
         app:boxCornerRadiusBottomStart="20dp"
         app:boxCornerRadiusTopEnd="20dp"
@@ -84,7 +83,7 @@
         android:fontFamily="@font/assistant_semibold"
         android:text="@string/sign_up_button_text"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/sign_up_text_field"
-        app:layout_constraintTop_toBottomOf="@+id/sign_up_text_field" />
+        app:layout_constraintStart_toStartOf="@+id/user_name_text_field"
+        app:layout_constraintTop_toBottomOf="@+id/user_name_text_field" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
