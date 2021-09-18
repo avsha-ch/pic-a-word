@@ -118,6 +118,7 @@
     <string name="choose_language_header">Choose the language you want to learn.</string>
     <string name="username">Username</string>
     <string name="text_field_required">*Required</string>
-
+    <!-- Progress percentage format -->
+    <string name="progress_percentage_string" translatable="false">%1$d%%</string>
 
 </resources>

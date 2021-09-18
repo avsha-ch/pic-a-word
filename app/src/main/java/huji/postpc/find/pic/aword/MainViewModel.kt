@@ -19,30 +19,28 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         R.string.category_clothing to Category(R.string.category_clothing),
 //        R.string.category_misc to Category(R.string.category_misc)
     )
-    private var sp = application.getSharedPreferences(SP_GAME_NAME, Context.MODE_PRIVATE)
-    private val gson = Gson()
+//    private var sp = application.getSharedPreferences(SP_GAME_NAME, Context.MODE_PRIVATE)
+//    private val gson = Gson()
 
-//    var currCategoryResId = MutableLiveData<Int?>(null)
-//    var currLevelResId = MutableLiveData<Int?>(null)
     var currCategoryResId : Int? = null
     var currLevelResId : Int? = null
 
-    init {
-        loadFromSP()
-    }
+//    init {
+//        loadFromSP()
+//    }
 
-    fun saveToSP(){
-        val gameDataJson = gson.toJson(gameData)
-        sp.edit().putString(SP_GAME_DATA_KEY, gameDataJson).apply()
-    }
-
-    private fun loadFromSP(){
-        val gameDataJson = sp.getString(SP_GAME_DATA_KEY, "")
-        if (gameDataJson != ""){
-            // Create a new database
-            gameData = gson.fromJson(gameDataJson, gameData.javaClass)
-        }
-    }
+//    fun saveToSP(){
+//        val gameDataJson = gson.toJson(gameData)
+//        sp.edit().putString(SP_GAME_DATA_KEY, gameDataJson).apply()
+//    }
+//
+//    private fun loadFromSP(){
+//        val gameDataJson = sp.getString(SP_GAME_DATA_KEY, "")
+//        if (gameDataJson != ""){
+//            // Create a new database
+//            gameData = gson.fromJson(gameDataJson, gameData.javaClass)
+//        }
+//    }
 
     fun getCurrCategoryProgress(): Int{
         if (currCategoryResId == null){
@@ -50,8 +48,6 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         }
         val category = gameData[currCategoryResId]
         return category?.progress ?: 0
-
-
     }
 
 //    fun setCurrLevelCompleted(){

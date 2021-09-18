@@ -21,17 +21,17 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
     private lateinit var myCollectionButton : MaterialButton
     private lateinit var goButton : MaterialButton
     private lateinit var categoryProgressPercentage : TextView
-    private lateinit var activity: MainActivity
+    private lateinit var mainActivity: MainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity = (getActivity() as MainActivity)
+        mainActivity = (activity as MainActivity)
         // Get the category name resource-id argument
         arguments?.let {
             val categoryNameResId = it.get("categoryNameResId") as Int
             // Update the view model
             mainViewModel.currCategoryResId = categoryNameResId
-            activity.updateStatusBarColor()
+            mainActivity.updateStatusBarColor()
         }
     }
 
@@ -48,12 +48,12 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         if (currCategoryResId != null) {
             categoryNameTextView.text = getString(currCategoryResId)
             categoryProgressBar.progress = mainViewModel.getCurrCategoryProgress()
-            categoryProgressPercentage.text =  "${mainViewModel.getCurrCategoryProgress()}%"
-            val categoryColorResId = activity.CATEGORY_COLOR_MAP[currCategoryResId]
+            categoryProgressPercentage.text =  getString(R.string.progress_percentage_string, mainViewModel.getCurrCategoryProgress())
+            val categoryColorResId = mainActivity.CATEGORY_COLOR_MAP[currCategoryResId]
             if (categoryColorResId != null) {
                 categoryNameTextView.setBackgroundResource(categoryColorResId)
-                categoryProgressBar.progressTintList = activity.getColorStateList(categoryColorResId)
-                myCollectionButton.backgroundTintList = activity.getColorStateList(categoryColorResId)
+                categoryProgressBar.progressTintList = mainActivity.getColorStateList(categoryColorResId)
+                myCollectionButton.backgroundTintList = mainActivity.getColorStateList(categoryColorResId)
             }
         }
 

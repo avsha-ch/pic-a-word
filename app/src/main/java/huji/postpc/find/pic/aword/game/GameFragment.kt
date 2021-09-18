@@ -17,12 +17,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.label.ImageLabel
 import huji.postpc.find.pic.aword.MainActivity
 import huji.postpc.find.pic.aword.MainViewModel
 import huji.postpc.find.pic.aword.R
+import huji.postpc.find.pic.aword.models.Level
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -31,41 +33,46 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
     // The lens of camera the app uses (front/back)
     private var lensFacing: Int = CameraSelector.LENS_FACING_BACK
+
+    // Preview - used to display the camera's feed
     private var preview: Preview? = null
+
+    // Capture and Analyzer for CameraX
     private var imageCapture: ImageCapture? = null
     private var imageAnalyzer: ImageAnalysis? = null
+
+    // camera provides access to CameraControl & CameraInfo
     private var camera: Camera? = null
     private var cameraProvider: ProcessCameraProvider? = null
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var cameraViewFinder: PreviewView
 
-
     // UI components
-//    private lateinit var bottomAppBar: BottomAppBar
-//    private lateinit var wordTextView: TextView
     private lateinit var captureButton: FloatingActionButton
+    private lateinit var wordListenButton: MaterialButton
+    private lateinit var previousImgButton: MaterialButton
+    private lateinit var nextImgButton: MaterialButton
 
-    // Word to display for this game-level
-    private var word: String = ""
-    private var levelResId: Int = 0
+    // Activity for getColorStateList
+    private lateinit var mainActivity: MainActivity
+
+
+
+    // View models
     private val gameViewModel: GameViewModel by viewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let {
-//            word = it.getString("word").toString()
-//            levelResId = it.get("levelResId") as Int
-//            mainViewModel.currLevelResId = levelResId
-//            word = getString(levelResId)
-        }
-    }
-
+    // All levels for this category by level resource id
+    private lateinit var levels : List<Level>
+    // Current level displayed
+    private var levelIdx : Int = 0
+    // Word to display for this game-level
+    private var word: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        // Get activity context
+        mainActivity = (activity as MainActivity)
         // Initialize our background executor, which is used for camera options that are blocking
         cameraExecutor = Executors.newSingleThreadExecutor()
 
@@ -76,41 +83,58 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                 ActivityCompat.requestPermissions(it, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
             }
         }
-
         // Wait for the views to be properly laid out and then set up camera and use cases
         cameraViewFinder.post { setUpCamera() }
 
-
-        // Find text view with the level's word
-//        wordTextView = view.findViewById(R.id.word_text_view)
-//        wordTextView.text = word
-
-        // Set click listeners for bottom app bar menu items
-//        bottomAppBar = view.findViewById(R.id.bottom_app_bar)
-        // --------------
-//        val currCategoryResId = mainViewModel.currCategoryResId
-//        if (currCategoryResId != null) {
-//            val activity = (activity as MainActivity)
-//            val categoryColorResId = activity.CATEGORY_COLOR_MAP[currCategoryResId]
-//            if (categoryColorResId != null) {
-//                bottomAppBar.backgroundTintList = activity.getColorStateList(categoryColorResId)
-//            }
-//        }
-//        // -------------
-//        bottomAppBar.setOnMenuItemClickListener { menuItem ->
-//            when (menuItem.itemId) {
-//                R.id.listen -> {
-//                    // Handle listen icon press
-//                    (activity as MainActivity).speak(wordTextView.text.toString())
-//                    true
-//                }
-//                else -> false
-//            }
-//        }
-
-        // Set click listener for capture picture button
+        // Find all views
+        wordListenButton = view.findViewById(R.id.word_listen_button)
         captureButton = view.findViewById(R.id.capture_fab)
-        captureButton.setOnClickListener { captureImage() }
+        previousImgButton = view.findViewById(R.id.previous_img_button)
+        nextImgButton = view.findViewById(R.id.next_img_button)
+
+        // Get information from view model
+        val currCategoryResId = mainViewModel.currCategoryResId
+        if (currCategoryResId != null) {
+            // Get all levels
+            val currCategory = mainViewModel.gameData[currCategoryResId]
+            if (currCategory != null) {
+                levels = currCategory.levels
+                // Initialize current level to be the first one
+                updateDisplayLevel()
+            }
+            // Update category information
+            val categoryColorResId = (activity as MainActivity).CATEGORY_COLOR_MAP[currCategoryResId]
+            if (categoryColorResId != null) {
+                wordListenButton.backgroundTintList = mainActivity.getColorStateList(categoryColorResId)
+                previousImgButton.backgroundTintList = mainActivity.getColorStateList(categoryColorResId)
+                nextImgButton.backgroundTintList = mainActivity.getColorStateList(categoryColorResId)
+            }
+            }
+
+
+
+
+        // Set click listener for button
+        wordListenButton.setOnClickListener {
+            mainActivity.speak(word)
+        }
+        // Set click listener for capture picture button
+        captureButton.setOnClickListener {
+            captureImage()
+        }
+        // Todo set listeners for previous and next image button
+        previousImgButton.setOnClickListener {
+            if (levelIdx > 0){
+                levelIdx--
+                updateDisplayLevel()
+            }
+        }
+        nextImgButton.setOnClickListener {
+            if (levelIdx < levels.size - 1){
+                levelIdx++
+                updateDisplayLevel()
+            }
+        }
 
         // Set an observer for the labeler live data
         val labelObserver = Observer<ImageLabel?> { label ->
@@ -124,8 +148,14 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
         }
         gameViewModel.labelLiveData.observe(viewLifecycleOwner, labelObserver)
-
     }
+
+    private fun updateDisplayLevel(){
+        val currLevel = levels.getOrNull(levelIdx)
+        word = currLevel?.let { getString(it.nameResId) }.toString()
+        wordListenButton.text = word
+    }
+
 
 
     private fun setUpCamera() {
@@ -157,19 +187,13 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         val cameraProvider = cameraProvider ?: throw IllegalStateException("Camera initialization failed.")
         // CameraSelector - used to select which lens to use for camera
         val cameraSelector = CameraSelector.Builder().requireLensFacing(lensFacing).build()
-        // Preview - used to display the camera's feed
         preview = Preview.Builder().build()
-        // ImageCapture
+        // ImageCapture and ImageAnalysis objects for CameraX
         imageCapture = ImageCapture.Builder().setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY).build()
-        // ImageAnalysis
         imageAnalyzer = ImageAnalysis.Builder().build()
-
         // Must unbind the use-cases before rebinding them
         cameraProvider.unbindAll()
-
         try {
-            // A variable number of use-cases can be passed here -
-            // camera provides access to CameraControl & CameraInfo
             camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture, imageAnalyzer)
             // Attach the viewfinder's surface provider to preview use case
             preview?.setSurfaceProvider(cameraViewFinder.surfaceProvider)
@@ -179,7 +203,6 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     }
 
     private fun captureImage() {
-
         imageCapture?.takePicture(cameraExecutor, object : ImageCapture.OnImageCapturedCallback() {
             override fun onCaptureSuccess(imageProxy: ImageProxy) {
                 Log.e("ImageCapture", "Photo capture success: ${imageProxy.imageInfo.timestamp}")
@@ -199,21 +222,17 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                 super.onError(exception)
                 Log.e("CameraXBasic", "Photo capture failed: ${exception.message}", exception)
             }
-        }
-        )
+        })
     }
 
     private fun allPermissionsGranted() =
         REQUIRED_PERMISSIONS.all { ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED }
 
 
-    private fun hasBackCamera(): Boolean {
-        return cameraProvider?.hasCamera(CameraSelector.DEFAULT_BACK_CAMERA) ?: false
-    }
+    private fun hasBackCamera(): Boolean = cameraProvider?.hasCamera(CameraSelector.DEFAULT_BACK_CAMERA) ?: false
 
-    private fun hasFrontCamera(): Boolean {
-        return cameraProvider?.hasCamera(CameraSelector.DEFAULT_FRONT_CAMERA) ?: false
-    }
+    private fun hasFrontCamera(): Boolean = cameraProvider?.hasCamera(CameraSelector.DEFAULT_FRONT_CAMERA) ?: false
+
 
 // TODO Ron: add camera switch button to the fragment layout
 //    private fun updateCameraSwitchButton() {
@@ -229,6 +248,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         super.onDestroy()
         cameraExecutor.shutdown()
     }
+
 
     companion object {
         private const val CAMERA_X_TAG = "CameraX"
