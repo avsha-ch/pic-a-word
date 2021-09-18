@@ -3,19 +3,29 @@ package huji.postpc.find.pic.aword.game
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.Manifest
+import android.content.Intent
+import android.media.MediaScannerConnection
+import android.net.Uri
+import android.os.Build
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ImageView
+import android.webkit.MimeTypeMap
+import android.widget.TextView
 import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toFile
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.mlkit.vision.common.InputImage
@@ -24,6 +34,9 @@ import huji.postpc.find.pic.aword.MainActivity
 import huji.postpc.find.pic.aword.MainViewModel
 import huji.postpc.find.pic.aword.R
 import huji.postpc.find.pic.aword.models.Level
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -39,6 +52,10 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     // Capture and Analyzer for CameraX
     private var imageCapture: ImageCapture? = null
     private var imageAnalyzer: ImageAnalysis? = null
+
+    // Camera output
+    private lateinit var  outputDirectory: File
+
 
     // camera provides access to CameraControl & CameraInfo
     private var camera: Camera? = null
@@ -85,6 +102,9 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         }
         // Wait for the views to be properly laid out and then set up camera and use cases
         cameraViewFinder.post { setUpCamera() }
+
+        // set output directory
+        outputDirectory = MainActivity.getOutputDirectory(requireContext())
 
         // Find all views
         wordListenButton = view.findViewById(R.id.word_listen_button)
@@ -206,6 +226,12 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     }
 
     private fun captureImage() {
+        val photoFile = createFile(outputDirectory, FILENAME, PHOTO_EXTENSION)
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile)
+            // .setMetadata() TODO: setting metadata here is optional
+            .build()
+
+        // handle ML image recognition
         imageCapture?.takePicture(cameraExecutor, object : ImageCapture.OnImageCapturedCallback() {
             override fun onCaptureSuccess(imageProxy: ImageProxy) {
                 Log.e("ImageCapture", "Photo capture success: ${imageProxy.imageInfo.timestamp}")
@@ -224,6 +250,41 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             override fun onError(exception: ImageCaptureException) {
                 super.onError(exception)
                 Log.e("CameraXBasic", "Photo capture failed: ${exception.message}", exception)
+            }
+        })
+
+        // handle saving image
+        imageCapture?.takePicture(outputOptions, cameraExecutor, object : ImageCapture.OnImageSavedCallback {
+
+            override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
+                Log.d(CAMERA_X_TAG, "Photo capture succeeded: $savedUri")
+
+                // Implicit broadcasts will be ignored for devices running API level >= 24
+                // so if you only target API level 24+ you can remove this statement
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                    requireActivity().sendBroadcast(
+                        Intent(android.hardware.Camera.ACTION_NEW_PICTURE, savedUri)
+                    )
+                }
+
+
+                // If the folder selected is an external media directory, this is
+                // unnecessary but otherwise other apps will not be able to access our
+                // images unless we scan them using [MediaScannerConnection]
+                val mimeType = MimeTypeMap.getSingleton()
+                    .getMimeTypeFromExtension(savedUri.toFile().extension)
+                MediaScannerConnection.scanFile(
+                    context,
+                    arrayOf(savedUri.toFile().absolutePath),
+                    arrayOf(mimeType)
+                ) { _, uri ->
+                    Log.d(CAMERA_X_TAG, "Image capture scanned into media store: $uri")
+                }
+            }
+
+            override fun onError(exception: ImageCaptureException) {
+                Log.e(CAMERA_X_TAG, "Photo capture failed: ${exception.message}", exception)
             }
         })
     }
@@ -255,8 +316,17 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
     companion object {
         private const val CAMERA_X_TAG = "CameraX"
+        private const val FILENAME = "yyyy-MM-dd-HH-mm-ss-SSS"
+        private const val PHOTO_EXTENSION = ".jpg"
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+
+        /** Helper function used to create a timestamped file */
+        private fun createFile(baseFolder: File, format: String, extension: String) =
+            File(baseFolder, SimpleDateFormat(format, Locale.US)
+                .format(System.currentTimeMillis()) + extension)
+
+
     }
 
 
