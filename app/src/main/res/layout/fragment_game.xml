@@ -46,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@id/word_listen_button" />
 
     <ImageView
-        android:id="@+id/game_image"
+        android:id="@+id/word_image_view"
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:alpha="0.8"
@@ -103,6 +103,9 @@
         app:layout_constraintStart_toEndOf="@id/capture_fab" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+<!--    android:backgroundTint="@color/button_green"-->
 
 
     <!--<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"-->

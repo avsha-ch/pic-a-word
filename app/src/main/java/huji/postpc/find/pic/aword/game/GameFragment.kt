@@ -6,7 +6,7 @@ import android.Manifest
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.TextView
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -16,7 +16,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.mlkit.vision.common.InputImage
@@ -52,20 +51,21 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     private lateinit var wordListenButton: MaterialButton
     private lateinit var previousImgButton: MaterialButton
     private lateinit var nextImgButton: MaterialButton
+    private lateinit var wordImgView: ImageView
 
     // Activity for getColorStateList
     private lateinit var mainActivity: MainActivity
-
-
 
     // View models
     private val gameViewModel: GameViewModel by viewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
 
     // All levels for this category by level resource id
-    private lateinit var levels : List<Level>
+    private lateinit var levels: List<Level>
+
     // Current level displayed
-    private var levelIdx : Int = 0
+    private var levelIdx: Int = 0
+
     // Word to display for this game-level
     private var word: String = ""
 
@@ -91,6 +91,8 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         captureButton = view.findViewById(R.id.capture_fab)
         previousImgButton = view.findViewById(R.id.previous_img_button)
         nextImgButton = view.findViewById(R.id.next_img_button)
+        wordImgView = view.findViewById(R.id.word_image_view)
+
 
         // Get information from view model
         val currCategoryResId = mainViewModel.currCategoryResId
@@ -109,9 +111,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                 previousImgButton.backgroundTintList = mainActivity.getColorStateList(categoryColorResId)
                 nextImgButton.backgroundTintList = mainActivity.getColorStateList(categoryColorResId)
             }
-            }
-
-
+        }
 
 
         // Set click listener for button
@@ -124,13 +124,13 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         }
         // Todo set listeners for previous and next image button
         previousImgButton.setOnClickListener {
-            if (levelIdx > 0){
+            if (levelIdx > 0) {
                 levelIdx--
                 updateDisplayLevel()
             }
         }
         nextImgButton.setOnClickListener {
-            if (levelIdx < levels.size - 1){
+            if (levelIdx < levels.size - 1) {
                 levelIdx++
                 updateDisplayLevel()
             }
@@ -145,17 +145,20 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
             // Set level completed if found a correct label
 //            mainViewModel.setCurrLevelCompleted()
-
         }
         gameViewModel.labelLiveData.observe(viewLifecycleOwner, labelObserver)
     }
 
-    private fun updateDisplayLevel(){
+    private fun updateDisplayLevel() {
         val currLevel = levels.getOrNull(levelIdx)
-        word = currLevel?.let { getString(it.nameResId) }.toString()
-        wordListenButton.text = word
+        // Update word
+        if (currLevel != null) {
+            word = getString(currLevel.nameResId)
+            wordListenButton.text = word
+            // Update image
+            wordImgView.setImageResource(currLevel.imgResId)
+        }
     }
-
 
 
     private fun setUpCamera() {

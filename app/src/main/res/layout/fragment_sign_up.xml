@@ -27,15 +27,15 @@
         app:layout_constraintStart_toStartOf="@+id/login_header"
         app:layout_constraintTop_toBottomOf="@+id/login_header" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/enter_username_message"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="124dp"-->
-<!--        android:fontFamily="@font/assistant_semibold"-->
-<!--        android:text="@string/login_message"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/login_header"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/login_header" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/enter_username_message"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="124dp"-->
+    <!--        android:fontFamily="@font/assistant_semibold"-->
+    <!--        android:text="@string/login_message"-->
+    <!--        app:layout_constraintStart_toStartOf="@+id/login_header"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/login_header" />-->
 
     <!--    <EditText-->
     <!--        android:id="@+id/editText"-->
@@ -53,13 +53,13 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="279dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:hint="@string/username"
         app:boxCornerRadiusBottomEnd="20dp"
         app:boxCornerRadiusBottomStart="20dp"
         app:boxCornerRadiusTopEnd="20dp"
         app:boxCornerRadiusTopStart="20dp"
         app:helperText="*Required"
-        android:layout_marginTop="100dp"
         app:layout_constraintStart_toStartOf="@+id/login_header"
         app:layout_constraintTop_toBottomOf="@+id/login_header"
         app:startIconContentDescription="Username end icon"
@@ -74,16 +74,31 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/sign_up_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="147dp"
+        android:layout_height="54dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/oval_green_button"
         android:fontFamily="@font/assistant_semibold"
         android:text="@string/sign_up_button_text"
         android:textSize="20sp"
+        app:cornerRadius="30dp"
         app:layout_constraintStart_toStartOf="@+id/user_name_text_field"
         app:layout_constraintTop_toBottomOf="@+id/user_name_text_field" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!--<Button-->
+    <!--android:id="@+id/sign_up_button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="40dp"-->
+    <!--android:background="@drawable/oval_green_button"-->
+    <!--android:fontFamily="@font/assistant_semibold"-->
+    <!--android:text="@string/sign_up_button_text"-->
+    <!--android:textSize="20sp"-->
+    <!--android:backgroundTint="@color/button_green"-->
+    <!--app:layout_constraintStart_toStartOf="@+id/user_name_text_field"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/user_name_text_field" />-->
