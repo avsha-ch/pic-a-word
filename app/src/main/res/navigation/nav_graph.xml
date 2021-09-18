@@ -42,9 +42,6 @@
         android:name="huji.postpc.find.pic.aword.game.GameFragment"
         android:label="fragment_game"
         tools:layout="@layout/fragment_game">
-        <argument
-            android:name="levelResId"
-            app:argType="reference" />
         <action
             android:id="@+id/action_gameFragment_to_chooseCategoryFragment"
             app:destination="@id/chooseCategoryFragment" />

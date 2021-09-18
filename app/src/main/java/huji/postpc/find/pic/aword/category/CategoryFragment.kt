@@ -9,6 +9,7 @@ import huji.postpc.find.pic.aword.R
 import android.view.*
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 
 
@@ -36,7 +37,6 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        goButton = view.findViewById(R.id.go_button)
 
         // Find the all the views in the fragment
         categoryNameTextView = view.findViewById(R.id.category_name_text_view)
@@ -47,14 +47,21 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         val currCategoryResId = mainViewModel.currCategoryResId
         if (currCategoryResId != null) {
             categoryNameTextView.text = getString(currCategoryResId)
-            categoryProgressBar.progress = mainViewModel.getCurrCategoryProgress() + 20
-            categoryProgressPercentage.text =  "${mainViewModel.getCurrCategoryProgress() + 20}%"
+            categoryProgressBar.progress = mainViewModel.getCurrCategoryProgress()
+            categoryProgressPercentage.text =  "${mainViewModel.getCurrCategoryProgress()}%"
             val categoryColorResId = activity.CATEGORY_COLOR_MAP[currCategoryResId]
             if (categoryColorResId != null) {
                 categoryNameTextView.setBackgroundResource(categoryColorResId)
                 categoryProgressBar.progressTintList = activity.getColorStateList(categoryColorResId)
                 myCollectionButton.backgroundTintList = activity.getColorStateList(categoryColorResId)
             }
+        }
+
+        // Set click listener to the 'GO' button for transitioning to the game itself
+        goButton = view.findViewById(R.id.go_button)
+        goButton.setOnClickListener {
+            val action = CategoryFragmentDirections.actionCategoryFragmentToGameFragment()
+            findNavController().navigate(action)
         }
 
     }

@@ -20,9 +20,6 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.label.ImageLabel
-import com.google.mlkit.vision.label.ImageLabeler
-import com.google.mlkit.vision.label.ImageLabeling
-import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
 import huji.postpc.find.pic.aword.MainActivity
 import huji.postpc.find.pic.aword.MainViewModel
 import huji.postpc.find.pic.aword.R
@@ -44,13 +41,13 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
 
     // UI components
-    private lateinit var bottomAppBar: BottomAppBar
-    private lateinit var wordTextView: TextView
+//    private lateinit var bottomAppBar: BottomAppBar
+//    private lateinit var wordTextView: TextView
     private lateinit var captureButton: FloatingActionButton
 
     // Word to display for this game-level
     private var word: String = ""
-    private var levelResId : Int = 0
+    private var levelResId: Int = 0
     private val gameViewModel: GameViewModel by viewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
 
@@ -59,9 +56,9 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
         arguments?.let {
 //            word = it.getString("word").toString()
-            levelResId = it.get("levelResId") as Int
-            mainViewModel.currLevelResId = levelResId
-            word = getString(levelResId)
+//            levelResId = it.get("levelResId") as Int
+//            mainViewModel.currLevelResId = levelResId
+//            word = getString(levelResId)
         }
     }
 
@@ -85,29 +82,39 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
 
         // Find text view with the level's word
-        wordTextView = view.findViewById(R.id.word_text_view)
-        wordTextView.text = word
+//        wordTextView = view.findViewById(R.id.word_text_view)
+//        wordTextView.text = word
 
         // Set click listeners for bottom app bar menu items
-        bottomAppBar = view.findViewById(R.id.bottom_app_bar)
-        bottomAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.listen -> {
-                    // Handle listen icon press
-                    (activity as MainActivity).speak(wordTextView.text.toString())
-                    true
-                }
-                else -> false
-            }
-        }
+//        bottomAppBar = view.findViewById(R.id.bottom_app_bar)
+        // --------------
+//        val currCategoryResId = mainViewModel.currCategoryResId
+//        if (currCategoryResId != null) {
+//            val activity = (activity as MainActivity)
+//            val categoryColorResId = activity.CATEGORY_COLOR_MAP[currCategoryResId]
+//            if (categoryColorResId != null) {
+//                bottomAppBar.backgroundTintList = activity.getColorStateList(categoryColorResId)
+//            }
+//        }
+//        // -------------
+//        bottomAppBar.setOnMenuItemClickListener { menuItem ->
+//            when (menuItem.itemId) {
+//                R.id.listen -> {
+//                    // Handle listen icon press
+//                    (activity as MainActivity).speak(wordTextView.text.toString())
+//                    true
+//                }
+//                else -> false
+//            }
+//        }
 
         // Set click listener for capture picture button
-        captureButton = view.findViewById(R.id.capture_button)
+        captureButton = view.findViewById(R.id.capture_fab)
         captureButton.setOnClickListener { captureImage() }
 
         // Set an observer for the labeler live data
         val labelObserver = Observer<ImageLabel?> { label ->
-            if (label == null){
+            if (label == null) {
                 return@Observer
             }
             // Else, found the correct label!
