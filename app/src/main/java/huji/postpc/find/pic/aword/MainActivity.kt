@@ -36,11 +36,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initializeTTS()
-
-        // Set observer for current category
-        mainViewModel.currCategoryResId.observe(this, {
-            updateStatusBarColor()
-        })
+        updateStatusBarColor()
+//        // Set observer for current category
+//        mainViewModel.currCategoryResId.observe(this, {
+//            updateStatusBarColor()
+//        })
     }
 
     private fun initializeTTS(){
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
     fun updateStatusBarColor(){
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        val categoryColorResId = if (mainViewModel.currCategoryResId.value != null) CATEGORY_COLOR_MAP[mainViewModel.currCategoryResId.value] else R.color.purple_700
+        val categoryColorResId = if (mainViewModel.currCategoryResId != null) CATEGORY_COLOR_MAP[mainViewModel.currCategoryResId] else R.color.black
         if (categoryColorResId != null){
             window.statusBarColor = getColor(categoryColorResId)
         }

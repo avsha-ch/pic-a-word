@@ -22,8 +22,10 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     private var sp = application.getSharedPreferences(SP_GAME_NAME, Context.MODE_PRIVATE)
     private val gson = Gson()
 
-    var currCategoryResId = MutableLiveData<Int?>(null)
-    var currLevelResId = MutableLiveData<Int?>(null)
+//    var currCategoryResId = MutableLiveData<Int?>(null)
+//    var currLevelResId = MutableLiveData<Int?>(null)
+    var currCategoryResId : Int? = null
+    var currLevelResId : Int? = null
 
     init {
         loadFromSP()
@@ -40,6 +42,16 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
             // Create a new database
             gameData = gson.fromJson(gameDataJson, gameData.javaClass)
         }
+    }
+
+    fun getCurrCategoryProgress(): Int{
+        if (currCategoryResId == null){
+            return 0
+        }
+        val category = gameData[currCategoryResId]
+        return category?.progress ?: 0
+
+
     }
 
 //    fun setCurrLevelCompleted(){

@@ -60,7 +60,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         arguments?.let {
 //            word = it.getString("word").toString()
             levelResId = it.get("levelResId") as Int
-            mainViewModel.currLevelResId.value = levelResId
+            mainViewModel.currLevelResId = levelResId
             word = getString(levelResId)
         }
     }
