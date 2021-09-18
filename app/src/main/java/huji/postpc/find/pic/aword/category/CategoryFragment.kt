@@ -2,7 +2,6 @@ package huji.postpc.find.pic.aword.category
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.widget.Button
 import androidx.fragment.app.activityViewModels
 import huji.postpc.find.pic.aword.MainActivity
 import huji.postpc.find.pic.aword.MainViewModel

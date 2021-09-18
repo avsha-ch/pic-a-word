@@ -1,6 +1,5 @@
 package huji.postpc.find.pic.aword.userarea
 
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
