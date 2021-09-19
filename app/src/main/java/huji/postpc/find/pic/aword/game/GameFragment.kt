@@ -32,6 +32,7 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.label.ImageLabel
 import huji.postpc.find.pic.aword.MainActivity
 import huji.postpc.find.pic.aword.MainViewModel
+import huji.postpc.find.pic.aword.OnSwipeTouchListener
 import huji.postpc.find.pic.aword.R
 import huji.postpc.find.pic.aword.models.Level
 import java.io.File
