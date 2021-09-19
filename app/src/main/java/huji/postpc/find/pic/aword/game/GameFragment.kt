@@ -142,6 +142,39 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         captureButton.setOnClickListener {
             captureImage()
         }
+
+        // Set swipe listeners for next and previous levels
+        wordImgView.setOnTouchListener(object : OnSwipeTouchListener(mainActivity){
+            override fun onSwipeLeft(){
+                if (levelIdx < levels.size - 1) {
+                    levelIdx++
+                    updateDisplayLevel()
+                }
+            }
+            override fun onSwipeRight(){
+                if (levelIdx > 0) {
+                    levelIdx--
+                    updateDisplayLevel()
+                }
+            }
+
+        })
+        // TODO - choose on what view will the swipe listener be
+//        cameraViewFinder.setOnTouchListener(object : OnSwipeTouchListener(mainActivity){
+//            override fun onSwipeLeft(){
+//                if (levelIdx < levels.size - 1) {
+//                    levelIdx++
+//                    updateDisplayLevel()
+//                }
+//            }
+//            override fun onSwipeRight(){
+//                if (levelIdx > 0) {
+//                    levelIdx--
+//                    updateDisplayLevel()
+//                }
+//            }
+//
+//        })
         // Todo set listeners for previous and next image button
         previousImgButton.setOnClickListener {
             if (levelIdx > 0) {
