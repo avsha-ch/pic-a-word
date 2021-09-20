@@ -2,7 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/game_nav_graph">
+    android:id="@+id/game_nav_graph"
+    app:startDestination="@id/chooseCategoryFragment">
 
     <!-- ChooseCategoryFragment, the landing screen for the game itself. -->
     <fragment
@@ -18,8 +19,12 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
         <action
-            android:id="@+id/action_chooseCategoryFragment_to_myAreaFragment"
-            app:destination="@id/userAreaFragment" />
+            android:id="@+id/action_chooseCategoryFragment_to_userAreaFragment"
+            app:destination="@id/userAreaFragment"
+            app:enterAnim="@anim/slide_in_down"
+            app:exitAnim="@anim/slide_out_up"
+            app:popEnterAnim="@anim/slide_in_up"
+            app:popExitAnim="@anim/slide_out_down" />
     </fragment>
 
     <!-- CategoryFragment, displays the category progress
@@ -39,6 +44,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_categoryFragment_to_collectionFragment"
+            app:destination="@id/collectionFragment"
+            app:enterAnim="@anim/slide_in_down"
+            app:exitAnim="@anim/slide_out_up"
+            app:popEnterAnim="@anim/slide_in_up"
+            app:popExitAnim="@anim/slide_out_down" />
     </fragment>
 
     <!-- GameFragment, for playing the actual game -->
@@ -56,8 +68,12 @@
         android:label="fragment_user_area"
         tools:layout="@layout/fragment_user_area">
         <action
-            android:id="@+id/action_myAreaFragment_to_collectionFragment"
-            app:destination="@id/collectionFragment" />
+            android:id="@+id/action_userAreaFragment_to_collectionChooseCategoryFragment"
+            app:destination="@id/collectionChooseCategoryFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <!-- CollectionFragment, displays a single category's collection -->
@@ -66,7 +82,22 @@
         android:name="huji.postpc.find.pic.aword.game.userarea.CollectionFragment"
         android:label="fragment_collection"
         tools:layout="@layout/fragment_collection">
-
+        <argument
+            android:name="categoryNameResId"
+            app:argType="reference" />
+    </fragment>
+    <fragment
+        android:id="@+id/collectionChooseCategoryFragment"
+        android:name="huji.postpc.find.pic.aword.game.userarea.CollectionChooseCategoryFragment"
+        android:label="fragment_collection_choose_category"
+        tools:layout="@layout/fragment_collection_choose_category" >
+        <action
+            android:id="@+id/action_collectionChooseCategoryFragment_to_collectionFragment"
+            app:destination="@id/collectionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
 </navigation>

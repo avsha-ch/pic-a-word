@@ -55,6 +55,11 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                 categoryProgressBar.progressTintList = gameActivity.getColorStateList(categoryColorResId)
                 myCollectionButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
             }
+            // Set click listener to the 'My Collection' button for transitioning to collection
+            myCollectionButton.setOnClickListener {
+                val action = CategoryFragmentDirections.actionCategoryFragmentToCollectionFragment(categoryNameResId = currCategoryResId)
+                findNavController().navigate(action)
+            }
         }
 
         // Set click listener to the 'GO' button for transitioning to the game itself

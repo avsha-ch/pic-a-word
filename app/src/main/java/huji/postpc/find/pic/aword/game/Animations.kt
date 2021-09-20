@@ -78,6 +78,7 @@ fun animateViewOutIn(view: View, translation : Float, updateUi: (Level) -> Unit,
                 view.visibility = View.INVISIBLE
                 view.animate()
                     .translationX(translation)
+                    .setDuration(1L)
                     .withEndAction {
                         // animate new view in
                         view.visibility = View.VISIBLE
