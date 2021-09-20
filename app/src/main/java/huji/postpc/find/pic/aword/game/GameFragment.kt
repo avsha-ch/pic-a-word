@@ -10,9 +10,6 @@ import android.os.Build
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.view.animation.AccelerateInterpolator
-import android.view.animation.Animation
-import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.webkit.MimeTypeMap
 import android.widget.Toast
@@ -29,8 +26,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.label.ImageLabel
-import huji.postpc.find.pic.aword.MainActivity
-import huji.postpc.find.pic.aword.MainViewModel
+import huji.postpc.find.pic.aword.*
 import huji.postpc.find.pic.aword.OnSwipeTouchListener
 import huji.postpc.find.pic.aword.R
 import huji.postpc.find.pic.aword.models.Level
@@ -148,13 +144,13 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             override fun onSwipeLeft(){
                 if (levelIdx < levels.size - 1) {
                     levelIdx++
-                    updateDisplayLevel(Direction.LEFT)
+                    updateDisplayLevel(Direction.NEXT)
                 }
             }
             override fun onSwipeRight(){
                 if (levelIdx > 0) {
                     levelIdx--
-                    updateDisplayLevel(Direction.RIGHT)
+                    updateDisplayLevel(Direction.PREV)
                 }
             }
 
@@ -179,13 +175,13 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         previousImgButton.setOnClickListener {
             if (levelIdx > 0) {
                 levelIdx--
-                updateDisplayLevel(Direction.RIGHT)
+                updateDisplayLevel(Direction.PREV)
             }
         }
         nextImgButton.setOnClickListener {
             if (levelIdx < levels.size - 1) {
                 levelIdx++
-                updateDisplayLevel(Direction.LEFT)
+                updateDisplayLevel(Direction.NEXT)
             }
         }
 
@@ -202,63 +198,30 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         gameViewModel.labelLiveData.observe(viewLifecycleOwner, labelObserver)
     }
 
-    private fun inFromRightAnimation(): Animation {
-        val inFromRight: Animation = TranslateAnimation(
-            Animation.RELATIVE_TO_PARENT, +1.0f,
-            Animation.RELATIVE_TO_PARENT, 0.0f,
-            Animation.RELATIVE_TO_PARENT, 0.0f,
-            Animation.RELATIVE_TO_PARENT, 0.0f
-        )
-        inFromRight.duration = 500
-        inFromRight.interpolator = AccelerateInterpolator()
-        return inFromRight
-    }
-
-    private fun outToLeftAnimation(): Animation {
-        val outtoLeft: Animation = TranslateAnimation(
-            Animation.RELATIVE_TO_PARENT, 0.0f,
-            Animation.RELATIVE_TO_PARENT, -1.0f,
-            Animation.RELATIVE_TO_PARENT, 0.0f,
-            Animation.RELATIVE_TO_PARENT, 0.0f
-        )
-        outtoLeft.duration = 500
-        outtoLeft.interpolator = AccelerateInterpolator()
-        return outtoLeft
-    }
-
-    private fun inFromLeftAnimation(): Animation {
-        val inFromLeft: Animation = TranslateAnimation(
-            Animation.RELATIVE_TO_PARENT, -1.0f,
-            Animation.RELATIVE_TO_PARENT, 0.0f,
-            Animation.RELATIVE_TO_PARENT, 0.0f,
-            Animation.RELATIVE_TO_PARENT, 0.0f
-        )
-        inFromLeft.duration = 500
-        inFromLeft.interpolator = AccelerateInterpolator()
-        return inFromLeft
-    }
-
-    private fun outToRightAnimation(): Animation {
-        val outtoRight: Animation = TranslateAnimation(
-            Animation.RELATIVE_TO_PARENT, 0.0f,
-            Animation.RELATIVE_TO_PARENT, +1.0f,
-            Animation.RELATIVE_TO_PARENT, 0.0f,
-            Animation.RELATIVE_TO_PARENT, 0.0f
-        )
-        outtoRight.duration = 500
-        outtoRight.interpolator = AccelerateInterpolator()
-        return outtoRight
+    private fun changeLevelUi(currLevel : Level) {
+        word = getString(currLevel.nameResId)
+        wordListenButton.text = word
+        // Update image
+        wordImgView.setImageResource(currLevel.imgResId)
     }
 
     private fun updateDisplayLevel(dir : Direction) {
         val currLevel = levels.getOrNull(levelIdx)
-        // Update word
-        if (currLevel != null) {
 
+        if (currLevel != null) {
+            val translationDir = when (dir){
+                Direction.NEXT -> {resources.getDimension(R.dimen.translationTemplateOutIn)}
+                Direction.PREV -> {-resources.getDimension(R.dimen.translationTemplateOutIn)}
+                else -> {0f}
+            }
+            animateViewOutIn(wordImgView, translationDir, ::changeLevelUi, currLevel)
+
+            // Alternative way for animation - somewhat smoother but only animates the view in (not out and in)
+            /*
             // old out
             when (dir){
-                Direction.LEFT -> {wordImgView.startAnimation(outToLeftAnimation())}
-                Direction.RIGHT -> {wordImgView.startAnimation(outToRightAnimation())}
+                Direction.NEXT -> {wordImgView.startAnimation(outToLeftAnimation())}
+                Direction.PREV -> {wordImgView.startAnimation(outToRightAnimation())}
                 else -> {}
             }
 
@@ -269,10 +232,11 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
             // new in
             when (dir){
-                Direction.LEFT -> {wordImgView.startAnimation(inFromRightAnimation())}
-                Direction.RIGHT -> {wordImgView.startAnimation(inFromLeftAnimation())}
+                Direction.NEXT -> {wordImgView.startAnimation(inFromRightAnimation())}
+                Direction.PREV -> {wordImgView.startAnimation(inFromLeftAnimation())}
                 else -> {}
             }
+            */
         }
     }
 
@@ -425,7 +389,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
     }
     enum class Direction {
-        LEFT, RIGHT, NOMOVE
+        NEXT, PREV, NOMOVE
     }
 
 }
