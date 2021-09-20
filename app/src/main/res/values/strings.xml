@@ -120,5 +120,8 @@
     <string name="text_field_required">*Required</string>
     <!-- Progress percentage format -->
     <string name="progress_percentage_string" translatable="false">%1$d%%</string>
+    <string name="language_en">English</string>
+    <string name="language_he">Hebrew</string>
+    <string name="choose_language">Choose language</string>
 
 </resources>

@@ -16,5 +16,8 @@
     <string name="choose_language_header">תבחר שפה ילד קקה</string>
     <string name="username">שם</string>
     <string name="text_field_required">*חובה</string>
-    <string name="username_field_invalid">תווים המכילים  3-10 אותיות בלבד!</string>
+    <string name="username_field_invalid">תווים המכילים  3–10 אותיות בלבד!</string>
+    <string name="language_en">אנגלית</string>
+    <string name="language_he">עברית</string>
+    <string name="choose_language">בחר שפה</string>
 </resources>
