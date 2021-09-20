@@ -16,7 +16,13 @@ class PicAWordApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
         sp = getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
+
+        // TODO for debug
+        sp.edit().clear().apply()
+        // TODO
+
         // Load the saved data about onboarding and user, if exists
         onboardingDone = sp.getBoolean(SP_ONBOARDING_DONE_KEY, false)
         username = sp.getString(SP_USER_NAME_KEY, "").toString()
@@ -36,7 +42,9 @@ class PicAWordApp : Application() {
         sp.edit().putString(SP_USER_ID_KEY, userId).apply()
     }
 
+
     companion object {
+        lateinit var instance: PicAWordApp private set
         private const val SP_NAME = "sp_pic_a_word"
         private const val SP_ONBOARDING_DONE_KEY = "sp_key_onboarding_done"
         private const val SP_USER_NAME_KEY = "sp_key_user_name"
