@@ -1,10 +1,10 @@
-package huji.postpc.find.pic.aword.category
+package huji.postpc.find.pic.aword.game.category
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import huji.postpc.find.pic.aword.MainActivity
-import huji.postpc.find.pic.aword.MainViewModel
+import huji.postpc.find.pic.aword.game.GameActivity
+import huji.postpc.find.pic.aword.game.GameViewModel
 import huji.postpc.find.pic.aword.R
 import android.view.*
 import android.widget.ProgressBar
@@ -15,23 +15,23 @@ import com.google.android.material.button.MaterialButton
 
 class CategoryFragment : Fragment(R.layout.fragment_category) {
 
-    private val mainViewModel: MainViewModel by activityViewModels()
+    private val gameViewModel: GameViewModel by activityViewModels()
     private lateinit var categoryNameTextView: TextView
     private lateinit var categoryProgressBar : ProgressBar
     private lateinit var myCollectionButton : MaterialButton
     private lateinit var goButton : MaterialButton
     private lateinit var categoryProgressPercentage : TextView
-    private lateinit var mainActivity: MainActivity
+    private lateinit var gameActivity: GameActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainActivity = (activity as MainActivity)
+        gameActivity = (activity as GameActivity)
         // Get the category name resource-id argument
         arguments?.let {
             val categoryNameResId = it.get("categoryNameResId") as Int
             // Update the view model
-            mainViewModel.currCategoryResId = categoryNameResId
-            mainActivity.updateStatusBarColor()
+            gameViewModel.currCategoryResId = categoryNameResId
+            gameActivity.updateStatusBarColor()
         }
     }
 
@@ -44,16 +44,16 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         myCollectionButton = view.findViewById(R.id.my_collection_button)
         categoryProgressPercentage = view.findViewById(R.id.category_progress_percentage)
         // Get current category resource id to update the texts and colors of the views
-        val currCategoryResId = mainViewModel.currCategoryResId
+        val currCategoryResId = gameViewModel.currCategoryResId
         if (currCategoryResId != null) {
             categoryNameTextView.text = getString(currCategoryResId)
-            categoryProgressBar.progress = mainViewModel.getCurrCategoryProgress()
-            categoryProgressPercentage.text =  getString(R.string.progress_percentage_string, mainViewModel.getCurrCategoryProgress())
-            val categoryColorResId = mainActivity.CATEGORY_COLOR_MAP[currCategoryResId]
+            categoryProgressBar.progress = gameViewModel.getCurrCategoryProgress()
+            categoryProgressPercentage.text =  getString(R.string.progress_percentage_string, gameViewModel.getCurrCategoryProgress())
+            val categoryColorResId = gameActivity.CATEGORY_COLOR_MAP[currCategoryResId]
             if (categoryColorResId != null) {
                 categoryNameTextView.setBackgroundResource(categoryColorResId)
-                categoryProgressBar.progressTintList = mainActivity.getColorStateList(categoryColorResId)
-                myCollectionButton.backgroundTintList = mainActivity.getColorStateList(categoryColorResId)
+                categoryProgressBar.progressTintList = gameActivity.getColorStateList(categoryColorResId)
+                myCollectionButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
             }
         }
 

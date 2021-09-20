@@ -1,5 +1,6 @@
-package huji.postpc.find.pic.aword.game
+package huji.postpc.find.pic.aword.game.play
 
+import huji.postpc.find.pic.aword.game.*
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.Manifest
@@ -10,6 +11,9 @@ import android.os.Build
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.Animation
+import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.webkit.MimeTypeMap
 import android.widget.Toast
@@ -26,18 +30,19 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.label.ImageLabel
-import huji.postpc.find.pic.aword.*
+import huji.postpc.find.pic.aword.game.GameActivity
+import huji.postpc.find.pic.aword.game.GameViewModel
 import huji.postpc.find.pic.aword.OnSwipeTouchListener
 import huji.postpc.find.pic.aword.R
-import huji.postpc.find.pic.aword.models.Level
+import huji.postpc.find.pic.aword.game.models.Level
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import huji.postpc.find.pic.aword.*
 
-
-class GameFragment : Fragment(R.layout.fragment_game) {
+class PlayFragment : Fragment(R.layout.fragment_game) {
 
     // The lens of camera the app uses (front/back)
     private var lensFacing: Int = CameraSelector.LENS_FACING_BACK
@@ -67,11 +72,11 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     private lateinit var wordImgView: ImageView
 
     // Activity for getColorStateList
-    private lateinit var mainActivity: MainActivity
+    private lateinit var gameActivity: GameActivity
 
     // View models
-    private val gameViewModel: GameViewModel by viewModels()
-    private val mainViewModel: MainViewModel by activityViewModels()
+    private val playViewModel: PlayViewModel by viewModels()
+    private val gameViewModel: GameViewModel by activityViewModels()
 
     // All levels for this category by level resource id
     private lateinit var levels: List<Level>
@@ -85,7 +90,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Get activity context
-        mainActivity = (activity as MainActivity)
+        gameActivity = (activity as GameActivity)
         // Initialize our background executor, which is used for camera options that are blocking
         cameraExecutor = Executors.newSingleThreadExecutor()
 
@@ -100,7 +105,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         cameraViewFinder.post { setUpCamera() }
 
         // set output directory
-        outputDirectory = MainActivity.getOutputDirectory(requireContext())
+        outputDirectory = GameActivity.getOutputDirectory(requireContext())
 
         // Find all views
         wordListenButton = view.findViewById(R.id.word_listen_button)
@@ -111,28 +116,28 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
 
         // Get information from view model
-        val currCategoryResId = mainViewModel.currCategoryResId
+        val currCategoryResId = gameViewModel.currCategoryResId
         if (currCategoryResId != null) {
             // Get all levels
-            val currCategory = mainViewModel.gameData[currCategoryResId]
+            val currCategory = gameViewModel.gameData[currCategoryResId]
             if (currCategory != null) {
                 levels = currCategory.levels
                 // Initialize current level to be the first one
                 updateDisplayLevel(Direction.NOMOVE)
             }
             // Update category information
-            val categoryColorResId = (activity as MainActivity).CATEGORY_COLOR_MAP[currCategoryResId]
+            val categoryColorResId = (activity as GameActivity).CATEGORY_COLOR_MAP[currCategoryResId]
             if (categoryColorResId != null) {
-                wordListenButton.backgroundTintList = mainActivity.getColorStateList(categoryColorResId)
-                previousImgButton.backgroundTintList = mainActivity.getColorStateList(categoryColorResId)
-                nextImgButton.backgroundTintList = mainActivity.getColorStateList(categoryColorResId)
+                wordListenButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
+                previousImgButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
+                nextImgButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
             }
         }
 
 
         // Set click listener for button
         wordListenButton.setOnClickListener {
-            mainActivity.speak(word)
+            gameActivity.speak(word)
         }
         // Set click listener for capture picture button
         captureButton.setOnClickListener {
@@ -140,7 +145,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         }
 
         // Set swipe listeners for next and previous levels
-        wordImgView.setOnTouchListener(object : OnSwipeTouchListener(mainActivity){
+        wordImgView.setOnTouchListener(object : OnSwipeTouchListener(gameActivity){
             override fun onSwipeLeft(){
                 if (levelIdx < levels.size - 1) {
                     levelIdx++
@@ -175,13 +180,13 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         previousImgButton.setOnClickListener {
             if (levelIdx > 0) {
                 levelIdx--
-                updateDisplayLevel(Direction.PREV)
+                updateDisplayLevel(Direction.NEXT)
             }
         }
         nextImgButton.setOnClickListener {
             if (levelIdx < levels.size - 1) {
                 levelIdx++
-                updateDisplayLevel(Direction.NEXT)
+                updateDisplayLevel(Direction.PREV)
             }
         }
 
@@ -195,7 +200,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             // Set level completed if found a correct label
 //            mainViewModel.setCurrLevelCompleted()
         }
-        gameViewModel.labelLiveData.observe(viewLifecycleOwner, labelObserver)
+        playViewModel.labelLiveData.observe(viewLifecycleOwner, labelObserver)
     }
 
     private fun changeLevelUi(currLevel : Level) {
@@ -204,6 +209,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         // Update image
         wordImgView.setImageResource(currLevel.imgResId)
     }
+
 
     private fun updateDisplayLevel(dir : Direction) {
         val currLevel = levels.getOrNull(levelIdx)
@@ -224,12 +230,10 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                 Direction.PREV -> {wordImgView.startAnimation(outToRightAnimation())}
                 else -> {}
             }
-
             word = getString(currLevel.nameResId)
             wordListenButton.text = word
             // Update image
             wordImgView.setImageResource(currLevel.imgResId)
-
             // new in
             when (dir){
                 Direction.NEXT -> {wordImgView.startAnimation(inFromRightAnimation())}
@@ -301,7 +305,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                     val inputImageForMLKIT = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
                     Log.e("ImageCapture", "inputImage prepared: ${imageProxy.imageInfo.timestamp}")
                     // Label image
-                    gameViewModel.analyzeImage(inputImageForMLKIT, word)
+                    playViewModel.analyzeImage(inputImageForMLKIT, word)
                 }
                 // close image when done with it. after this nothing can be done with the captured image
                 imageProxy.close()

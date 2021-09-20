@@ -1,4 +1,4 @@
-package huji.postpc.find.pic.aword.intro
+package huji.postpc.find.pic.aword.onboarding
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import huji.postpc.find.pic.aword.R
 
-class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
+class NameFragment : Fragment(R.layout.fragment_name) {
 
     private lateinit var signUpButton: Button
     private lateinit var usernameTextField: TextInputLayout
@@ -30,17 +30,21 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         usernameTextField.editText?.doOnTextChanged { text, _, _, _ ->
             // Reset username text field error when typing
             usernameTextField.error = ""
-            onboardingViewModel.username = text.toString()
+            // Get newly typed username and update view model
+            val newUsername = text.toString()
+            onboardingViewModel.updateUserDetails(newUsername)
         }
 
         // Set click listener for signup button
         signUpButton.setOnClickListener {
             if (!onboardingViewModel.isUsernameValid) {
+                // Invalid username, show error and don't continue
                 usernameTextField.error = getString(R.string.username_field_invalid)
                 return@setOnClickListener
             }
+            // Continue into the choose language fragment
             usernameTextField.error = ""
-            val action = SignUpFragmentDirections.actionSignUpFragmentToChooseLanguageFragment()
+            val action = NameFragmentDirections.actionSignUpFragmentToChooseLanguageFragment()
             findNavController().navigate(action)
         }
 

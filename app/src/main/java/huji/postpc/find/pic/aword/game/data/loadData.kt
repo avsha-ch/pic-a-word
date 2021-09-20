@@ -1,10 +1,8 @@
-package huji.postpc.find.pic.aword.data
+package huji.postpc.find.pic.aword.game.data
 
-import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import huji.postpc.find.pic.aword.R
-import huji.postpc.find.pic.aword.models.Category
-import huji.postpc.find.pic.aword.models.Level
+import huji.postpc.find.pic.aword.game.models.Level
 
 
 fun loadDataSet(@StringRes categoryName : Int) : List<Level>{

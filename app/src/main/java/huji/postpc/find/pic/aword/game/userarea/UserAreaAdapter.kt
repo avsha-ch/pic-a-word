@@ -1,4 +1,4 @@
-package huji.postpc.find.pic.aword.userarea
+package huji.postpc.find.pic.aword.game.userarea
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import huji.postpc.find.pic.aword.MainActivity
+import huji.postpc.find.pic.aword.game.GameActivity
 import huji.postpc.find.pic.aword.R
-import huji.postpc.find.pic.aword.models.Category
+import huji.postpc.find.pic.aword.game.models.Category
 
-class MyAreaAdapter(private val gameData: HashMap<Int, Category>) : RecyclerView.Adapter<MyAreaAdapter.ProgressViewHolder>() {
+class UserAreaAdapter(private val gameData: HashMap<Int, Category>) : RecyclerView.Adapter<UserAreaAdapter.ProgressViewHolder>() {
 
 
     private val categories = gameData.values.toList()
@@ -31,7 +31,7 @@ class MyAreaAdapter(private val gameData: HashMap<Int, Category>) : RecyclerView
 
     override fun onBindViewHolder(holder:  ProgressViewHolder, position: Int) {
         // Get context in order to use getString from resources (R)
-        val context = holder.itemView.context as MainActivity
+        val context = holder.itemView.context as GameActivity
         // Select the bound item in position, which is a category
         val category = categories[position]
         val categoryNameResId = category.nameResId

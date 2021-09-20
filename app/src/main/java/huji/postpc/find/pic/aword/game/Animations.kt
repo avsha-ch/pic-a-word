@@ -1,10 +1,10 @@
-package huji.postpc.find.pic.aword
+package huji.postpc.find.pic.aword.game
 
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import android.view.animation.AccelerateInterpolator
-import huji.postpc.find.pic.aword.models.Level
+import huji.postpc.find.pic.aword.game.models.Level
 
 fun inFromRightAnimation(): Animation {
     val inFromRight: Animation = TranslateAnimation(
@@ -78,7 +78,6 @@ fun animateViewOutIn(view: View, translation : Float, updateUi: (Level) -> Unit,
                 view.visibility = View.INVISIBLE
                 view.animate()
                     .translationX(translation)
-                    .setDuration(1L)
                     .withEndAction {
                         // animate new view in
                         view.visibility = View.VISIBLE

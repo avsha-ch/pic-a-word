@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/onboarding_nav_graph"
+    app:startDestination="@id/signUpFragment">
+
+    <!-- IntroFragment, shows the logo for a few moments -->
+    <fragment
+        android:id="@+id/introFragment"
+        android:name="huji.postpc.find.pic.aword.onboarding.IntroFragment"
+        android:label="fragment_intro"
+        tools:layout="@layout/fragment_intro">
+        <action
+            android:id="@+id/action_introFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+    <!-- SignUpFragment, gets the user's name -->
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="huji.postpc.find.pic.aword.onboarding.NameFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_name">
+        <action
+            android:id="@+id/action_signUpFragment_to_chooseLanguageFragment"
+            app:destination="@id/chooseLanguageFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <!-- IntroFragment, showing the logo for a few moments -->
+    <fragment
+        android:id="@+id/chooseLanguageFragment"
+        android:name="huji.postpc.find.pic.aword.onboarding.ChooseLanguageFragment"
+        android:label="fragment_choose_language"
+        tools:layout="@layout/fragment_choose_language">
+
+    </fragment>
+
+</navigation>

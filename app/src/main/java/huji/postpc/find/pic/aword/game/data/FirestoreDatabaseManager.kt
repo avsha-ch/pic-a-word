@@ -1,10 +1,9 @@
-package huji.postpc.find.pic.aword.data
+package huji.postpc.find.pic.aword.game.data
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import com.bumptech.glide.Glide

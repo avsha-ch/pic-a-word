@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/signUpFragment">
+    app:startDestination="@id/chooseCategoryFragment">
 
     <fragment
         android:id="@+id/introFragment"
-        android:name="huji.postpc.find.pic.aword.intro.IntroFragment"
+        android:name="huji.postpc.find.pic.aword.onboarding.IntroFragment"
         android:label="fragment_intro"
         tools:layout="@layout/fragment_intro">
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/chooseCategoryFragment"
-        android:name="huji.postpc.find.pic.aword.category.ChooseCategoryFragment"
+        android:name="huji.postpc.find.pic.aword.game.category.ChooseCategoryFragment"
         android:label="fragment_choose_category"
         tools:layout="@layout/fragment_choose_category">
         <action
@@ -39,7 +39,7 @@
 
     <fragment
         android:id="@+id/gameFragment"
-        android:name="huji.postpc.find.pic.aword.game.GameFragment"
+        android:name="huji.postpc.find.pic.aword.game.play.PlayFragment"
         android:label="fragment_game"
         tools:layout="@layout/fragment_game">
         <action
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/categoryFragment"
-        android:name="huji.postpc.find.pic.aword.category.CategoryFragment"
+        android:name="huji.postpc.find.pic.aword.game.category.CategoryFragment"
         android:label="fragment_category"
         tools:layout="@layout/fragment_category">
         <argument
@@ -71,9 +71,9 @@
     </fragment>
     <fragment
         android:id="@+id/myAreaFragment"
-        android:name="huji.postpc.find.pic.aword.userarea.MyAreaFragment"
+        android:name="huji.postpc.find.pic.aword.game.userarea.UserAreaFragment"
         android:label="fragment_my_area"
-        tools:layout="@layout/fragment_my_area">
+        tools:layout="@layout/fragment_user_area">
         <action
             android:id="@+id/action_myAreaFragment_to_collectionFragment"
             app:destination="@id/collectionFragment" />
@@ -83,7 +83,7 @@
     </fragment>
     <fragment
         android:id="@+id/collectionFragment"
-        android:name="huji.postpc.find.pic.aword.userarea.CollectionFragment"
+        android:name="huji.postpc.find.pic.aword.game.userarea.CollectionFragment"
         android:label="fragment_collection"
         tools:layout="@layout/fragment_collection">
         <action
@@ -92,9 +92,9 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="huji.postpc.find.pic.aword.intro.SignUpFragment"
+        android:name="huji.postpc.find.pic.aword.onboarding.NameFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up">
+        tools:layout="@layout/fragment_name">
         <action
             android:id="@+id/action_signUpFragment_to_chooseLanguageFragment"
             app:destination="@id/chooseLanguageFragment"
@@ -105,7 +105,7 @@
     </fragment>
     <fragment
         android:id="@+id/chooseLanguageFragment"
-        android:name="huji.postpc.find.pic.aword.intro.ChooseLanguageFragment"
+        android:name="huji.postpc.find.pic.aword.onboarding.ChooseLanguageFragment"
         android:label="fragment_choose_language"
         tools:layout="@layout/fragment_choose_language">
         <action

@@ -1,8 +1,8 @@
-package huji.postpc.find.pic.aword.models
+package huji.postpc.find.pic.aword.game.models
 
 import androidx.annotation.StringRes
 
-import huji.postpc.find.pic.aword.data.loadDataSet
+import huji.postpc.find.pic.aword.game.data.loadDataSet
 
 class Category(@StringRes val nameResId: Int){
 

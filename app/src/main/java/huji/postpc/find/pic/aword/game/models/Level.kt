@@ -1,4 +1,4 @@
-package huji.postpc.find.pic.aword.models
+package huji.postpc.find.pic.aword.game.models
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

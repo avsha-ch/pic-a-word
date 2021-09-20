@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="category.ChooseCategoryFragment">
+    tools:context=".game.category.ChooseCategoryFragment">
 
     <TextView
         android:id="@+id/choose_category_msg_text_view"

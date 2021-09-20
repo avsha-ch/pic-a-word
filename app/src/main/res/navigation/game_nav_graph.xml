@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/game_nav_graph">
+
+    <!-- ChooseCategoryFragment, the landing screen for the game itself. -->
+    <fragment
+        android:id="@+id/chooseCategoryFragment"
+        android:name="huji.postpc.find.pic.aword.game.category.ChooseCategoryFragment"
+        android:label="fragment_choose_category"
+        tools:layout="@layout/fragment_choose_category">
+        <action
+            android:id="@+id/action_chooseCategoryFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_chooseCategoryFragment_to_myAreaFragment"
+            app:destination="@id/userAreaFragment" />
+    </fragment>
+
+    <!-- CategoryFragment, displays the category progress
+    Links to the game itself and to the category's collection -->
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="huji.postpc.find.pic.aword.game.category.CategoryFragment"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category">
+        <argument
+            android:name="categoryNameResId"
+            app:argType="reference" />
+        <action
+            android:id="@+id/action_categoryFragment_to_gameFragment"
+            app:destination="@id/gameFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- GameFragment, for playing the actual game -->
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="huji.postpc.find.pic.aword.game.play.PlayFragment"
+        android:label="fragment_game"
+        tools:layout="@layout/fragment_game"/>
+
+    <!-- UserAreaFragment, displays the user's progress across all categories and
+    links to all categories collection -->
+    <fragment
+        android:id="@+id/userAreaFragment"
+        android:name="huji.postpc.find.pic.aword.game.userarea.UserAreaFragment"
+        android:label="fragment_user_area"
+        tools:layout="@layout/fragment_user_area">
+        <action
+            android:id="@+id/action_myAreaFragment_to_collectionFragment"
+            app:destination="@id/collectionFragment" />
+    </fragment>
+
+    <!-- CollectionFragment, displays a single category's collection -->
+    <fragment
+        android:id="@+id/collectionFragment"
+        android:name="huji.postpc.find.pic.aword.game.userarea.CollectionFragment"
+        android:label="fragment_collection"
+        tools:layout="@layout/fragment_collection">
+
+    </fragment>
+
+</navigation>

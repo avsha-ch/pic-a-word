@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="intro.SignUpFragment">
+    tools:context=".onboarding.NameFragment">
     <TextView
         android:id="@+id/choose_language_header"
         android:layout_width="298dp"
@@ -19,30 +19,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <TextView
-        android:id="@+id/enter_username_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="124dp"
-        android:text="@string/login_message"
-        android:fontFamily="@font/assistant_semibold"
-        app:layout_constraintStart_toStartOf="@+id/choose_language_header"
-        app:layout_constraintTop_toBottomOf="@+id/choose_language_header" />
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="279dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_text"
-        android:hint="@string/login_username_placeholder"
-        android:fontFamily="@font/assistant_semibold"
-        android:padding="5dip"
-        app:layout_constraintStart_toStartOf="@+id/enter_username_message"
-        app:layout_constraintTop_toBottomOf="@+id/enter_username_message" />
-
     <Button
-        android:id="@+id/go_button"
+        android:id="@+id/finish_onboarding_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -50,7 +28,7 @@
         android:text="@string/go_button"
         android:fontFamily="@font/assistant_semibold"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintStart_toStartOf="@+id/choose_language_header"
+        app:layout_constraintTop_toBottomOf="@+id/choose_language_header" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

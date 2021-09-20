@@ -1,67 +1,59 @@
 package huji.postpc.find.pic.aword.game
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.google.mlkit.vision.common.InputImage
-import com.google.mlkit.vision.label.ImageLabel
-import com.google.mlkit.vision.label.ImageLabeler
-import com.google.mlkit.vision.label.ImageLabeling
-import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
-import java.lang.Exception
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import huji.postpc.find.pic.aword.R
+import huji.postpc.find.pic.aword.game.models.Category
 
-class GameViewModel : ViewModel() {
+class GameViewModel(application: Application): AndroidViewModel(application) {
 
-    // MLKit image labeler
-    private var labeler: ImageLabeler
-    var labelLiveData = MutableLiveData<ImageLabel?>(null)
 
-    init {
-        // Initialize MLKit's image labeler
-        // MLKit will ignore labels found with confidence score less than the threshold
-        val labelingOptions = ImageLabelerOptions.Builder().setConfidenceThreshold(LABELER_THRESHOLD).build()
-        labeler = ImageLabeling.getClient(labelingOptions)
-    }
+    var gameData = hashMapOf(
+        R.string.category_house to Category(R.string.category_house),
+        R.string.category_food to Category(R.string.category_food),
+        R.string.category_vehicles to Category(R.string.category_vehicles),
+        R.string.category_body to Category(R.string.category_body),
+        R.string.category_animals to Category(R.string.category_animals),
+        R.string.category_clothing to Category(R.string.category_clothing),
+//        R.string.category_misc to Category(R.string.category_misc)
+    )
+//    private var sp = application.getSharedPreferences(SP_GAME_NAME, Context.MODE_PRIVATE)
+//    private val gson = Gson()
 
-    private fun labelerOnSuccess(trueLabelText: String, labels: List<ImageLabel>) {
-        var currLabel: ImageLabel? = null
-        for (label in labels) {
-            if (label.text != trueLabelText) {
-                continue
-            }
-            // Found correct label
-            if (currLabel == null) {
-                Log.d(LABELER_TAG, "Found label with text ${label.text} with confidence ${label.confidence}")
-                currLabel = label
-            } else {
-                // Already found a label, choose the one with the higher confidence
-                if (label.confidence > currLabel.confidence) {
-                    Log.d(LABELER_TAG, "Found better label with text ${label.text} with confidence ${label.confidence}")
-                    currLabel = label
-                }
-            }
+    var currCategoryResId : Int? = null
+    var currLevelResId : Int? = null
+
+//    init {
+//        loadFromSP()
+//    }
+
+//    fun saveToSP(){
+//        val gameDataJson = gson.toJson(gameData)
+//        sp.edit().putString(SP_GAME_DATA_KEY, gameDataJson).apply()
+//    }
+//
+//    private fun loadFromSP(){
+//        val gameDataJson = sp.getString(SP_GAME_DATA_KEY, "")
+//        if (gameDataJson != ""){
+//            // Create a new database
+//            gameData = gson.fromJson(gameDataJson, gameData.javaClass)
+//        }
+//    }
+
+    fun getCurrCategoryProgress(): Int{
+        if (currCategoryResId == null){
+            return 0
         }
-        // After going over all the labels, update the live-data
-        labelLiveData.value = currLabel
+        val category = gameData[currCategoryResId]
+        return category?.progress ?: 0
     }
 
-    private fun labelerOnFail(e: Exception) {
-        Log.e(LABELER_TAG, "Failed to label $e")
-        labelLiveData.value = null
-    }
-
-    fun analyzeImage(inputImage: InputImage, trueLabelText: String) {
-        labeler.process(inputImage)
-            .addOnSuccessListener { labels ->
-                labelerOnSuccess(trueLabelText, labels)
-            }
-            .addOnFailureListener { e ->
-                labelerOnFail(e)
-            }
-    }
+//    fun setCurrLevelCompleted(){
+//        currLevelResId?.let { gameData[currCategoryResId]?.markLevelCompleted(it) }
+//    }
 
     companion object {
-        private const val LABELER_THRESHOLD = 0.7f
-        private const val LABELER_TAG = "Labeler"
+        private const val SP_GAME_NAME = "sp_game"
+        private const val SP_GAME_DATA_KEY = "sp_game_data_key"
     }
 }
