@@ -69,7 +69,7 @@ fun animateViewOutIn(view: View, translation : Float, updateUi: (Level) -> Unit,
         // animate old view out
         view.animate()
             .translationX(-translation)
-            .setDuration(500L)
+            .setDuration(450L)
             .withEndAction {
                 // update Ui if needed
                 updateUi(level)
@@ -78,12 +78,13 @@ fun animateViewOutIn(view: View, translation : Float, updateUi: (Level) -> Unit,
                 view.visibility = View.INVISIBLE
                 view.animate()
                     .translationX(translation)
+                    .setDuration(1L)
                     .withEndAction {
                         // animate new view in
                         view.visibility = View.VISIBLE
                         view.animate()
                             .translationX(0f)
-                            .setDuration(500L)
+                            .setDuration(450L)
                             .start()
                     }
                     .start()
