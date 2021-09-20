@@ -103,7 +103,7 @@
 
 
     <!-- General -->
-    <string name="go_button">GO!</string>
+    <string name="go_button">Go!</string>
     <!-- Intro -->
     <string name="intro_header" translatable="false">Pic A Word</string>
     <!-- Login -->

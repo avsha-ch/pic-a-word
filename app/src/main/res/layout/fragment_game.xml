@@ -13,6 +13,8 @@
         android:text="Look around you and find the"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/assistant_extrabold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,69 +40,103 @@
     <androidx.camera.view.PreviewView
         android:id="@+id/camera_view_finder"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-
+        android:layout_height="480dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/bright_gray"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/word_listen_button" />
+        app:layout_constraintTop_toBottomOf="@id/word_listen_button">
 
-    <ImageView
-        android:id="@+id/word_image_view"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:alpha="0.8"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/shoes_stencil"
+        <ImageView
+            android:id="@+id/word_image_view"
+            android:layout_width="338dp"
+            android:layout_height="500dp"
+            android:layout_marginStart="10dp"
+            android:alpha="0.8"
+            android:src="@drawable/shoes_stencil" />
+    </androidx.camera.view.PreviewView>
+
+    <!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/previous_img_button"-->
+<!--        style="@style/Widget.MaterialComponents.Button.Icon"-->
+<!--        android:layout_width="40dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_marginEnd="18dp"-->
+<!--        android:insetLeft="0dp"-->
+<!--        android:insetTop="0dp"-->
+<!--        android:insetRight="0dp"-->
+<!--        android:insetBottom="0dp"-->
+<!--        app:cornerRadius="100dp"-->
+<!--        app:icon="@drawable/ic_baseline_navigate_before_24"-->
+<!--        app:iconGravity="textStart"-->
+<!--        app:iconPadding="0dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/capture_fab"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/capture_fab" />-->
+
+    <View
+        android:id="@+id/next_img_preview"
+        android:layout_width="20dp"
+        android:layout_height="450dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/bright_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/camera_view_finder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/camera_view_finder" />
+
+    <View
+        android:id="@+id/prev_img_preview"
+        android:layout_width="20dp"
+        android:layout_height="450dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/bright_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/camera_view_finder"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/word_listen_button" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/previous_img_button"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="18dp"
-        android:insetLeft="0dp"
-        android:insetTop="0dp"
-        android:insetRight="0dp"
-        android:insetBottom="0dp"
-        app:cornerRadius="100dp"
-        app:icon="@drawable/ic_baseline_navigate_before_24"
-        app:iconGravity="textStart"
-        app:iconPadding="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/capture_fab"
-        app:layout_constraintEnd_toStartOf="@id/capture_fab" />
+        app:layout_constraintTop_toTopOf="@+id/camera_view_finder" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/capture_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="10dp"
         app:fabCustomSize="70dp"
-        app:maxImageSize="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/camera_view_finder"
-        app:srcCompat="@drawable/ic_baseline_camera_alt_64" />
+        app:layout_constraintVertical_bias="1.0"
+        app:maxImageSize="40dp"
+        app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/next_img_button"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="18dp"
-        android:insetLeft="0dp"
-        android:insetTop="0dp"
-        android:insetRight="0dp"
-        android:insetBottom="0dp"
-        app:cornerRadius="100dp"
-        app:icon="@drawable/ic_baseline_navigate_next_24"
-        app:iconGravity="textEnd"
-        app:iconPadding="4dp"
-        app:layout_constraintBottom_toBottomOf="@id/capture_fab"
-        app:layout_constraintStart_toEndOf="@id/capture_fab" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/camera_bottom_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/capture_fab" />
+
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/next_img_button"-->
+<!--        style="@style/Widget.MaterialComponents.Button.Icon"-->
+<!--        android:layout_width="40dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_marginStart="18dp"-->
+<!--        android:insetLeft="0dp"-->
+<!--        android:insetTop="0dp"-->
+<!--        android:insetRight="0dp"-->
+<!--        android:insetBottom="0dp"-->
+<!--        app:cornerRadius="100dp"-->
+<!--        app:icon="@drawable/ic_baseline_navigate_next_24"-->
+<!--        app:iconGravity="textEnd"-->
+<!--        app:iconPadding="4dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/capture_fab"-->
+<!--        app:layout_constraintStart_toEndOf="@id/capture_fab" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

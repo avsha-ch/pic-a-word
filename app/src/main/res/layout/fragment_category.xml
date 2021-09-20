@@ -9,27 +9,38 @@
     <TextView
         android:id="@+id/category_name_text_view"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="30sp"
+        android:layout_height="140dp"
+        android:paddingBottom="20dp"
+        android:background="@color/baby_pink"
+        android:fontFamily="@font/assistant_extrabold"
+        android:text="Around The House"
+        android:textColor="@color/dark_gray"
+        android:textSize="28sp"
         android:textStyle="bold"
+        android:gravity="bottom|center"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/my_collection_button"
-        android:layout_width="250dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="28dp"
+        android:layout_width="347dp"
+        android:layout_height="135dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/assistant_semibold"
         android:gravity="bottom|start"
         android:padding="20dp"
-        android:text="My collection"
+        android:text="My Collection"
+        android:textAllCaps="false"
         android:textColor="@color/white"
-        app:cornerRadius="25dp"
+        android:textSize="18sp"
+        app:backgroundTint="@color/neon_green"
+        app:cornerRadius="15dp"
+        app:icon="@drawable/gallery_black"
+        app:iconGravity="end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/category_name_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/category_name_text_view" />
 
     <TextView
         android:id="@+id/your_progress_msg_text_view"
@@ -40,6 +51,8 @@
         app:layout_constraintStart_toStartOf="@id/category_progress_bar"
         android:text="Your progress:"
         android:textAlignment="textStart"
+        android:fontFamily="@font/assistant_bold"
+        android:textColor="@color/dark_gray"
         android:textStyle="bold"
         android:textSize="16sp"/>
 
@@ -51,8 +64,8 @@
         android:layout_marginTop="8dp"
         android:max="100"
         android:min="0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/my_collection_button"
+        app:layout_constraintStart_toStartOf="@+id/my_collection_button"
         app:layout_constraintTop_toBottomOf="@id/your_progress_msg_text_view" />
 
     <TextView
@@ -62,20 +75,38 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
         android:text="100%"
+        android:fontFamily="@font/assistant_bold"
+        android:textColor="@color/dark_gray"
         app:layout_constraintStart_toEndOf="@id/category_progress_bar"
         app:layout_constraintTop_toBottomOf="@id/your_progress_msg_text_view" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/go_button"
-        android:layout_width="147dp"
-        android:layout_height="54dp"
+        android:layout_width="100dp"
+        android:layout_height="63dp"
         android:layout_margin="28dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:text="@string/go_button"
+        android:fontFamily="@font/assistant_bold"
+        android:textSize="20sp"
         app:cornerRadius="30dp"
+        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/category_progress_bar" />
 
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_marginTop="140dp"-->
+<!--        android:src="@drawable/category_white_background"-->
+<!--        android:translationZ="-1dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <!--    <Button-->
     <!--        android:id="@+id/button"-->

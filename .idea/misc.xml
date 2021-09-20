@@ -32,6 +32,21 @@
         <entry key="..\:/Users/Ron/Desktop/postpc_final_project/app/src/main/res/layout/level_view.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Ron/Desktop/postpc_final_project/app/src/main/res/layout/progres_item_view.xml" value="0.5" />
         <entry key="..\:/Users/Ron/Desktop/postpc_final_project/app/src/main/res/menu/bottom_app_bar.xml" value="0.19791666666666666" />
+        <entry key="app/src/main/res/drawable/camera_bottom_bar.xml" value="0.4197916666666667" />
+        <entry key="app/src/main/res/drawable/category_button.xml" value="0.4197916666666667" />
+        <entry key="app/src/main/res/drawable/ic_baseline_camera_alt_64.xml" value="0.4197916666666667" />
+        <entry key="app/src/main/res/drawable/ic_baseline_photo_camera_24.xml" value="0.4197916666666667" />
+        <entry key="app/src/main/res/drawable/ic_baseline_volume_up_24.xml" value="0.4197916666666667" />
+        <entry key="app/src/main/res/drawable/oval_green_button.xml" value="0.4197916666666667" />
+        <entry key="app/src/main/res/layout/activity_onboarding.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/fragment_category.xml" value="0.2849610014934832" />
+        <entry key="app/src/main/res/layout/fragment_choose_category.xml" value="0.17968657511945313" />
+        <entry key="app/src/main/res/layout/fragment_game.xml" value="0.2702078521939954" />
+        <entry key="app/src/main/res/layout/fragment_intro.xml" value="0.3710140506189856" />
+        <entry key="app/src/main/res/layout/fragment_name.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/fragment_user_area.xml" value="0.30144150920808227" />
+        <entry key="app/src/main/res/layout/item_view.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/progres_item_view.xml" value="0.4036458333333333" />
       </map>
     </option>
   </component>
