@@ -3,11 +3,13 @@ package huji.postpc.find.pic.aword
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import huji.postpc.find.pic.aword.game.data.FirestoreDatabaseManager
 import java.util.*
 
 class PicAWordApp : Application() {
 
     private lateinit var sp: SharedPreferences
+    lateinit var fbManager : FirestoreDatabaseManager
 
     var username: String = ""
     private var userId: String = ""
@@ -18,6 +20,7 @@ class PicAWordApp : Application() {
         super.onCreate()
         instance = this
         sp = getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
+        fbManager = FirestoreDatabaseManager()
 
         // TODO for debug
 //        sp.edit().clear().apply()

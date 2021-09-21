@@ -350,6 +350,7 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
 
     /// @param folderName can be your app's name
     private fun saveImage(bitmap: Bitmap, context: Context, folderName: String) {
+        val fileName = System.currentTimeMillis().toString() + ".png"
         if (android.os.Build.VERSION.SDK_INT >= 29) {
             val values = contentValues()
             values.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/$folderName")
@@ -369,7 +370,6 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
             if (!directory.exists()) {
                 directory.mkdirs()
             }
-            val fileName = System.currentTimeMillis().toString() + ".png"
             val file = File(directory, fileName)
             saveImageToStream(bitmap, FileOutputStream(file))
             val values = contentValues()
@@ -377,6 +377,7 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
             // .DATA is deprecated in API 29
             context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
         }
+        PicAWordApp.instance.fbManager.uploadImageFromBitmap(bitmap, fileName)
     }
 
     private fun contentValues() : ContentValues {
