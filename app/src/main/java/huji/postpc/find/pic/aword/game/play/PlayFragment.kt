@@ -129,8 +129,8 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
             val categoryColorResId = (activity as GameActivity).CATEGORY_COLOR_MAP[currCategoryResId]
             if (categoryColorResId != null) {
                 wordListenButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
-                previousImgButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
-                nextImgButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
+                // previousImgButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
+                // nextImgButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
             }
         }
 
@@ -177,18 +177,18 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
 //
 //        })
         // Todo set listeners for previous and next image button
-        previousImgButton.setOnClickListener {
-            if (levelIdx > 0) {
-                levelIdx--
-                updateDisplayLevel(Direction.NEXT)
-            }
-        }
-        nextImgButton.setOnClickListener {
-            if (levelIdx < levels.size - 1) {
-                levelIdx++
-                updateDisplayLevel(Direction.PREV)
-            }
-        }
+//        previousImgButton.setOnClickListener {
+//            if (levelIdx > 0) {
+//                levelIdx--
+//                updateDisplayLevel(Direction.NEXT)
+//            }
+//        }
+//        nextImgButton.setOnClickListener {
+//            if (levelIdx < levels.size - 1) {
+//                levelIdx++
+//                updateDisplayLevel(Direction.PREV)
+//            }
+//        }
 
         // Set an observer for the labeler live data
         val labelObserver = Observer<ImageLabel?> { label ->

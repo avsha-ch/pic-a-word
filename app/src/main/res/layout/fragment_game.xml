@@ -47,15 +47,20 @@
         android:background="@color/bright_gray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/word_listen_button">
-
-        <ImageView
-            android:id="@+id/word_image_view"
-            android:layout_width="338dp"
-            android:layout_height="500dp"
-            android:layout_marginStart="10dp"
-            android:alpha="0.8"
-            android:src="@drawable/shoes_stencil" />
     </androidx.camera.view.PreviewView>
+
+    <ImageView
+        android:id="@+id/word_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="10dp"
+        android:alpha="0.8"
+        android:src="@drawable/shoes_stencil"
+        app:layout_constraintTop_toTopOf="@id/camera_view_finder"
+        app:layout_constraintBottom_toBottomOf="@id/camera_view_finder"
+        />
 
     <!--    <com.google.android.material.button.MaterialButton-->
 <!--        android:id="@+id/previous_img_button"-->
