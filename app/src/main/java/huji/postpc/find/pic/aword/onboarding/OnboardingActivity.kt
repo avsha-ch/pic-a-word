@@ -12,13 +12,10 @@ import huji.postpc.find.pic.aword.game.GameActivity
 class OnboardingActivity : AppCompatActivity() {
 
     private val onboardingViewModel: OnboardingViewModel by viewModels()
-    private lateinit var app : PicAWordApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
-        // Find the custom application context
-        app = application as PicAWordApp
         // Set an observer for onboarding process so activity will start the game when onboarding is done
         setOnboardingDoneObserver()
     }
@@ -26,10 +23,10 @@ class OnboardingActivity : AppCompatActivity() {
 
     private fun setOnboardingDoneObserver() {
         val onboardingDoneObserver = Observer<Boolean> { onboardingDone ->
-            app.onboardingDone = onboardingDone
+            PicAWordApp.instance.onboardingDone = onboardingDone
             if (onboardingDone) {
-                // Save all user's data in application class and SP
-                app.completeOnboarding(onboardingViewModel.username)
+                // Complete onboarding by saving user details
+                onboardingViewModel.currUserLanguage?.let { PicAWordApp.instance.completeOnboarding(onboardingViewModel.username, it) }
                 // Start the game activity and kill the onboarding activity
                 val gameActivityIntent = Intent(this@OnboardingActivity, GameActivity::class.java)
                 startActivity(gameActivityIntent)

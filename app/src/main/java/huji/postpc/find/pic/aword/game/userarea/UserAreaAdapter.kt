@@ -10,10 +10,8 @@ import huji.postpc.find.pic.aword.game.GameActivity
 import huji.postpc.find.pic.aword.R
 import huji.postpc.find.pic.aword.game.models.Category
 
-class UserAreaAdapter(private val gameData: HashMap<Int, Category>) : RecyclerView.Adapter<UserAreaAdapter.ProgressViewHolder>() {
+class UserAreaAdapter(private val categories: List<Category>) : RecyclerView.Adapter<UserAreaAdapter.ProgressViewHolder>() {
 
-
-    private val categories = gameData.values.toList()
 
     class ProgressViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val categoryNameTextView : TextView = view.findViewById(R.id.category_progress_name)

@@ -69,8 +69,6 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
     // UI components
     private lateinit var captureButton: FloatingActionButton
     private lateinit var wordListenButton: MaterialButton
-    private lateinit var previousImgButton: MaterialButton
-    private lateinit var nextImgButton: MaterialButton
     private lateinit var wordImgView: ImageView
 
     // Activity for getColorStateList
@@ -112,8 +110,6 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
         // Find all views
         wordListenButton = view.findViewById(R.id.word_listen_button)
         captureButton = view.findViewById(R.id.capture_fab)
-//        previousImgButton = view.findViewById(R.id.previous_img_button)
-//        nextImgButton = view.findViewById(R.id.next_img_button)
         wordImgView = view.findViewById(R.id.word_image_view)
 
 
@@ -121,7 +117,7 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
         val currCategoryResId = gameViewModel.currCategoryResId
         if (currCategoryResId != null) {
             // Get all levels
-            val currCategory = gameViewModel.gameData[currCategoryResId]
+            val currCategory = gameViewModel.getCurrCategory()
             if (currCategory != null) {
                 levels = currCategory.levels
                 // Initialize current level to be the first one
@@ -131,8 +127,6 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
             val categoryColorResId = (activity as GameActivity).CATEGORY_COLOR_MAP[currCategoryResId]
             if (categoryColorResId != null) {
                 wordListenButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
-                // previousImgButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
-                // nextImgButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
             }
         }
 
@@ -178,19 +172,7 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
 //            }
 //
 //        })
-        // Todo set listeners for previous and next image button
-//        previousImgButton.setOnClickListener {
-//            if (levelIdx > 0) {
-//                levelIdx--
-//                updateDisplayLevel(Direction.NEXT)
-//            }
-//        }
-//        nextImgButton.setOnClickListener {
-//            if (levelIdx < levels.size - 1) {
-//                levelIdx++
-//                updateDisplayLevel(Direction.PREV)
-//            }
-//        }
+
 
         // Set an observer for the labeler live data
         val labelObserver = Observer<ImageLabel?> { label ->

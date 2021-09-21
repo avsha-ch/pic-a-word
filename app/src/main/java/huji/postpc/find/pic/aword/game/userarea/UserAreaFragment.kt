@@ -18,6 +18,6 @@ class UserAreaFragment : Fragment(R.layout.fragment_user_area) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.categories_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        recyclerView.adapter = UserAreaAdapter(gameViewModel.gameData)
+        recyclerView.adapter = gameViewModel.gameData?.let { UserAreaAdapter(it.getAllCategories()) }
     }
 }
