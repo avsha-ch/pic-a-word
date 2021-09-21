@@ -110,8 +110,8 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
         // Find all views
         wordListenButton = view.findViewById(R.id.word_listen_button)
         captureButton = view.findViewById(R.id.capture_fab)
-        previousImgButton = view.findViewById(R.id.previous_img_button)
-        nextImgButton = view.findViewById(R.id.next_img_button)
+//        previousImgButton = view.findViewById(R.id.previous_img_button)
+//        nextImgButton = view.findViewById(R.id.next_img_button)
         wordImgView = view.findViewById(R.id.word_image_view)
 
 
