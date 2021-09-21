@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".game.play.PlayFragment">
 
+
     <TextView
         android:id="@+id/game_message_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Look around you and find the"
+        android:text="Look around you and find the:"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginTop="30dp"
@@ -38,7 +39,7 @@
 
 
     <androidx.camera.view.PreviewView
-        android:id="@+id/camera_view_finder"
+        android:id="@+id/img_placeholder"
         android:layout_width="match_parent"
         android:layout_height="480dp"
         android:layout_marginStart="40dp"
@@ -58,8 +59,8 @@
         android:layout_marginTop="10dp"
         android:alpha="0.8"
         android:src="@drawable/shoes_stencil"
-        app:layout_constraintTop_toTopOf="@id/camera_view_finder"
-        app:layout_constraintBottom_toBottomOf="@id/camera_view_finder"
+        app:layout_constraintTop_toTopOf="@id/img_placeholder"
+        app:layout_constraintBottom_toBottomOf="@id/img_placeholder"
         />
 
     <!--    <com.google.android.material.button.MaterialButton-->
@@ -86,9 +87,9 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         android:background="@color/bright_gray"
-        app:layout_constraintBottom_toBottomOf="@+id/camera_view_finder"
+        app:layout_constraintBottom_toBottomOf="@+id/img_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/camera_view_finder" />
+        app:layout_constraintTop_toTopOf="@+id/img_placeholder" />
 
     <View
         android:id="@+id/prev_img_preview"
@@ -97,9 +98,9 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         android:background="@color/bright_gray"
-        app:layout_constraintBottom_toBottomOf="@+id/camera_view_finder"
+        app:layout_constraintBottom_toBottomOf="@+id/img_placeholder"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/camera_view_finder" />
+        app:layout_constraintTop_toTopOf="@+id/img_placeholder" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/capture_fab"
@@ -112,7 +113,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/camera_view_finder"
+        app:layout_constraintTop_toBottomOf="@id/img_placeholder"
         app:layout_constraintVertical_bias="1.0"
         app:maxImageSize="40dp"
         app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
@@ -125,6 +126,40 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/capture_fab" />
+
+    <TextView
+        android:id="@+id/try_again_message"
+        android:layout_width="324dp"
+        android:layout_height="130dp"
+        android:background="@color/baby_pink"
+        app:layout_constraintBottom_toTopOf="@+id/img_placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:translationZ="6dp"
+        android:text="It doesn't look like a chair...Try again!"
+        android:fontFamily="@font/assistant_bold"
+        android:textColor="@color/text_error_red"
+        android:textSize="17sp"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/category_complete_message"
+        android:layout_width="324dp"
+        android:layout_height="130dp"
+        android:background="@color/clothes_blue"
+        app:layout_constraintBottom_toTopOf="@+id/img_placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:translationZ="6dp"
+        android:text="Congratulations! You're done!"
+        android:fontFamily="@font/assistant_bold"
+        android:textColor="@color/text_success_blue"
+        android:textSize="17sp"
+        android:gravity="center"
+        />
 
 <!--    <com.google.android.material.button.MaterialButton-->
 <!--        android:id="@+id/next_img_button"-->

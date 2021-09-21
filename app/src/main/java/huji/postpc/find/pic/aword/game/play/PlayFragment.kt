@@ -6,29 +6,21 @@ import android.os.Bundle
 import android.Manifest
 import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.media.MediaScannerConnection
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.view.animation.AccelerateInterpolator
-import android.view.animation.Animation
-import android.view.animation.TranslateAnimation
 import android.widget.ImageView
-import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toFile
 import androidx.core.view.drawToBitmap
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -104,7 +96,7 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
         // Initialize our background executor, which is used for camera options that are blocking
         cameraExecutor = Executors.newSingleThreadExecutor()
 
-        cameraViewFinder = view.findViewById(R.id.camera_view_finder)
+        cameraViewFinder = view.findViewById(R.id.img_placeholder)
         // Request camera permissions if not already granted
         if (!allPermissionsGranted()) {
             activity?.let {

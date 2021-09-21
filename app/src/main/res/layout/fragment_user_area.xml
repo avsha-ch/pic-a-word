@@ -10,49 +10,80 @@
         android:id="@+id/my_area_msg_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello Ron!"
-        android:textColor="@color/dark_gray"
-        android:fontFamily="@font/assistant_extrabold"
-        android:layout_marginTop="60dp"
         android:layout_marginLeft="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="28sp"
-        android:textStyle="bold"
+        android:layout_marginTop="80dp"
+        android:fontFamily="@font/assistant_extrabold"
+        android:text="Hello Ron!"
         android:textAlignment="textStart"
-        />
+        android:textColor="@color/text_dark_gray"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/language_menu_text_field"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:textColorHint="@color/text_dark_gray"
+        android:hint="@string/choose_language"
+        app:layout_constraintStart_toStartOf="@id/my_area_msg_text_view"
+        app:layout_constraintTop_toBottomOf="@id/my_area_msg_text_view">
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/my_area_collection_button"
         android:layout_width="347dp"
         android:layout_height="135dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="40dp"
         android:gravity="bottom|start"
         android:padding="20dp"
         android:text="My Collection"
         android:textAllCaps="false"
-        android:textSize="18sp"
         android:textColor="@color/white"
+        android:textSize="18sp"
+        app:backgroundTint="@color/button_bright_green"
         app:cornerRadius="15dp"
         app:icon="@drawable/gallery_black"
         app:iconGravity="end"
-        app:backgroundTint="@color/neon_green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/my_area_msg_text_view" />
+        app:layout_constraintTop_toBottomOf="@id/language_menu_text_field" />
 
 
+    <TextView
+        android:id="@+id/progress_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/assistant_extrabold"
+        android:text="Your Progress:"
+        android:textAlignment="textStart"
+        android:textColor="@color/text_dark_gray"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/categories_recycler_view"
+        app:layout_constraintStart_toStartOf="@+id/my_area_collection_button"
+        app:layout_constraintTop_toBottomOf="@+id/my_area_collection_button"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categories_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
         android:clipToPadding="false"
-        android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/my_area_collection_button"
-        app:layout_constraintVertical_bias="0.498" />
+        app:layout_constraintTop_toBottomOf="@id/progress_header" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

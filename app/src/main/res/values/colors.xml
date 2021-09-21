@@ -19,4 +19,33 @@
     <color name="baby_eyes_blue">#0c6dff</color>
     <color name="royal_orange">#F68B43</color>
     <color name="button_green">#86D0AB</color>
+
+<!--    new colors-->
+    <color name="around_the_house_yellow">#FFC56E</color>
+    <color name="food_green">#42A192</color>
+    <color name="vehicles_purple">#B48CEA</color>
+    <color name="human_body_pink">#FFAC8C</color>
+    <color name="animals_blue">#7286A4</color>
+    <color name="clothes_blue">#93BEFF</color>
+    <color name="mix_orange">#FF6700</color>
+    <color name="button_dark_green">#5BBD8C</color>
+    <color name="button_bright_green">#8DEBD5</color>
+    <color name="background_bright_gray">#EEEEEE</color>
+    <color name="text_dark_gray">#565E71</color>
+    <color name="text_bright_gray">#959595</color>
+    <color name="text_white">#ffff</color>
+    <color name="text_error_red">#C70013</color>
+    <color name="text_success_blue">#005DE8</color>
+
+
+
+
+
+
+
+
+
+
+
+
 </resources>

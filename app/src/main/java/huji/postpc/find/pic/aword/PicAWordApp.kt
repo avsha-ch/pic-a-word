@@ -17,6 +17,7 @@ class PicAWordApp : Application() {
     var onboardingDone: Boolean = false
 
     override fun onCreate() {
+        sp.edit().clear().apply()
         super.onCreate()
         instance = this
         sp = getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)

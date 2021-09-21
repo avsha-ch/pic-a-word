@@ -38,15 +38,23 @@
         <entry key="app/src/main/res/drawable/ic_baseline_photo_camera_24.xml" value="0.4197916666666667" />
         <entry key="app/src/main/res/drawable/ic_baseline_volume_up_24.xml" value="0.4197916666666667" />
         <entry key="app/src/main/res/drawable/oval_green_button.xml" value="0.4197916666666667" />
+        <entry key="app/src/main/res/layout/activity_game.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/activity_onboarding.xml" value="0.4036458333333333" />
-        <entry key="app/src/main/res/layout/fragment_category.xml" value="0.2849610014934832" />
+        <entry key="app/src/main/res/layout/fragment_add_language.xml" value="0.23020833333333332" />
+        <entry key="app/src/main/res/layout/fragment_category.xml" value="0.26594301221166894" />
+        <entry key="app/src/main/res/layout/fragment_category_collection.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/fragment_choose_category.xml" value="0.17968657511945313" />
-        <entry key="app/src/main/res/layout/fragment_game.xml" value="0.2702078521939954" />
+        <entry key="app/src/main/res/layout/fragment_choose_language.xml" value="0.22708333333333333" />
+        <entry key="app/src/main/res/layout/fragment_collection.xml" value="0.20422196579731827" />
+        <entry key="app/src/main/res/layout/fragment_game.xml" value="0.2309257492330132" />
         <entry key="app/src/main/res/layout/fragment_intro.xml" value="0.3710140506189856" />
         <entry key="app/src/main/res/layout/fragment_name.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/fragment_user_area.xml" value="0.30144150920808227" />
-        <entry key="app/src/main/res/layout/item_view.xml" value="0.4036458333333333" />
-        <entry key="app/src/main/res/layout/progres_item_view.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/item_view.xml" value="0.1035372690602288" />
+        <entry key="app/src/main/res/layout/language_button_item_view.xml" value="0.23020833333333332" />
+        <entry key="app/src/main/res/layout/language_item_view.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/progres_item_view.xml" value="0.3880212689898849" />
       </map>
     </option>
   </component>
