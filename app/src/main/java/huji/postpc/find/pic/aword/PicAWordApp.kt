@@ -20,7 +20,7 @@ class PicAWordApp : Application() {
         sp = getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
 
         // TODO for debug
-        sp.edit().clear().apply()
+//        sp.edit().clear().apply()
         // TODO
 
         // Load the saved data about onboarding and user, if exists
