@@ -25,12 +25,12 @@ class GameActivity : AppCompatActivity() {
     // A mapping from category to color, used to display a consistent color throughout the entire app
     // The mapping is from a string resource id to the color resource id
     val CATEGORY_COLOR_MAP : HashMap<Int, Int> = hashMapOf(
-        R.string.category_house to R.color.misty_rose,
-        R.string.category_food to R.color.azure,
-        R.string.category_vehicles to R.color.lavender,
-        R.string.category_body to R.color.magic_mint,
-        R.string.category_animals to R.color.green,
-        R.string.category_clothing to R.color.baby_eyes_blue,
+        R.string.category_house to R.color.around_the_house_yellow,
+        R.string.category_food to R.color.food_green,
+        R.string.category_vehicles to R.color.vehicles_purple,
+        R.string.category_body to R.color.human_body_pink,
+        R.string.category_animals to R.color.animals_blue,
+        R.string.category_clothing to R.color.clothes_blue,
 //        R.string.category_misc to TODO not appearing in figma, we have enough categories as it is no?
         // Todo add category mix to view model and then color here
     )

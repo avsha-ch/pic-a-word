@@ -103,7 +103,7 @@
 
 
     <!-- General -->
-    <string name="go_button">GO!</string>
+    <string name="go_button">Go!</string>
     <!-- Intro -->
     <string name="intro_header" translatable="false">Pic A Word</string>
     <!-- Login -->
@@ -123,5 +123,7 @@
     <string name="language_en">English</string>
     <string name="language_he">Hebrew</string>
     <string name="choose_language">Choose language</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

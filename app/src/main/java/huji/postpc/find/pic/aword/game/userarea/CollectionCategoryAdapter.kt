@@ -10,11 +10,9 @@ import huji.postpc.find.pic.aword.MainActivity
 import huji.postpc.find.pic.aword.R
 import huji.postpc.find.pic.aword.game.GameActivity
 import huji.postpc.find.pic.aword.game.models.Category
-import huji.postpc.find.pic.aword.game.userarea.CollectionChooseCategoryFragmentDirections
 
-class CollectionCategoryAdapter(private val gameData: HashMap<Int, Category>) : RecyclerView.Adapter<CollectionCategoryAdapter.CollectionCategoryViewHolder>() {
+class CollectionCategoryAdapter(private val categories: List<Category>) : RecyclerView.Adapter<CollectionCategoryAdapter.CollectionCategoryViewHolder>() {
 
-    private val categories = gameData.values.toList()
 
     class CollectionCategoryViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val button: Button = view.findViewById(R.id.item_button)

@@ -2,6 +2,8 @@ package huji.postpc.find.pic.aword.onboarding
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import huji.postpc.find.pic.aword.game.data.GameData
+import huji.postpc.find.pic.aword.game.models.Language
 
 class OnboardingViewModel : ViewModel() {
 
@@ -9,23 +11,14 @@ class OnboardingViewModel : ViewModel() {
     val onboardingDoneLiveData = MutableLiveData(false)
 
     var username: String = ""
-    var isUsernameValid = false
+    var currUserLanguage : Language? = null
 
 
-    fun updateUserDetails(newUsername: String){
-        isUsernameValid = isUsernameValid(newUsername)
-        if (!isUsernameValid){
-            // Don't update user details
-            return
-        }
-        // Create UUID for use and store the details
-        username = newUsername
-    }
-
-    private fun isUsernameValid(newUsername: String): Boolean {
+    fun isUsernameValid(newUsername: String): Boolean {
         // Returns true iff the username's length is at least the minimum length and consists only of letters
         return (newUsername.length >= USERNAME_MIN_LENGTH) && (newUsername.length <= USERNAME_MAX_LENGTH) && (newUsername.all { it.isLetter() })
     }
+
 
 
 

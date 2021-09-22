@@ -4,25 +4,24 @@ import huji.postpc.find.pic.aword.game.*
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.Manifest
-import android.content.Intent
-import android.media.MediaScannerConnection
+import android.content.ContentValues
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.net.Uri
-import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.view.animation.AccelerateInterpolator
-import android.view.animation.Animation
-import android.view.animation.TranslateAnimation
 import android.widget.ImageView
-import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toFile
+import androidx.core.view.drawToBitmap
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -41,6 +40,9 @@ import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import huji.postpc.find.pic.aword.*
+import java.io.File.separator
+import java.io.FileOutputStream
+import java.io.OutputStream
 
 class PlayFragment : Fragment(R.layout.fragment_game) {
 
@@ -67,8 +69,6 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
     // UI components
     private lateinit var captureButton: FloatingActionButton
     private lateinit var wordListenButton: MaterialButton
-    private lateinit var previousImgButton: MaterialButton
-    private lateinit var nextImgButton: MaterialButton
     private lateinit var wordImgView: ImageView
 
     // Activity for getColorStateList
@@ -94,7 +94,7 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
         // Initialize our background executor, which is used for camera options that are blocking
         cameraExecutor = Executors.newSingleThreadExecutor()
 
-        cameraViewFinder = view.findViewById(R.id.camera_view_finder)
+        cameraViewFinder = view.findViewById(R.id.img_placeholder)
         // Request camera permissions if not already granted
         if (!allPermissionsGranted()) {
             activity?.let {
@@ -110,8 +110,6 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
         // Find all views
         wordListenButton = view.findViewById(R.id.word_listen_button)
         captureButton = view.findViewById(R.id.capture_fab)
-        previousImgButton = view.findViewById(R.id.previous_img_button)
-        nextImgButton = view.findViewById(R.id.next_img_button)
         wordImgView = view.findViewById(R.id.word_image_view)
 
 
@@ -119,7 +117,7 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
         val currCategoryResId = gameViewModel.currCategoryResId
         if (currCategoryResId != null) {
             // Get all levels
-            val currCategory = gameViewModel.gameData[currCategoryResId]
+            val currCategory = gameViewModel.getCurrCategory()
             if (currCategory != null) {
                 levels = currCategory.levels
                 // Initialize current level to be the first one
@@ -129,8 +127,6 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
             val categoryColorResId = (activity as GameActivity).CATEGORY_COLOR_MAP[currCategoryResId]
             if (categoryColorResId != null) {
                 wordListenButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
-                previousImgButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
-                nextImgButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
             }
         }
 
@@ -176,19 +172,7 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
 //            }
 //
 //        })
-        // Todo set listeners for previous and next image button
-        previousImgButton.setOnClickListener {
-            if (levelIdx > 0) {
-                levelIdx--
-                updateDisplayLevel(Direction.NEXT)
-            }
-        }
-        nextImgButton.setOnClickListener {
-            if (levelIdx < levels.size - 1) {
-                levelIdx++
-                updateDisplayLevel(Direction.PREV)
-            }
-        }
+
 
         // Set an observer for the labeler live data
         val labelObserver = Observer<ImageLabel?> { label ->
@@ -318,39 +302,75 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
         })
 
         // handle saving image
-        imageCapture?.takePicture(outputOptions, cameraExecutor, object : ImageCapture.OnImageSavedCallback {
+        val capturedImageBitmap = cameraViewFinder.bitmap
+        val templateImageBitmap = wordImgView.drawToBitmap()
+        val mergedImageBitmap = capturedImageBitmap!!.with(templateImageBitmap)
 
-            override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
-                Log.d(CAMERA_X_TAG, "Photo capture succeeded: $savedUri")
+        saveImage(mergedImageBitmap, requireContext(), "PicAWord")
+    }
 
-                // Implicit broadcasts will be ignored for devices running API level >= 24
-                // so if you only target API level 24+ you can remove this statement
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                    requireActivity().sendBroadcast(
-                        Intent(android.hardware.Camera.ACTION_NEW_PICTURE, savedUri)
-                    )
-                }
+    private fun Bitmap.with(bmp: Bitmap): Bitmap {
+        // Create new bitmap based on the size and config of the old
+        val newBitmap: Bitmap = Bitmap.createBitmap(this)
 
+        // Instantiate a canvas and prepare it to paint to the new bitmap
+        val canvas = Canvas(newBitmap)
 
-                // If the folder selected is an external media directory, this is
-                // unnecessary but otherwise other apps will not be able to access our
-                // images unless we scan them using [MediaScannerConnection]
-                val mimeType = MimeTypeMap.getSingleton()
-                    .getMimeTypeFromExtension(savedUri.toFile().extension)
-                MediaScannerConnection.scanFile(
-                    context,
-                    arrayOf(savedUri.toFile().absolutePath),
-                    arrayOf(mimeType)
-                ) { _, uri ->
-                    Log.d(CAMERA_X_TAG, "Image capture scanned into media store: $uri")
-                }
+        // Draw the old bitmap onto of the new white one
+        canvas.drawBitmap(bmp, 0f, 0f, null)
+
+        return newBitmap
+    }
+
+    /// @param folderName can be your app's name
+    private fun saveImage(bitmap: Bitmap, context: Context, folderName: String) {
+        val fileName = System.currentTimeMillis().toString() + ".png"
+        if (android.os.Build.VERSION.SDK_INT >= 29) {
+            val values = contentValues()
+            values.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/$folderName")
+            values.put(MediaStore.Images.Media.IS_PENDING, true)
+            // RELATIVE_PATH and IS_PENDING are introduced in API 29.
+
+            val uri: Uri? = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+            if (uri != null) {
+                saveImageToStream(bitmap, context.contentResolver.openOutputStream(uri))
+                values.put(MediaStore.Images.Media.IS_PENDING, false)
+                context.contentResolver.update(uri, values, null, null)
             }
+        } else {
+            val directory = File(Environment.getExternalStorageDirectory().toString() + separator + folderName)
+            // getExternalStorageDirectory is deprecated in API 29
 
-            override fun onError(exception: ImageCaptureException) {
-                Log.e(CAMERA_X_TAG, "Photo capture failed: ${exception.message}", exception)
+            if (!directory.exists()) {
+                directory.mkdirs()
             }
-        })
+            val file = File(directory, fileName)
+            saveImageToStream(bitmap, FileOutputStream(file))
+            val values = contentValues()
+            values.put(MediaStore.Images.Media.DATA, file.absolutePath)
+            // .DATA is deprecated in API 29
+            context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        }
+        PicAWordApp.instance.fbManager.uploadImageFromBitmap(bitmap, fileName)
+    }
+
+    private fun contentValues() : ContentValues {
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+        values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000);
+        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+        return values
+    }
+
+    private fun saveImageToStream(bitmap: Bitmap, outputStream: OutputStream?) {
+        if (outputStream != null) {
+            try {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                outputStream.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     private fun allPermissionsGranted() =

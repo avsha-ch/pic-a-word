@@ -6,43 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".game.category.ChooseCategoryFragment">
 
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:text="What would \nyou like to learn?"-->
+<!--    app:layout_constraintStart_toStartOf="parent"-->
+<!--    app:layout_constraintTop_toTopOf="parent"-->
+<!--    android:textSize="28sp"-->
+<!--    android:textStyle="bold"-->
     <TextView
         android:id="@+id/choose_category_msg_text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="What would \nyou like to learn?"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="28sp"
-        android:textStyle="bold"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/assistant_extrabold"
+        android:padding="0dp"
+        android:text="What Subject would you like to learn?"
         android:textAlignment="textStart"
-        android:padding="16dp"/>
+        android:textColor="@color/text_dark_gray"
+        android:textSize="33sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
+    <ImageView
         android:id="@+id/user_area_button"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:insetLeft="0dp"
-        android:insetTop="0dp"
-        android:insetRight="0dp"
-        android:insetBottom="0dp"
-        app:cornerRadius="100dp"
-        app:icon="@drawable/ic_baseline_person_24"
-        app:iconGravity="textStart"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp"
+        android:src="@drawable/user"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintTop_toBottomOf="@id/choose_category_msg_text_view"
-        app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/categories_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
         android:clipToPadding="false"
-        android:padding="16dp"/>
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/choose_category_msg_text_view" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

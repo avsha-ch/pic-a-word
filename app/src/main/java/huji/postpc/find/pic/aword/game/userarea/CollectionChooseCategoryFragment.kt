@@ -23,7 +23,7 @@ class CollectionChooseCategoryFragment : Fragment(R.layout.fragment_collection_c
 
         recyclerView = view.findViewById(R.id.categories_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        recyclerView.adapter = CollectionCategoryAdapter(gameViewModel.gameData)
+        recyclerView.adapter = CollectionCategoryAdapter(gameViewModel.gameData.getAllCategories())
 
     }
 }

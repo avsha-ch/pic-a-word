@@ -10,9 +10,8 @@ import huji.postpc.find.pic.aword.game.GameActivity
 import huji.postpc.find.pic.aword.R
 import huji.postpc.find.pic.aword.game.models.Category
 
-class ChooseCategoryAdapter(private val gameData: HashMap<Int, Category>) : RecyclerView.Adapter<ChooseCategoryAdapter.CategoryViewHolder>() {
+class ChooseCategoryAdapter(private val categories: List<Category>) : RecyclerView.Adapter<ChooseCategoryAdapter.CategoryViewHolder>() {
 
-    private val categories = gameData.values.toList()
 
     class CategoryViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val button: Button = view.findViewById(R.id.item_button)
@@ -41,6 +40,5 @@ class ChooseCategoryAdapter(private val gameData: HashMap<Int, Category>) : Recy
             holder.view.findNavController().navigate(action)
         }
     }
-
 
 }

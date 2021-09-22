@@ -78,7 +78,7 @@
         android:fontFamily="@font/assistant_semibold"
         android:text="@string/sign_up_button_text"
         android:textAllCaps="false"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:cornerRadius="30dp"
         app:layout_constraintStart_toStartOf="@+id/user_name_text_field"
         app:layout_constraintTop_toBottomOf="@+id/user_name_text_field" />

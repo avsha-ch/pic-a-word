@@ -19,20 +19,6 @@ fun loadDataSet(@StringRes categoryName : Int) : List<Level>{
     }
 }
 
-//fun loadDataSet(@StringRes categoryName : Int) : HashMap<Int, Level>{
-//
-//    return when (categoryName){
-////        R.string.category_house -> loadHouseDataset()
-////        R.string.category_food -> loadFoodDataset()
-////        R.string.category_vehicles -> loadVehiclesDataset()
-////        R.string.category_body -> loadHumanBodyDataset()
-//        R.string.category_animals -> loadAnimalsDataset()
-////        R.string.category_clothing -> loadClothingDataset()
-////        R.string.category_misc -> loadMiscellaneousDataset()
-//        else -> hashMapOf()
-//    }
-//}
-
 private fun loadHouseDataset() : List<Level> =
     listOf(
         Level(R.string.level_sink, R.drawable.shoes_stencil),
@@ -97,19 +83,6 @@ private fun loadHumanBodyDataset() : List<Level> =
         Level(R.string.level_hand, R.drawable.shoes_stencil),
     )
 
-//private fun loadAnimalsDataset() : HashMap<Int,Level> =
-//    hashMapOf(
-//        R.string.level_bird to Level(R.string.level_bird, R.drawable.shoes_stencil),
-////        Level(R.string.level_bear, R.drawable.shoes_stencil),
-//        R.string.level_cat to Level(R.string.level_cat, R.drawable.shoes_stencil),
-////        Level(R.string.level_horse, R.drawable.shoes_stencil),
-////        Level(R.string.level_pet, R.drawable.shoes_stencil),
-////        Level(R.string.level_duck, R.drawable.shoes_stencil),
-////        Level(R.string.level_turtle, R.drawable.shoes_stencil),
-//        R.string.level_dog to Level(R.string.level_dog, R.drawable.shoes_stencil),
-//        R.string.level_butterfly to Level(R.string.level_butterfly, R.drawable.shoes_stencil)
-//    )
-//
 private fun loadAnimalsDataset() : List<Level> =
     listOf(
         Level(R.string.level_bird, R.drawable.shoes_stencil),

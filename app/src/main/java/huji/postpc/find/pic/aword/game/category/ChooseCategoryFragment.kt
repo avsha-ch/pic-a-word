@@ -3,6 +3,7 @@ package huji.postpc.find.pic.aword.game.category
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.ImageView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +18,7 @@ class ChooseCategoryFragment : Fragment(R.layout.fragment_choose_category) {
 
     private lateinit var recyclerView: RecyclerView
     private val gameViewModel: GameViewModel by activityViewModels()
-    private lateinit var userAreaButton: MaterialButton
+    private lateinit var userAreaButton: ImageView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Reset the current category and update status bar color
@@ -26,11 +27,11 @@ class ChooseCategoryFragment : Fragment(R.layout.fragment_choose_category) {
 
         recyclerView = view.findViewById(R.id.categories_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        recyclerView.adapter = ChooseCategoryAdapter(gameViewModel.gameData)
+        recyclerView.adapter = ChooseCategoryAdapter(gameViewModel.gameData.getAllCategories())
 
         userAreaButton = view.findViewById(R.id.user_area_button)
         userAreaButton.setOnClickListener {
-            val action = ChooseCategoryFragmentDirections.actionChooseCategoryFragmentToUserAreaFragment()
+            val action = ChooseCategoryFragmentDirections.actionChooseCategoryFragmentToMyAreaFragment()
             findNavController().navigate(action)
         }
     }
