@@ -1,7 +1,9 @@
 package huji.postpc.find.pic.aword.game
 
+import android.util.Log
 import android.view.View
 import android.view.animation.*
+import android.widget.TextView
 import huji.postpc.find.pic.aword.game.models.Level
 
 fun inFromRightAnimation(): Animation {
@@ -97,21 +99,51 @@ fun animateViewOutIn(view: View, translation : Float, updateUi: (Level) -> Unit,
 /**
  * Animates a view to appear for sometime and then disappear
  * @param view The view to animate
- * @param duration how much time should the animation take
+ * @param duration for how much time (milliseconds) the view appears
  */
-fun appearDisappearView(view: View, duration : Long){
+fun appearDisappearView(view: View, duration : Long, changeOtherView: () -> Unit){
     view.alpha = 0f
     view.visibility = View.VISIBLE
     view.animate()
         .alpha(1f)
-        .setDuration(duration)
-        .setInterpolator(AccelerateDecelerateInterpolator())
+        .setDuration(500L)
+        .withStartAction(changeOtherView)
         .withEndAction {
             view.animate()
                 .alpha(0f)
-                .setDuration(duration)
-                .setInterpolator(AccelerateDecelerateInterpolator())
+                .setStartDelay(duration)
+                .setDuration(500L)
                 .withEndAction { view.visibility = View.GONE }
+                .start()
+        }
+        .start()
+}
+
+fun invisibleToVisible(view: View){
+    view.visibility = View.VISIBLE
+    view.animate()
+        .alpha(1f)
+        .setDuration(500L)
+        .start()
+}
+
+fun visibleToInvisible(view: View){
+    view.animate()
+        .alpha(0f)
+        .setDuration(500L)
+        .withEndAction { view.visibility = View.INVISIBLE }
+        .start()
+}
+
+fun changeTextAnimation(textView : TextView, text : String){
+    textView.animate()
+        .alpha(0f)
+        .setDuration(350L)
+        .withEndAction {
+            textView.text = text
+            textView.animate()
+                .alpha(1f)
+                .setDuration(350L)
                 .start()
         }
         .start()

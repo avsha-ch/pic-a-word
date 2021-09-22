@@ -63,6 +63,19 @@
         app:layout_constraintBottom_toBottomOf="@id/img_placeholder"
         />
 
+    <ProgressBar
+        android:id="@+id/wait_for_labeler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintTop_toTopOf="@+id/word_image_view"
+        app:layout_constraintBottom_toBottomOf="@+id/word_image_view"
+        app:layout_constraintRight_toRightOf="@+id/word_image_view"
+        app:layout_constraintLeft_toLeftOf="@+id/word_image_view"
+        android:translationZ="10dp"
+        android:visibility="invisible"
+        />
+
     <!--    <com.google.android.material.button.MaterialButton-->
 <!--        android:id="@+id/previous_img_button"-->
 <!--        style="@style/Widget.MaterialComponents.Button.Icon"-->

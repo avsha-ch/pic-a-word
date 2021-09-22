@@ -8,10 +8,8 @@ import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.button.MaterialButton
 import huji.postpc.find.pic.aword.OnSwipeTouchListener
-import huji.postpc.find.pic.aword.game.GameViewModel
 import huji.postpc.find.pic.aword.R
-import huji.postpc.find.pic.aword.game.GameActivity
-import huji.postpc.find.pic.aword.game.animateViewOutIn
+import huji.postpc.find.pic.aword.game.*
 import huji.postpc.find.pic.aword.game.models.Level
 import huji.postpc.find.pic.aword.game.play.PlayFragment
 
@@ -23,7 +21,9 @@ class CollectionFragment : Fragment(R.layout.fragment_collection) {
 
     // UI components
     private lateinit var collectionNameTextView : TextView
+    // TODO: decide on how this fragment works (show all levels of category? if yes - how to display level that are not completed?)
     private lateinit var levelNotCompleteMsg : TextView
+    private lateinit var levelNotCompleteMsg2 : TextView
     private lateinit var wordListenButton : MaterialButton
     private lateinit var wordImage : ImageView
 
@@ -53,6 +53,7 @@ class CollectionFragment : Fragment(R.layout.fragment_collection) {
         // Find all views
         collectionNameTextView = view.findViewById(R.id.my_collection_text_view)
         levelNotCompleteMsg = view.findViewById(R.id.level_not_complete_msg)
+        levelNotCompleteMsg2 = view.findViewById(R.id.level_not_complete_msg_option2)
         wordListenButton = view.findViewById(R.id.word_listen_button)
         wordImage = view.findViewById(R.id.word_image_view)
 
@@ -110,17 +111,20 @@ class CollectionFragment : Fragment(R.layout.fragment_collection) {
 
     private fun changeLevelUi(currLevel : Level) {
         word = getString(currLevel.nameResId)
-        wordListenButton.text = word
+        changeTextAnimation(wordListenButton, word)
         // Update image
         if (currLevel.isCompleted){
-            levelNotCompleteMsg.visibility = View.INVISIBLE
+            visibleToInvisible(levelNotCompleteMsg)
+            visibleToInvisible(levelNotCompleteMsg2)
             // TODO: get user's image of this level and display it
             wordImage.setImageResource(currLevel.imgResId)
         }
         else{
             // level not completed
-            levelNotCompleteMsg.visibility = View.VISIBLE
-            wordImage.setImageResource(currLevel.imgResId)
+            invisibleToVisible(levelNotCompleteMsg)
+            invisibleToVisible(levelNotCompleteMsg2)
+            // TODO: if we want to display template of level - uncomment next line
+//            wordImage.setImageResource(currLevel.imgResId)
         }
 
     }

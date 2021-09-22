@@ -15,6 +15,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.camera.core.*
@@ -29,10 +30,10 @@ import androidx.lifecycle.Observer
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.mlkit.vision.common.InputImage
-import com.google.mlkit.vision.label.ImageLabel
 import huji.postpc.find.pic.aword.game.GameActivity
 import huji.postpc.find.pic.aword.game.GameViewModel
 import huji.postpc.find.pic.aword.OnSwipeTouchListener
+import huji.postpc.find.pic.aword.PicAWordApp
 import huji.postpc.find.pic.aword.R
 import huji.postpc.find.pic.aword.game.models.Level
 import java.io.File
@@ -40,11 +41,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import huji.postpc.find.pic.aword.*
 import java.io.File.separator
 import java.io.FileOutputStream
 import java.io.OutputStream
-import java.lang.Thread.sleep
 
 class PlayFragment : Fragment(R.layout.fragment_game) {
 
@@ -75,6 +74,7 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
     private lateinit var tryAgainMsg: TextView
     private lateinit var levelSuccessMsg: TextView
     private lateinit var categoryCompleteMsg: TextView
+    private lateinit var waitForLabelerProgressBar: ProgressBar
 
     // Activity for getColorStateList
     private lateinit var gameActivity: GameActivity
@@ -119,7 +119,7 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
         tryAgainMsg = view.findViewById(R.id.try_again_message)
         levelSuccessMsg = view.findViewById(R.id.level_success_message)
         categoryCompleteMsg = view.findViewById(R.id.category_complete_message)
-
+        waitForLabelerProgressBar = view.findViewById(R.id.wait_for_labeler)
 
 
         // Get information from view model
@@ -146,6 +146,7 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
         }
         // Set click listener for capture picture button
         captureButton.setOnClickListener {
+            waitForLabelerProgressBar.visibility = View.VISIBLE
             captureImage()
         }
 
@@ -185,25 +186,28 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
 
         // Set an observer for the labeler live data
         val labelObserver = Observer<Boolean?> { label ->
-            if (label == null) {
-                return@Observer
+            if (label == false){
+                // Wrong label found
+                appearDisappearView(tryAgainMsg, SUCCESS_FAIL_MSG_DURATION, ::disappearWaitForLabelerProgressBar)
             }
-            else if (label == false){
-                appearDisappearView(tryAgainMsg, 2500L)
-                return@Observer
-            }
-            // Else, found the correct label!
-            appearDisappearView(levelSuccessMsg, 2500L)
-            Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
-            // Set level completed if found a correct label
+            else if (label == true){
+                // Else, found the correct label!
+                appearDisappearView(levelSuccessMsg, SUCCESS_FAIL_MSG_DURATION, ::disappearWaitForLabelerProgressBar)
+                Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
+                // Set level completed if found a correct label
 //            mainViewModel.setCurrLevelCompleted()
+            }
         }
         playViewModel.labelLiveData.observe(viewLifecycleOwner, labelObserver)
     }
 
+    private fun disappearWaitForLabelerProgressBar(){
+        waitForLabelerProgressBar.visibility = View.GONE
+    }
+
     private fun changeLevelUi(currLevel : Level) {
         word = getString(currLevel.nameResId)
-        wordListenButton.text = word
+        changeTextAnimation(wordListenButton, word)
         // Update image
         wordImgView.setImageResource(currLevel.imgResId)
         tryAgainMsg.text = "It doesn't look like $word...Try again!"
@@ -419,6 +423,7 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
         private const val PHOTO_EXTENSION = ".jpg"
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        private const val SUCCESS_FAIL_MSG_DURATION = 2000L
 
         /** Helper function used to create a timestamped file */
         private fun createFile(baseFolder: File, format: String, extension: String) =
