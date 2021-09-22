@@ -1,9 +1,7 @@
 package huji.postpc.find.pic.aword.game
 
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.TranslateAnimation
-import android.view.animation.AccelerateInterpolator
+import android.view.animation.*
 import huji.postpc.find.pic.aword.game.models.Level
 
 fun inFromRightAnimation(): Animation {
@@ -94,4 +92,27 @@ fun animateViewOutIn(view: View, translation : Float, updateUi: (Level) -> Unit,
     else{
         updateUi(level)
     }
+}
+
+/**
+ * Animates a view to appear for sometime and then disappear
+ * @param view The view to animate
+ * @param duration how much time should the animation take
+ */
+fun appearDisappearView(view: View, duration : Long){
+    view.alpha = 0f
+    view.visibility = View.VISIBLE
+    view.animate()
+        .alpha(1f)
+        .setDuration(duration)
+        .setInterpolator(AccelerateDecelerateInterpolator())
+        .withEndAction {
+            view.animate()
+                .alpha(0f)
+                .setDuration(duration)
+                .setInterpolator(AccelerateDecelerateInterpolator())
+                .withEndAction { view.visibility = View.GONE }
+                .start()
+        }
+        .start()
 }

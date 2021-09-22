@@ -14,7 +14,8 @@ class PlayViewModel : ViewModel() {
 
     // MLKit image labeler
     private var labeler: ImageLabeler
-    var labelLiveData = MutableLiveData<ImageLabel?>(null)
+//    var labelLiveData = MutableLiveData<ImageLabel?>(null)
+    var labelLiveData = MutableLiveData<Boolean?>(null)
 
     init {
         // Initialize MLKit's image labeler
@@ -42,7 +43,7 @@ class PlayViewModel : ViewModel() {
             }
         }
         // After going over all the labels, update the live-data
-        labelLiveData.value = currLabel
+        labelLiveData.value = currLabel != null
     }
 
     private fun labelerOnFail(e: Exception) {

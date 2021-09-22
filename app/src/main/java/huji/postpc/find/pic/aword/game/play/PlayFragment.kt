@@ -15,6 +15,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -43,6 +44,7 @@ import huji.postpc.find.pic.aword.*
 import java.io.File.separator
 import java.io.FileOutputStream
 import java.io.OutputStream
+import java.lang.Thread.sleep
 
 class PlayFragment : Fragment(R.layout.fragment_game) {
 
@@ -70,6 +72,9 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
     private lateinit var captureButton: FloatingActionButton
     private lateinit var wordListenButton: MaterialButton
     private lateinit var wordImgView: ImageView
+    private lateinit var tryAgainMsg: TextView
+    private lateinit var levelSuccessMsg: TextView
+    private lateinit var categoryCompleteMsg: TextView
 
     // Activity for getColorStateList
     private lateinit var gameActivity: GameActivity
@@ -111,6 +116,10 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
         wordListenButton = view.findViewById(R.id.word_listen_button)
         captureButton = view.findViewById(R.id.capture_fab)
         wordImgView = view.findViewById(R.id.word_image_view)
+        tryAgainMsg = view.findViewById(R.id.try_again_message)
+        levelSuccessMsg = view.findViewById(R.id.level_success_message)
+        categoryCompleteMsg = view.findViewById(R.id.category_complete_message)
+
 
 
         // Get information from view model
@@ -175,11 +184,16 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
 
 
         // Set an observer for the labeler live data
-        val labelObserver = Observer<ImageLabel?> { label ->
+        val labelObserver = Observer<Boolean?> { label ->
             if (label == null) {
                 return@Observer
             }
+            else if (label == false){
+                appearDisappearView(tryAgainMsg, 2500L)
+                return@Observer
+            }
             // Else, found the correct label!
+            appearDisappearView(levelSuccessMsg, 2500L)
             Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
             // Set level completed if found a correct label
 //            mainViewModel.setCurrLevelCompleted()
@@ -192,6 +206,7 @@ class PlayFragment : Fragment(R.layout.fragment_game) {
         wordListenButton.text = word
         // Update image
         wordImgView.setImageResource(currLevel.imgResId)
+        tryAgainMsg.text = "It doesn't look like $word...Try again!"
     }
 
 

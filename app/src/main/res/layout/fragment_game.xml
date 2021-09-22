@@ -142,7 +142,27 @@
         android:textColor="@color/text_error_red"
         android:textSize="17sp"
         android:gravity="center"
+        android:visibility="gone"
         />
+
+    <TextView
+        android:id="@+id/level_success_message"
+        android:layout_width="324dp"
+        android:layout_height="130dp"
+        android:background="@color/button_bright_green"
+        app:layout_constraintBottom_toTopOf="@+id/img_placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:translationZ="6dp"
+        android:text="Great Success"
+        android:fontFamily="@font/assistant_bold"
+        android:textColor="@color/button_dark_green"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:visibility="gone"
+        />
+
 
     <TextView
         android:id="@+id/category_complete_message"
@@ -159,6 +179,7 @@
         android:textColor="@color/text_success_blue"
         android:textSize="17sp"
         android:gravity="center"
+        android:visibility="gone"
         />
 
 <!--    <com.google.android.material.button.MaterialButton-->
