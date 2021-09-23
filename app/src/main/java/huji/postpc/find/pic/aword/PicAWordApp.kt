@@ -4,13 +4,16 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonDeserializer
 import huji.postpc.find.pic.aword.game.data.FirestoreDatabaseManager
 import huji.postpc.find.pic.aword.game.models.Language
 import huji.postpc.find.pic.aword.game.models.User
 
 class PicAWordApp : Application() {
 
-    private val gson = Gson()
+    // This enable us to de/serialize complex key in maps, e.g. custom classes
+    private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
     private lateinit var sp: SharedPreferences
     lateinit var fbManager : FirestoreDatabaseManager
 
@@ -33,7 +36,6 @@ class PicAWordApp : Application() {
         if (userJson != "") {
             user = gson.fromJson(userJson, User::class.java)
         }
-
     }
 
 

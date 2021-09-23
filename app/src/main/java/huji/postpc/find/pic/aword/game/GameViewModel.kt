@@ -6,6 +6,7 @@ import huji.postpc.find.pic.aword.PicAWordApp
 import huji.postpc.find.pic.aword.R
 import huji.postpc.find.pic.aword.game.data.GameData
 import huji.postpc.find.pic.aword.game.models.Category
+import huji.postpc.find.pic.aword.game.models.Language
 import huji.postpc.find.pic.aword.game.models.User
 
 class GameViewModel(application: Application): AndroidViewModel(application) {
@@ -16,6 +17,10 @@ class GameViewModel(application: Application): AndroidViewModel(application) {
     var gameData : GameData = user!!.getCurrGameData()
     var currCategoryResId : Int? = null
     var currLevelResId : Int? = null
+
+    fun switchLanguage(newLanguage: Language){
+        
+    }
 
     fun getCurrCategory(): Category? {
         return currCategoryResId?.let { gameData.getCategory(it) }

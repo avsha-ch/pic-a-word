@@ -113,7 +113,7 @@
 
     <fragment
         android:id="@+id/addLanguageFragment"
-        android:name="huji.postpc.find.pic.aword.addLanguageFragment"
+        android:name="huji.postpc.find.pic.aword.AddLanguageFragment"
         android:label="fragment_add_language"
         tools:layout="@layout/fragment_add_language" />
 
