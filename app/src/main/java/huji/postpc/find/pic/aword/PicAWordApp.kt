@@ -15,7 +15,7 @@ class PicAWordApp : Application() {
     // This enable us to de/serialize complex key in maps, e.g. custom classes
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
     private lateinit var sp: SharedPreferences
-    lateinit var fbManager : FirestoreDatabaseManager
+    lateinit var fbManager: FirestoreDatabaseManager
 
     var user: User? = null
     var onboardingDone: Boolean = false
@@ -46,7 +46,7 @@ class PicAWordApp : Application() {
         user = User(newUsername, userInitialLanguage)
         // Save user to SP
         val userJson = gson.toJson(user)
-        sp.edit().putString(SP_USER_KEY,userJson).apply()
+        sp.edit().putString(SP_USER_KEY, userJson).apply()
         // Save onboarding status to SP
         sp.edit().putBoolean(SP_ONBOARDING_DONE_KEY, onboardingDone).apply()
     }
@@ -54,6 +54,14 @@ class PicAWordApp : Application() {
 
     companion object {
         lateinit var instance: PicAWordApp private set
+
+        // List of all available languages in game
+        val AVAILABLE_LANGUAGES: List<Language> = listOf(
+            Language(R.string.language_he, R.drawable.ic_israel_flag),
+            Language(R.string.language_en, R.drawable.ic_usa_flag)
+        )
+
+        // SharedPreferences name and keys
         private const val SP_NAME = "sp_pic_a_word"
         private const val SP_ONBOARDING_DONE_KEY = "sp_key_onboarding_done"
         private const val SP_USER_KEY = "sp_key_user"

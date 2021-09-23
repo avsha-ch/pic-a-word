@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.AdapterView
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,19 +14,23 @@ import com.google.android.material.button.MaterialButton
 import huji.postpc.find.pic.aword.game.GameViewModel
 import huji.postpc.find.pic.aword.R
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputLayout
+import huji.postpc.find.pic.aword.game.models.Language
+import huji.postpc.find.pic.aword.onboarding.LanguageAdapter
 
 class UserAreaFragment : Fragment(R.layout.fragment_user_area) {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var myCollectionButton : MaterialButton
+    private lateinit var myCollectionButton: MaterialButton
     private lateinit var shareAppButton: Button
+    private lateinit var languageMenuTextField: TextInputLayout
     private val gameViewModel: GameViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.categories_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        recyclerView.adapter = gameViewModel.gameData?.let { UserAreaAdapter(it.getAllCategories()) }
+        recyclerView.adapter = UserAreaAdapter(gameViewModel.gameData.getAllCategories())
 
         myCollectionButton = view.findViewById(R.id.my_area_collection_button)
         myCollectionButton.setOnClickListener {
@@ -34,7 +40,29 @@ class UserAreaFragment : Fragment(R.layout.fragment_user_area) {
 
         shareAppButton = view.findViewById(R.id.share_app_button)
         shareAppButton.setOnClickListener { shareAppLink() }
+
+        languageMenuTextField = view.findViewById(R.id.language_menu_text_field)
+        val userLanguages = gameViewModel.getUserLanguages()
+        // Add the special 'Add Language' language
+        userLanguages.add(Language(R.string.add_language, R.drawable.ic_baseline_add_box_36))
+        // Create custom adapter for displaying language's country flag and name
+        val adapter = LanguageAdapter(requireContext(), userLanguages)
+        (languageMenuTextField.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+        // Set onclick listener to get the chosen language
+        (languageMenuTextField.editText as AutoCompleteTextView).onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, position, _ ->
+                val selectedLanguage: Language = adapter.getItem(position) ?: return@OnItemClickListener
+                // If the language is the special 'Add language', navigate to the add language screen
+                if (selectedLanguage.nameResId == R.string.add_language){
+                    val action = UserAreaFragmentDirections.actionUserAreaFragmentToAddLanguageFragment()
+                    findNavController().navigate(action)
+                }
+                // Else, update the user current language
+                gameViewModel.switchLanguage(selectedLanguage)
+                // todo add live data to curr language ,when changes update the game data and views
+            }
     }
+
 
     private fun shareAppLink() {
         val sendIntent = Intent().apply {

@@ -45,7 +45,7 @@ import java.io.File.separator
 import java.io.FileOutputStream
 import java.io.OutputStream
 
-class PlayFragment : Fragment(R.layout.fragment_game) {
+class PlayFragment : Fragment(R.layout.fragment_play) {
 
     // The lens of camera the app uses (front/back)
     private var lensFacing: Int = CameraSelector.LENS_FACING_BACK

@@ -10,6 +10,7 @@ import com.google.android.material.textfield.TextInputLayout
 import huji.postpc.find.pic.aword.R
 import huji.postpc.find.pic.aword.game.models.Language
 import android.widget.AdapterView.OnItemClickListener
+import huji.postpc.find.pic.aword.PicAWordApp
 
 
 class ChooseLanguageFragment : Fragment(R.layout.fragment_choose_language) {
@@ -30,13 +31,9 @@ class ChooseLanguageFragment : Fragment(R.layout.fragment_choose_language) {
         // Disable button until user choose language
         finishOnBoardingButton.isEnabled = false
 
-        // Load available languages
-        val enLanguage = Language(R.string.language_en, R.drawable.ic_usa_flag)
-        val heLanguage = Language(R.string.language_he, R.drawable.ic_israel_flag)
-        val items = listOf(enLanguage, heLanguage)
 
-        // Create custom adapter for displaying language's country flag and name
-        val adapter = LanguageAdapter(requireContext(), items)
+        // Create custom adapter for displaying available languages
+        val adapter = LanguageAdapter(requireContext(), PicAWordApp.AVAILABLE_LANGUAGES)
         (languageMenuTextField.editText as? AutoCompleteTextView)?.setAdapter(adapter)
         // Set onclick listener to get the chosen language
         (languageMenuTextField.editText as AutoCompleteTextView).onItemClickListener =

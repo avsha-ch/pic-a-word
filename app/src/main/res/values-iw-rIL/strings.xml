@@ -20,4 +20,5 @@
     <string name="language_en">אנגלית</string>
     <string name="language_he">עברית</string>
     <string name="choose_language">בחר שפה</string>
+    <string name="add_language">הוסיפו שפה</string>
 </resources>
