@@ -43,6 +43,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/level_not_complete_msg"
             />
@@ -50,10 +51,11 @@
         <TextView
             android:id="@+id/level_not_complete_msg_option2"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="450dp"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/level_not_complete_msg"
             android:text="You haven't done this one yet\n\nWhy don't you go give it a try?"
@@ -82,8 +84,29 @@
             android:visibility="invisible"
             />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/share_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="10dp"
+            app:fabCustomSize="70dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:maxImageSize="40dp"
+            app:srcCompat="@drawable/ic_share_variant_white_24" />
 
-<!--        android:translationZ="6dp"-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/camera_bottom_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/share_fab" />
 
         <View
             android:id="@+id/next_img_preview"

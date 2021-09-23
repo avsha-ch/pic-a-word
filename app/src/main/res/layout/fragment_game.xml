@@ -170,7 +170,7 @@
         android:translationZ="6dp"
         android:text="Great Success"
         android:fontFamily="@font/assistant_bold"
-        android:textColor="@color/button_dark_green"
+        android:textColor="@color/text_dark_green"
         android:textSize="17sp"
         android:gravity="center"
         android:visibility="gone"
