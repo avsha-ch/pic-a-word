@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/game_nav_graph"
-    app:startDestination="@id/addLanguageFragment">
+    app:startDestination="@id/chooseCategoryFragment">
 
     <!-- ChooseCategoryFragment, the landing screen for the game itself. -->
     <fragment
@@ -108,6 +108,12 @@
         android:id="@+id/addLanguageFragment"
         android:name="huji.postpc.find.pic.aword.AddLanguageFragment"
         android:label="fragment_add_language"
-        tools:layout="@layout/fragment_add_language" />
+        tools:layout="@layout/fragment_add_language" >
+        <action
+            android:id="@+id/action_addLanguageFragment_to_userAreaFragment"
+            app:destination="@id/userAreaFragment"
+            app:popUpTo="@id/userAreaFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>

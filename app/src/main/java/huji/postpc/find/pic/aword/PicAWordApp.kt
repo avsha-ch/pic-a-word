@@ -3,12 +3,13 @@ package huji.postpc.find.pic.aword
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import com.google.gson.Gson
+import android.content.res.Configuration
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonDeserializer
 import huji.postpc.find.pic.aword.game.data.FirestoreDatabaseManager
 import huji.postpc.find.pic.aword.game.models.Language
 import huji.postpc.find.pic.aword.game.models.User
+import java.util.*
+import kotlin.collections.HashMap
 
 class PicAWordApp : Application() {
 
@@ -20,6 +21,7 @@ class PicAWordApp : Application() {
     var user: User? = null
     var onboardingDone: Boolean = false
 
+
     override fun onCreate() {
         super.onCreate()
         instance = this
@@ -29,6 +31,7 @@ class PicAWordApp : Application() {
         // TODO for debug
 //        sp.edit().clear().apply()
         // TODO
+
 
         // Load the saved data about onboarding and user, if exists
         onboardingDone = sp.getBoolean(SP_ONBOARDING_DONE_KEY, false)
@@ -58,9 +61,13 @@ class PicAWordApp : Application() {
         // List of all available languages in game
         val AVAILABLE_LANGUAGES: List<Language> = listOf(
             Language(R.string.language_he, R.drawable.ic_israel_flag),
-            Language(R.string.language_en, R.drawable.ic_usa_flag)
+            Language(R.string.language_en, R.drawable.ic_usa_flag),
+            Language(R.string.language_sp, R.drawable.ic_spain_flag)
         )
-
+        val LANGUAGE_LOCAL_MAP : HashMap<Language, Locale> = hashMapOf(
+            Language(R.string.language_he, R.drawable.ic_israel_flag) to Locale("he"),
+            Language(R.string.language_en, R.drawable.ic_usa_flag) to Locale("en")
+        )
         // SharedPreferences name and keys
         private const val SP_NAME = "sp_pic_a_word"
         private const val SP_ONBOARDING_DONE_KEY = "sp_key_onboarding_done"

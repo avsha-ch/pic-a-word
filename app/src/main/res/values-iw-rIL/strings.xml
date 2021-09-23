@@ -21,4 +21,6 @@
     <string name="language_he">עברית</string>
     <string name="choose_language">בחר שפה</string>
     <string name="add_language">הוסיפו שפה</string>
+    <string name="language_sp">ספרדית - בקרוב!</string>
+    <string name="level_sunglasses" translatable="false">משקפי שמש</string>
 </resources>

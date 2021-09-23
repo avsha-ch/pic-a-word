@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".game.category.ChooseCategoryFragment">
 
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:text="What would \nyou like to learn?"-->
-<!--    app:layout_constraintStart_toStartOf="parent"-->
-<!--    app:layout_constraintTop_toTopOf="parent"-->
-<!--    android:textSize="28sp"-->
-<!--    android:textStyle="bold"-->
     <TextView
         android:id="@+id/choose_category_msg_text_view"
         android:layout_width="200dp"

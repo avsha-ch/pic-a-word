@@ -47,6 +47,8 @@ class UserAreaFragment : Fragment(R.layout.fragment_user_area) {
         userLanguages.add(Language(R.string.add_language, R.drawable.ic_baseline_add_box_36))
         // Create custom adapter for displaying language's country flag and name
         val adapter = LanguageAdapter(requireContext(), userLanguages)
+        // Initialize default value to the current language
+        (languageMenuTextField.editText as? AutoCompleteTextView)?.setText(gameViewModel.user?.currUserLanguage?.let { getString(it.nameResId) })
         (languageMenuTextField.editText as? AutoCompleteTextView)?.setAdapter(adapter)
         // Set onclick listener to get the chosen language
         (languageMenuTextField.editText as AutoCompleteTextView).onItemClickListener =
@@ -59,7 +61,11 @@ class UserAreaFragment : Fragment(R.layout.fragment_user_area) {
                 }
                 // Else, update the user current language
                 gameViewModel.switchLanguage(selectedLanguage)
+                // Refresh the progress adapter to see the new language progress
+                adapter.notifyDataSetChanged()
+
                 // todo add live data to curr language ,when changes update the game data and views
+                // do I still need this todo after calling notifyDataSetChanged() ??
             }
     }
 

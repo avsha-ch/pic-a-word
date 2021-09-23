@@ -1,12 +1,16 @@
 package huji.postpc.find.pic.aword.game
 
+import android.annotation.SuppressLint
 import android.app.Application
+import android.content.Context
+import android.content.res.Configuration
 import androidx.lifecycle.AndroidViewModel
 import huji.postpc.find.pic.aword.PicAWordApp
 import huji.postpc.find.pic.aword.game.data.GameData
 import huji.postpc.find.pic.aword.game.models.Category
 import huji.postpc.find.pic.aword.game.models.Language
 import huji.postpc.find.pic.aword.game.models.User
+
 
 class GameViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -17,22 +21,40 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     var currCategoryResId: Int? = null
     var currLevelResId: Int? = null
 
+    // Current language live data todo...
+    // Config for the current language
+    @SuppressLint("StaticFieldLeak")
+    var configContext : Context = updateConfigContext()
+
     fun getUserLanguages(): MutableList<Language> {
-        if (user != null) {
-            return user.userGameData.keys.toMutableList()
-        }
-        return mutableListOf()
+        return user?.userGameData?.keys?.toMutableList() ?: mutableListOf()
     }
 
-    fun switchLanguage(newLanguage: Language) {
+    private fun updateConfigContext() : Context {
+        val configuration = Configuration(PicAWordApp.instance.resources.configuration)
+        configuration.setLocale(PicAWordApp.LANGUAGE_LOCAL_MAP[user!!.currUserLanguage])
+        return PicAWordApp.instance.createConfigurationContext(configuration)
+    }
+
+    fun addNewLanguage(language : Language){
+        if (user != null) {
+            user.userGameData[language] = GameData()
+        }
+    }
+
+    fun switchLanguage(language: Language) {
         if (user == null) {
             return
         }
-        if (!user.userGameData.keys.contains(newLanguage)) {
+        if (!user.userGameData.keys.contains(language)) {
             return
         }
-        user.currUserLanguage = newLanguage
+        user.currUserLanguage = language
         gameData = user.getCurrGameData()
+//        user.currUserLanguage = language
+//        gameData = user.getCurrGameData()
+        // todo move currUserLanguage to gameviewmmodel livedata?..
+        configContext = updateConfigContext()
     }
 
 

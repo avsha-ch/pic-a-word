@@ -72,7 +72,7 @@
     <string name="level_dog" translatable="false">Dog</string>
     <string name="level_butterfly" translatable="false">Butterfly</string>
     <!-- Clothing levels -->
-    <string name="level_sunglasses" translatable="false">Sunglasses</string>
+    <string name="level_sunglasses">Sunglasses</string>
     <string name="level_necklace" translatable="false">Necklace</string>
     <string name="level_dress" translatable="false">Dress</string>
     <string name="level_tie" translatable="false">Tie</string>
@@ -123,8 +123,7 @@
     <string name="language_en">English</string>
     <string name="language_he">Hebrew</string>
     <string name="choose_language">Choose language</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_language">Add language</string>
+    <string name="language_sp">Spanish - soon !</string>
 
 </resources>

@@ -206,7 +206,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
     }
 
     private fun changeLevelUi(currLevel : Level) {
-        word = getString(currLevel.nameResId)
+        word = gameViewModel.configContext.resources.getString(currLevel.nameResId)
         changeTextAnimation(wordListenButton, word)
         // Update image
         wordImgView.setImageResource(currLevel.imgResId)
