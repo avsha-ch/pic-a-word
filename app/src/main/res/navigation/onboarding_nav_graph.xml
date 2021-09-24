@@ -5,20 +5,6 @@
     android:id="@+id/onboarding_nav_graph"
     app:startDestination="@id/NameFragment">
 
-    <!-- IntroFragment, shows the logo for a few moments -->
-    <fragment
-        android:id="@+id/introFragment"
-        android:name="huji.postpc.find.pic.aword.onboarding.IntroFragment"
-        android:label="fragment_intro"
-        tools:layout="@layout/fragment_intro">
-        <action
-            android:id="@+id/action_introFragment_to_signUpFragment"
-            app:destination="@id/NameFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
-    </fragment>
     <!-- SignUpFragment, gets the user's name -->
     <fragment
         android:id="@+id/NameFragment"

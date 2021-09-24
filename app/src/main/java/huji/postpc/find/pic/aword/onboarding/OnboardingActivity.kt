@@ -14,6 +14,8 @@ class OnboardingActivity : AppCompatActivity() {
     private val onboardingViewModel: OnboardingViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_Picaword)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
         // Set an observer for onboarding process so activity will start the game when onboarding is done

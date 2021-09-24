@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="splashScreenTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
+         <item name="colorPrimaryDark">@android:color/white</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+
+    </style>
+
+
+</resources>

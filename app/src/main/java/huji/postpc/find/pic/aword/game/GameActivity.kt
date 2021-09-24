@@ -36,14 +36,13 @@ class GameActivity : AppCompatActivity() {
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_Picaword)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
         initializeTTS()
         updateStatusBarColor()
-//        // Set observer for current category
-//        mainViewModel.currCategoryResId.observe(this, {
-//            updateStatusBarColor()
-//        })
+
     }
 
     private fun initializeTTS(){

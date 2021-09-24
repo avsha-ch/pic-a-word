@@ -10,6 +10,8 @@ import huji.postpc.find.pic.aword.onboarding.OnboardingActivity
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        setTheme(R.style.Theme_Picaword)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         // Disable dark mode for this app
