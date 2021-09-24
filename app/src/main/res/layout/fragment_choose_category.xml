@@ -22,16 +22,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/user_area_button"
-        android:layout_width="31dp"
-        android:layout_height="31dp"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/user"
+        app:cornerRadius="50dp"
+        app:iconSize="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="50dp"
-        android:contentDescription="@string/button_that_leads_to_user_area"
-        android:src="@drawable/user"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"

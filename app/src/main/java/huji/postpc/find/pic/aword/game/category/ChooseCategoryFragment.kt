@@ -18,7 +18,7 @@ class ChooseCategoryFragment : Fragment(R.layout.fragment_choose_category) {
 
     private lateinit var recyclerView: RecyclerView
     private val gameViewModel: GameViewModel by activityViewModels()
-    private lateinit var userAreaButton: ImageView
+    private lateinit var userAreaButton: MaterialButton
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Reset the current category and update status bar color

@@ -22,9 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/splashScreenTheme"
         android:name=".PicAWordApp">
-        <activity android:name=".onboarding.OnboardingActivity"/>
-        <activity android:name=".game.GameActivity"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".onboarding.OnboardingActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".game.GameActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -31,8 +31,6 @@ class GameActivity : AppCompatActivity() {
         R.string.category_body to R.color.human_body_pink,
         R.string.category_animals to R.color.animals_blue,
         R.string.category_clothing to R.color.clothes_blue,
-//        R.string.category_misc to TODO not appearing in figma, we have enough categories as it is no?
-        // Todo add category mix to view model and then color here
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
