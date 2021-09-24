@@ -30,102 +30,72 @@ class GameData {
 
     private fun loadHouseDataset(): List<Level> =
         listOf(
-            Level(R.string.level_sink, R.drawable.shoes_stencil),
-            Level(R.string.level_bathroom, R.drawable.shoes_stencil),
-            Level(R.string.level_chair, R.drawable.shoes_stencil),
-            Level(R.string.level_desk, R.drawable.shoes_stencil),
-            Level(R.string.level_cutlery, R.drawable.shoes_stencil),
-            Level(R.string.level_pillow, R.drawable.shoes_stencil),
-            Level(R.string.level_plant, R.drawable.shoes_stencil),
-            Level(R.string.level_cup, R.drawable.shoes_stencil),
-            Level(R.string.level_wall, R.drawable.shoes_stencil),
-            Level(R.string.level_shelf, R.drawable.shoes_stencil),
-            Level(R.string.level_computer, R.drawable.shoes_stencil),
-            Level(R.string.level_newspaper, R.drawable.shoes_stencil),
+            Level(R.string.level_sink, R.drawable.sink),
+            Level(R.string.level_chair, R.drawable.chair),
+            Level(R.string.level_cutlery, R.drawable.cutlery),
+            Level(R.string.level_pillow, R.drawable.pillow),
             Level(R.string.level_mobile_phone, R.drawable.shoes_stencil),
-            Level(R.string.level_lego, R.drawable.shoes_stencil),
-            Level(R.string.level_money, R.drawable.shoes_stencil),
+            Level(R.string.level_clock, R.drawable.clock)
         )
 
 
     private fun loadFoodDataset(): List<Level> =
         listOf(
-            Level(R.string.level_hotdog, R.drawable.shoes_stencil),
-            Level(R.string.level_couscous, R.drawable.shoes_stencil),
-            Level(R.string.level_cookie, R.drawable.shoes_stencil),
-            Level(R.string.level_cola, R.drawable.shoes_stencil),
-            Level(R.string.level_coffee, R.drawable.shoes_stencil),
-            Level(R.string.level_fruit, R.drawable.shoes_stencil),
-            Level(R.string.level_pizza, R.drawable.shoes_stencil),
-            Level(R.string.level_wine, R.drawable.shoes_stencil),
-            Level(R.string.level_bread, R.drawable.shoes_stencil),
-            Level(R.string.level_vegetable, R.drawable.shoes_stencil),
-            Level(R.string.level_cake, R.drawable.shoes_stencil),
-            Level(R.string.level_pie, R.drawable.shoes_stencil),
+//            Level(R.string.level_hotdog, R.drawable.shoes_stencil),
+//            Level(R.string.level_couscous, R.drawable.shoes_stencil),
+//            Level(R.string.level_cookie, R.drawable.shoes_stencil),
+//            Level(R.string.level_cola, R.drawable.shoes_stencil),
+//            Level(R.string.level_coffee, R.drawable.shoes_stencil),
+//            Level(R.string.level_fruit, R.drawable.shoes_stencil),
+//            Level(R.string.level_pizza, R.drawable.shoes_stencil),
+//            Level(R.string.level_wine, R.drawable.shoes_stencil),
+//            Level(R.string.level_bread, R.drawable.shoes_stencil),
+//            Level(R.string.level_vegetable, R.drawable.shoes_stencil),
+//            Level(R.string.level_cake, R.drawable.shoes_stencil),
+//            Level(R.string.level_pie, R.drawable.shoes_stencil),
         )
 
 
     private fun loadVehiclesDataset(): List<Level> =
         listOf(
-            Level(R.string.level_tractor, R.drawable.shoes_stencil),
-            Level(R.string.level_bus, R.drawable.shoes_stencil),
-            Level(R.string.level_bicycle, R.drawable.shoes_stencil),
-            Level(R.string.level_boat, R.drawable.shoes_stencil),
-            Level(R.string.level_vehicle, R.drawable.shoes_stencil),
-            Level(R.string.level_wheel, R.drawable.shoes_stencil),
-            Level(R.string.level_van, R.drawable.shoes_stencil),
-            Level(R.string.level_sailboat, R.drawable.shoes_stencil),
-            Level(R.string.level_car, R.drawable.shoes_stencil),
-            Level(R.string.level_skateboard, R.drawable.shoes_stencil),
+            Level(R.string.level_bicycle, R.drawable.bicycle),
+            Level(R.string.level_wheel, R.drawable.wheel1),
+            Level(R.string.level_van, R.drawable.van),
+            Level(R.string.level_skateboard, R.drawable.skateboard),
         )
 
 
     private fun loadHumanBodyDataset(): List<Level> =
         listOf(
-            Level(R.string.level_beard, R.drawable.shoes_stencil),
-            Level(R.string.level_smile, R.drawable.shoes_stencil),
-            Level(R.string.level_mouth, R.drawable.shoes_stencil),
-            Level(R.string.level_foot, R.drawable.shoes_stencil),
-            Level(R.string.level_ear, R.drawable.shoes_stencil),
-            Level(R.string.level_eyelash, R.drawable.shoes_stencil),
-            Level(R.string.level_hair, R.drawable.shoes_stencil),
-            Level(R.string.level_hand, R.drawable.shoes_stencil),
+            Level(R.string.level_beard, R.drawable.beard),
+            Level(R.string.level_smile, R.drawable.smile),
+            Level(R.string.level_mouth, R.drawable.smile),
+            Level(R.string.level_ear, R.drawable.ear),
+            Level(R.string.level_hair, R.drawable.hair)
         )
 
     private fun loadAnimalsDataset(): List<Level> =
         listOf(
-            Level(R.string.level_bird, R.drawable.shoes_stencil),
-            Level(R.string.level_bear, R.drawable.shoes_stencil),
-            Level(R.string.level_cat, R.drawable.shoes_stencil),
-            Level(R.string.level_horse, R.drawable.shoes_stencil),
-            Level(R.string.level_pet, R.drawable.shoes_stencil),
-            Level(R.string.level_duck, R.drawable.shoes_stencil),
-            Level(R.string.level_turtle, R.drawable.shoes_stencil),
-            Level(R.string.level_dog, R.drawable.shoes_stencil),
-            Level(R.string.level_butterfly, R.drawable.shoes_stencil),
+            Level(R.string.level_bird, R.drawable.bird),
+            Level(R.string.level_bear, R.drawable.bear),
+            Level(R.string.level_cat, R.drawable.cat),
+            Level(R.string.level_dog, R.drawable.dog)
         )
 
 
     private fun loadClothingDataset(): List<Level> =
         listOf(
-            Level(R.string.level_sunglasses, R.drawable.shoes_stencil),
-            Level(R.string.level_necklace, R.drawable.shoes_stencil),
-            Level(R.string.level_dress, R.drawable.shoes_stencil),
-            Level(R.string.level_tie, R.drawable.shoes_stencil),
-            Level(R.string.level_hat, R.drawable.shoes_stencil),
-            Level(R.string.level_jacket, R.drawable.shoes_stencil),
-            Level(R.string.level_beanie, R.drawable.shoes_stencil),
-            Level(R.string.level_jersey, R.drawable.shoes_stencil),
-            Level(R.string.level_scarf, R.drawable.shoes_stencil),
-            Level(R.string.level_jewellery, R.drawable.shoes_stencil),
-            Level(R.string.level_shoe, R.drawable.shoes_stencil),
-            Level(R.string.level_sneakers, R.drawable.shoes_stencil),
-            Level(R.string.level_ring, R.drawable.shoes_stencil),
-            Level(R.string.level_jeans, R.drawable.shoes_stencil),
-            Level(R.string.level_umbrella, R.drawable.shoes_stencil),
-            Level(R.string.level_glasses, R.drawable.shoes_stencil),
-            Level(R.string.level_bag, R.drawable.shoes_stencil),
-            Level(R.string.level_helmet, R.drawable.shoes_stencil),
+            Level(R.string.level_sunglasses, R.drawable.sunglasses),
+            Level(R.string.level_necklace, R.drawable.necklace),
+            Level(R.string.level_dress, R.drawable.dress),
+            Level(R.string.level_hat, R.drawable.hat),
+            Level(R.string.level_jersey, R.drawable.jersey),
+            Level(R.string.level_jewellery, R.drawable.jewellery),
+            Level(R.string.level_ring, R.drawable.ring),
+            Level(R.string.level_jeans, R.drawable.jeans),
+            Level(R.string.level_umbrella, R.drawable.umbrella),
+            Level(R.string.level_glasses, R.drawable.glasses),
+            Level(R.string.level_bag, R.drawable.bag),
         )
 
 
