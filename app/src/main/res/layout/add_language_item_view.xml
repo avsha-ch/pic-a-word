@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/language_icon_content_description" />
 
     <TextView
         android:id="@+id/language_name_text_view"

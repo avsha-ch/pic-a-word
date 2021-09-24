@@ -2,17 +2,16 @@
 <com.google.android.material.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_button"
-    android:layout_height="83dp"
     android:layout_width="356dp"
+    android:layout_height="83dp"
     android:layout_marginTop="8dp"
-    android:padding="15dp"
-    android:gravity="bottom|start"
-    android:textColor="@color/white"
     android:fontFamily="@font/assistant_bold"
+    android:gravity="bottom|start"
+    android:padding="15dp"
     android:textAllCaps="false"
-    android:textSize="18dp"
-    app:cornerRadius="15dp"
-    >
+    android:textColor="@color/white"
+    android:textSize="18sp"
+    app:cornerRadius="15dp">
 
 </com.google.android.material.button.MaterialButton>
 

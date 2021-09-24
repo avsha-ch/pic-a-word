@@ -10,14 +10,12 @@
         android:id="@+id/category_name_text_view"
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        android:paddingBottom="20dp"
-        android:background="@color/around_the_house_yellow"
         android:fontFamily="@font/assistant_extrabold"
-        android:text="Around The House"
+        android:gravity="bottom|center"
+        android:paddingBottom="20dp"
         android:textColor="@color/text_white"
         android:textSize="28sp"
         android:textStyle="bold"
-        android:gravity="bottom|center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,7 +28,7 @@
         android:fontFamily="@font/assistant_bold"
         android:gravity="bottom|start"
         android:padding="20dp"
-        android:text="My Collection"
+        android:text="@string/my_collection"
         android:textAllCaps="false"
         android:textColor="@color/text_white"
         android:textSize="18sp"
@@ -48,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:fontFamily="@font/assistant_bold"
-        android:text="Your progress:"
+        android:text="@string/your_progress"
         android:textAlignment="textStart"
         android:textColor="@color/text_dark_gray"
         android:textSize="16sp"
@@ -76,7 +74,6 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/assistant_bold"
-        android:text="100%"
         android:textColor="@color/text_dark_gray"
         app:layout_constraintBottom_toBottomOf="@+id/category_progress_bar"
         app:layout_constraintStart_toEndOf="@id/category_progress_bar"
@@ -102,26 +99,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/category_progress_bar" />
 
-    <!--    <ImageView-->
-<!--        android:id="@+id/imageView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_marginTop="140dp"-->
-<!--        android:src="@drawable/category_white_background"-->
-<!--        android:translationZ="-1dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--    <Button-->
-    <!--        android:id="@+id/button"-->
-    <!--        android:layout_width="139dp"-->
-    <!--        android:layout_height="63dp"-->
-    <!--        android:layout_marginLeft="137dp"-->
-    <!--        android:layout_marginTop="50dp"-->
-    <!--        android:background="@drawable/go_rectangle_button"-->
-    <!--        android:elevation="2dp"-->
-    <!--        android:text="GO" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

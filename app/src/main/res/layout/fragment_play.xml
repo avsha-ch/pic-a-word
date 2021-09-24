@@ -11,11 +11,11 @@
         android:id="@+id/game_message_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Look around you and find the:"
-        android:textSize="20sp"
-        android:textStyle="bold"
         android:layout_marginTop="30dp"
         android:fontFamily="@font/assistant_extrabold"
+        android:text="@string/look_around_you_and_find"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,55 +43,36 @@
         android:layout_width="match_parent"
         android:layout_height="480dp"
         android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="40dp"
         android:background="@color/bright_gray"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/word_listen_button">
-    </androidx.camera.view.PreviewView>
+        app:layout_constraintTop_toBottomOf="@id/word_listen_button"></androidx.camera.view.PreviewView>
 
     <ImageView
         android:id="@+id/word_image_view"
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="40dp"
         android:alpha="0.8"
+        android:contentDescription="@string/image_of_the_word_played"
         android:src="@drawable/shoes_stencil"
-        app:layout_constraintTop_toTopOf="@id/img_placeholder"
         app:layout_constraintBottom_toBottomOf="@id/img_placeholder"
-        />
+        app:layout_constraintTop_toTopOf="@id/img_placeholder" />
 
     <ProgressBar
         android:id="@+id/wait_for_labeler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
-        app:layout_constraintTop_toTopOf="@+id/word_image_view"
-        app:layout_constraintBottom_toBottomOf="@+id/word_image_view"
-        app:layout_constraintRight_toRightOf="@+id/word_image_view"
-        app:layout_constraintLeft_toLeftOf="@+id/word_image_view"
         android:translationZ="10dp"
         android:visibility="invisible"
-        />
-
-    <!--    <com.google.android.material.button.MaterialButton-->
-<!--        android:id="@+id/previous_img_button"-->
-<!--        style="@style/Widget.MaterialComponents.Button.Icon"-->
-<!--        android:layout_width="40dp"-->
-<!--        android:layout_height="40dp"-->
-<!--        android:layout_marginEnd="18dp"-->
-<!--        android:insetLeft="0dp"-->
-<!--        android:insetTop="0dp"-->
-<!--        android:insetRight="0dp"-->
-<!--        android:insetBottom="0dp"-->
-<!--        app:cornerRadius="100dp"-->
-<!--        app:icon="@drawable/ic_baseline_navigate_before_24"-->
-<!--        app:iconGravity="textStart"-->
-<!--        app:iconPadding="0dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="@id/capture_fab"-->
-<!--        app:layout_constraintEnd_toStartOf="@id/capture_fab" />-->
+        app:layout_constraintBottom_toBottomOf="@+id/word_image_view"
+        app:layout_constraintLeft_toLeftOf="@+id/word_image_view"
+        app:layout_constraintRight_toRightOf="@+id/word_image_view"
+        app:layout_constraintTop_toTopOf="@+id/word_image_view" />
 
     <View
         android:id="@+id/next_img_preview"
@@ -121,6 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="10dp"
+        android:contentDescription="@string/take_picture"
         app:fabCustomSize="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -138,43 +120,42 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/capture_fab" />
+        app:layout_constraintTop_toBottomOf="@+id/capture_fab"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/try_again_message"
         android:layout_width="324dp"
         android:layout_height="130dp"
         android:background="@color/baby_pink"
+        android:fontFamily="@font/assistant_bold"
+        android:gravity="center"
+        android:text="@string/not_correct_try_again"
+        android:textColor="@color/text_error_red"
+        android:textSize="17sp"
+        android:translationZ="6dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/img_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:translationZ="6dp"
-        android:text="It doesn't look like a chair...Try again!"
-        android:fontFamily="@font/assistant_bold"
-        android:textColor="@color/text_error_red"
-        android:textSize="17sp"
-        android:gravity="center"
-        android:visibility="gone"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/level_success_message"
         android:layout_width="324dp"
         android:layout_height="130dp"
         android:background="@color/button_bright_green"
+        android:fontFamily="@font/assistant_bold"
+        android:gravity="center"
+        android:text="@string/great_success"
+        android:textColor="@color/text_dark_green"
+        android:textSize="17sp"
+        android:translationZ="6dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/img_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:translationZ="6dp"
-        android:text="Great Success"
-        android:fontFamily="@font/assistant_bold"
-        android:textColor="@color/text_dark_green"
-        android:textSize="17sp"
-        android:gravity="center"
-        android:visibility="gone"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
@@ -182,108 +163,17 @@
         android:layout_width="324dp"
         android:layout_height="130dp"
         android:background="@color/clothes_blue"
+        android:fontFamily="@font/assistant_bold"
+        android:gravity="center"
+        android:text="@string/congratulations_you_re_done"
+        android:textColor="@color/text_success_blue"
+        android:textSize="17sp"
+        android:translationZ="6dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/img_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:translationZ="6dp"
-        android:text="Congratulations! You're done!"
-        android:fontFamily="@font/assistant_bold"
-        android:textColor="@color/text_success_blue"
-        android:textSize="17sp"
-        android:gravity="center"
-        android:visibility="gone"
-        />
-
-<!--    <com.google.android.material.button.MaterialButton-->
-<!--        android:id="@+id/next_img_button"-->
-<!--        style="@style/Widget.MaterialComponents.Button.Icon"-->
-<!--        android:layout_width="40dp"-->
-<!--        android:layout_height="40dp"-->
-<!--        android:layout_marginStart="18dp"-->
-<!--        android:insetLeft="0dp"-->
-<!--        android:insetTop="0dp"-->
-<!--        android:insetRight="0dp"-->
-<!--        android:insetBottom="0dp"-->
-<!--        app:cornerRadius="100dp"-->
-<!--        app:icon="@drawable/ic_baseline_navigate_next_24"-->
-<!--        app:iconGravity="textEnd"-->
-<!--        app:iconPadding="4dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="@id/capture_fab"-->
-<!--        app:layout_constraintStart_toEndOf="@id/capture_fab" />-->
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-<!--    android:backgroundTint="@color/button_green"-->
-
-
-    <!--<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--    xmlns:tools="http://schemas.android.com/tools"-->
-    <!--    android:layout_width="match_parent"-->
-    <!--    android:layout_height="match_parent"-->
-    <!--    tools:context="game.GameFragment">-->
-
-    <!--    <androidx.core.widget.NestedScrollView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:clipToPadding="false"-->
-    <!--        android:paddingBottom="50dp">-->
-
-    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--            android:id="@+id/nested_constraint_layout"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent">-->
-
-    <!--            <TextView-->
-    <!--                android:id="@+id/word_text_view"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:fontFamily="casual"-->
-    <!--                android:textColor="@color/black"-->
-    <!--                android:textSize="30dp"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--            <androidx.camera.view.PreviewView-->
-    <!--                android:id="@+id/camera_view_finder"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="600dp"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toBottomOf="@id/word_text_view" />-->
-
-    <!--            <ImageView-->
-    <!--                android:id="@+id/game_image"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="600dp"-->
-    <!--                android:alpha="0.8"-->
-    <!--                android:src="@drawable/shoes_stencil"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toBottomOf="@id/word_text_view">-->
-    <!--            </ImageView>-->
-
-    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-
-    <!--    </androidx.core.widget.NestedScrollView>-->
-
-
-    <!--    <com.google.android.material.bottomappbar.BottomAppBar-->
-    <!--        android:id="@+id/bottom_app_bar"-->
-    <!--        style="@style/Widget.MaterialComponents.BottomAppBar.Colored"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_gravity="bottom"-->
-    <!--        app:menu="@menu/bottom_app_bar" />-->
-
-    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-    <!--        android:id="@+id/capture_button"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        app:layout_anchor="@id/bottom_app_bar"-->
-    <!--        app:srcCompat="@drawable/ic_baseline_photo_camera_24" />-->
-
-
-    <!--</androidx.coordinatorlayout.widget.CoordinatorLayout>-->

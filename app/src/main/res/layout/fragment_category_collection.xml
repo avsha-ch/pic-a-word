@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:fontFamily="@font/assistant_extrabold"
-        android:text="Here is what you found"
+        android:text="@string/here_is_what_you_found"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,14 +27,13 @@
         android:layout_marginTop="10dp"
         android:width="280dp"
         android:height="65dp"
-        android:textSize="24sp"
         android:fontFamily="@font/assistant_bold"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:textSize="24sp"
         app:cornerRadius="50dp"
         app:icon="@drawable/ic_baseline_volume_up_24"
         app:iconGravity="textStart"
-        android:text="Chair"
-        android:textAllCaps="false"
-        android:gravity="center"
         app:iconPadding="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,12 +45,11 @@
         android:layout_width="match_parent"
         android:layout_height="480dp"
         android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="40dp"
         android:background="@color/bright_gray"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/word_listen_button">
-    </View>
+        app:layout_constraintTop_toBottomOf="@id/word_listen_button"></View>
 
     <ImageView
         android:id="@+id/word_image_view"
@@ -59,7 +57,7 @@
         android:layout_height="500dp"
         android:layout_marginTop="30dp"
         android:alpha="0.8"
-        android:src="@drawable/shoes_stencil"
+        android:contentDescription="@string/image_of_the_word_played"
         app:layout_constraintBottom_toBottomOf="@id/img_placeholder"
         app:layout_constraintTop_toTopOf="@id/img_placeholder"
         tools:layout_editor_absoluteX="40dp" />
@@ -86,7 +84,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/img_placeholder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/img_placeholder" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

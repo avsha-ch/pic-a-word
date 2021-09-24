@@ -23,7 +23,7 @@ class UserAreaAdapter(private val categories: List<Category>) : RecyclerView.Ada
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProgressViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.progres_item_view, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.progress_item_view, parent, false)
         return ProgressViewHolder(view)
     }
 

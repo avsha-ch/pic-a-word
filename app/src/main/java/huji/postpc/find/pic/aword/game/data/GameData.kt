@@ -32,27 +32,15 @@ class GameData {
         listOf(
             Level(R.string.level_sink, R.drawable.sink),
             Level(R.string.level_chair, R.drawable.chair),
+            Level(R.string.level_clock, R.drawable.clock),
             Level(R.string.level_cutlery, R.drawable.cutlery),
             Level(R.string.level_pillow, R.drawable.pillow),
-            Level(R.string.level_mobile_phone, R.drawable.shoes_stencil),
-            Level(R.string.level_clock, R.drawable.clock)
+            Level(R.string.level_mobile_phone, R.drawable.shoes_stencil)
         )
 
 
     private fun loadFoodDataset(): List<Level> =
         listOf(
-//            Level(R.string.level_hotdog, R.drawable.shoes_stencil),
-//            Level(R.string.level_couscous, R.drawable.shoes_stencil),
-//            Level(R.string.level_cookie, R.drawable.shoes_stencil),
-//            Level(R.string.level_cola, R.drawable.shoes_stencil),
-//            Level(R.string.level_coffee, R.drawable.shoes_stencil),
-//            Level(R.string.level_fruit, R.drawable.shoes_stencil),
-//            Level(R.string.level_pizza, R.drawable.shoes_stencil),
-//            Level(R.string.level_wine, R.drawable.shoes_stencil),
-//            Level(R.string.level_bread, R.drawable.shoes_stencil),
-//            Level(R.string.level_vegetable, R.drawable.shoes_stencil),
-//            Level(R.string.level_cake, R.drawable.shoes_stencil),
-//            Level(R.string.level_pie, R.drawable.shoes_stencil),
         )
 
 
@@ -101,15 +89,6 @@ class GameData {
 
     private fun loadMiscellaneousDataset(): List<Level> =
         listOf(
-            Level(R.string.level_rock, R.drawable.shoes_stencil),
-            Level(R.string.level_toy, R.drawable.shoes_stencil),
-            Level(R.string.level_balloon, R.drawable.shoes_stencil),
-            Level(R.string.level_branch, R.drawable.shoes_stencil),
-            Level(R.string.level_surfboard, R.drawable.shoes_stencil),
-            Level(R.string.level_hanukkah, R.drawable.shoes_stencil),
-            Level(R.string.level_clown, R.drawable.shoes_stencil),
-            Level(R.string.level_whiteboard, R.drawable.shoes_stencil),
-            Level(R.string.level_flag, R.drawable.shoes_stencil),
         )
 
 }

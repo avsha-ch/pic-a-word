@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,7 @@ class UserAreaFragment : Fragment(R.layout.fragment_user_area) {
     private lateinit var myCollectionButton: MaterialButton
     private lateinit var shareAppButton: Button
     private lateinit var languageMenuTextField: TextInputLayout
+    private lateinit var helloUserTextView : TextView
     private val gameViewModel: GameViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -31,6 +33,10 @@ class UserAreaFragment : Fragment(R.layout.fragment_user_area) {
         recyclerView = view.findViewById(R.id.categories_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         recyclerView.adapter = UserAreaAdapter(gameViewModel.gameData.getAllCategories())
+
+        // Set hello message with username
+        helloUserTextView = view.findViewById(R.id.my_area_msg_text_view)
+        helloUserTextView.text = getString(R.string.hello_username, gameViewModel.user?.username)
 
         myCollectionButton = view.findViewById(R.id.my_area_collection_button)
         myCollectionButton.setOnClickListener {

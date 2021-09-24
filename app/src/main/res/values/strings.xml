@@ -12,94 +12,43 @@
     <!-- Levels names -->
 
     <!-- Around the house levels -->
-    <string name="level_sink" translatable="false">Sink</string>
-    <string name="level_bathroom" translatable="false">Bathroom</string>
-    <string name="level_chair" translatable="false">Chair</string>
-    <string name="level_clock" translatable="false">Clock</string>
-    <string name="level_desk" translatable="false">Desk</string>
-    <string name="level_cutlery" translatable="false">Cutlery</string>
-    <string name="level_pillow" translatable="false">Pillow</string>
-    <string name="level_plant" translatable="false">Plant</string>
-    <string name="level_cup" translatable="false">Cup</string>
-    <string name="level_wall" translatable="false">Wall</string>
-    <string name="level_shelf" translatable="false">Shelf</string>
-    <string name="level_computer" translatable="false">Computer</string>
-    <string name="level_newspaper" translatable="false">Newspaper</string>
-    <string name="level_mobile_phone" translatable="false">Mobile phone</string>
-    <string name="level_lego" translatable="false">Lego</string>
-    <string name="level_money" translatable="false">Money</string>
+    <string name="level_sink">Sink</string>
+    <string name="level_chair">Chair</string>
+    <string name="level_clock">Clock</string>
+    <string name="level_cutlery">Cutlery</string>
+    <string name="level_pillow">Pillow</string>
+    <string name="level_mobile_phone">Mobile phone</string>
     <!-- Food levels -->
-    <string name="level_hotdog" translatable="false">Hotdog</string>
-    <string name="level_couscous" translatable="false">Couscous</string>
-    <string name="level_cookie" translatable="false">Cookie</string>
-    <string name="level_cola" translatable="false">Cola</string>
-    <string name="level_coffee" translatable="false">Coffee</string>
-    <string name="level_fruit" translatable="false">Fruit</string>
-    <string name="level_pizza" translatable="false">Pizza</string>
-    <string name="level_wine" translatable="false">Wine</string>
-    <string name="level_bread" translatable="false">Bread</string>
-    <string name="level_vegetable" translatable="false">Vegetable</string>
-    <string name="level_cake" translatable="false">Cake</string>
-    <string name="level_pie" translatable="false">Pie</string>
+    <!-- TBA -->
     <!-- Vehicles levels -->
-    <string name="level_tractor" translatable="false">Tractor</string>
-    <string name="level_bus" translatable="false">Bus</string>
-    <string name="level_bicycle" translatable="false">Bicycle</string>
-    <string name="level_boat" translatable="false">Boat</string>
-    <string name="level_vehicle" translatable="false">Vehicle</string>
-    <string name="level_wheel" translatable="false">Wheel</string>
-    <string name="level_van" translatable="false">Van</string>
-    <string name="level_sailboat" translatable="false">Sailboat</string>
-    <string name="level_car" translatable="false">Car</string>
-    <string name="level_skateboard" translatable="false">Skateboard</string>
+    <string name="level_bicycle">Bicycle</string>
+    <string name="level_wheel">Wheel</string>
+    <string name="level_van">Van</string>
+    <string name="level_skateboard">Skateboard</string>
     <!-- Human body levels -->
-    <string name="level_beard" translatable="false">Beard</string>
-    <string name="level_smile" translatable="false">Smile</string>
-    <string name="level_mouth" translatable="false">Mouth</string>
-    <string name="level_foot" translatable="false">Foot</string>
-    <string name="level_ear" translatable="false">Ear</string>
-    <string name="level_eyelash" translatable="false">Eyelash</string>
-    <string name="level_hair" translatable="false">Hair</string>
-    <string name="level_hand" translatable="false">Hand</string>
+    <string name="level_beard">Beard</string>
+    <string name="level_smile">Smile</string>
+    <string name="level_mouth">Mouth</string>
+    <string name="level_ear">Ear</string>
+    <string name="level_hair">Hair</string>
     <!-- Animals levels -->
-    <string name="level_bird" translatable="false">Bird</string>
-    <string name="level_bear" translatable="false">Bear</string>
-    <string name="level_cat" translatable="false">Cat</string>
-    <string name="level_horse" translatable="false">Horse</string>
-    <string name="level_pet" translatable="false">Pet</string>
-    <string name="level_duck" translatable="false">Duck</string>
-    <string name="level_turtle" translatable="false">Turtle</string>
-    <string name="level_dog" translatable="false">Dog</string>
-    <string name="level_butterfly" translatable="false">Butterfly</string>
+    <string name="level_bird">Bird</string>
+    <string name="level_bear">Bear</string>
+    <string name="level_cat">Cat</string>
+    <string name="level_dog">Dog</string>
     <!-- Clothing levels -->
     <string name="level_sunglasses">Sunglasses</string>
-    <string name="level_necklace" translatable="false">Necklace</string>
-    <string name="level_dress" translatable="false">Dress</string>
-    <string name="level_tie" translatable="false">Tie</string>
-    <string name="level_hat" translatable="false">Hat</string>
-    <string name="level_jacket" translatable="false">Jacket</string>
-    <string name="level_beanie" translatable="false">Beanie</string>
-    <string name="level_jersey" translatable="false">Jersey</string>
-    <string name="level_scarf" translatable="false">Scarf</string>
-    <string name="level_jewellery" translatable="false">Jewellery</string>
-    <string name="level_shoe" translatable="false">Shoe</string>
-    <string name="level_sneakers" translatable="false">Sneakers</string>
-    <string name="level_ring" translatable="false">Ring</string>
-    <string name="level_jeans" translatable="false">Jeans</string>
-    <string name="level_umbrella" translatable="false">Umbrella</string>
-    <string name="level_glasses" translatable="false">Glasses</string>
-    <string name="level_bag" translatable="false">Bag</string>
-    <string name="level_helmet" translatable="false">Helmet</string>
-    <!-- Miscellaneous levels -->
-    <string name="level_rock" translatable="false">Rock</string>
-    <string name="level_toy" translatable="false">Toy</string>
-    <string name="level_balloon" translatable="false">Balloon</string>
-    <string name="level_branch" translatable="false">Branch</string>
-    <string name="level_surfboard" translatable="false">Surfboard</string>
-    <string name="level_hanukkah" translatable="false">Hanukkah</string>
-    <string name="level_clown" translatable="false">Clown</string>
-    <string name="level_whiteboard" translatable="false">Whiteboard</string>
-    <string name="level_flag" translatable="false">Flag</string>
+    <string name="level_necklace">Necklace</string>
+    <string name="level_dress">Dress</string>
+    <string name="level_hat">Hat</string>
+    <string name="level_jacket">Jacket</string>
+    <string name="level_jersey">Jersey</string>
+    <string name="level_jewellery">Jewellery</string>
+    <string name="level_ring">Ring</string>
+    <string name="level_jeans">Jeans</string>
+    <string name="level_umbrella">Umbrella</string>
+    <string name="level_glasses">Glasses</string>
+    <string name="level_bag">Bag</string>
 
 
     <!-- General -->
@@ -109,7 +58,7 @@
     <!-- Login -->
     <string name="login_header">Hi there!</string>
     <string name="login_small_header">Welcome</string>
-    <string name="login_message" translatable="false">Please enter your user name</string>
+    <string name="login_message">Please enter your user name</string>
     <string name="login_username_placeholder">Username</string>
     <string name="sign_up_button_text">Sign Up</string>
     <string name="login_button_text">Login</string>
@@ -122,8 +71,27 @@
     <string name="progress_percentage_string" translatable="false">%1$d%%</string>
     <string name="language_en">English</string>
     <string name="language_he">Hebrew</string>
-    <string name="choose_language">Choose language</string>
     <string name="add_language">Add language</string>
     <string name="language_sp">Spanish - soon !</string>
+    <string name="language_icon_content_description">Icon containing flag of the language\'s country</string>
+    <string name="choose_language_to_add">Choose language to add:</string>
+    <string name="your_progress">Your progress:</string>
+    <string name="image_of_the_word_played">Image of the word played</string>
+    <string name="here_is_what_you_found">Here is what you found</string>
+    <string name="what_subject_would_you_like_to_learn">What Subject would you like to learn?</string>
+    <string name="button_that_leads_to_user_area">Button that leads to user area</string>
+    <string name="choose_language">Choose language</string>
+    <string name="user_captured_image">User captured image</string>
+    <string name="not_done_yet_give_a_try">You haven\'t done this one yet\n\nWhy don\'t you go give it a try?</string>
+    <string name="share_image_button">Share image button</string>
+    <string name="my_collection">My Collection</string>
+    <string name="application_logo">Application logo</string>
+    <string name="look_around_you_and_find">Look around you and find the:</string>
+    <string name="take_picture">Take picture</string>
+    <string name="not_correct_try_again">It doesn\'t look like correct…Try again!</string>
+    <string name="great_success">Great Success!</string>
+    <string name="congratulations_you_re_done">Congratulations! You\'re done!</string>
+    <string name="hello_username">Hello, %1$s !</string>
+    <string name="share_app">Share App</string>
 
 </resources>
