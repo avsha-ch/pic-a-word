@@ -2,12 +2,10 @@ package huji.postpc.find.pic.aword.game.models
 
 import androidx.annotation.StringRes
 
-import huji.postpc.find.pic.aword.game.data.loadDataSet
 
 class Category(@StringRes val nameResId: Int, val levels : List<Level>){
 
-//    val levels : HashMap<Int, Level> = loadDataSet(nameResId)
-//    val levels : List<Level> = loadDataSet(nameResId)
+
     private var levelsCompletedNum : Int = 0
     private var isCompleted : Boolean = false
     var progress = 0
