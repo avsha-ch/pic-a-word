@@ -14,8 +14,8 @@ android {
         applicationId "huji.postpc.find.pic.aword"
         minSdkVersion 28
         targetSdkVersion 30
-        versionCode 2
-        versionName "1.1.0"
+        versionCode 3
+        versionName "1.2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -81,6 +81,10 @@ dependencies {
 
     // GSON
     implementation 'com.google.code.gson:gson:2.8.7'
+
+    // Confetti animation library
+    implementation 'nl.dionsegijn:konfetti:1.3.2'
+
 
 
 }

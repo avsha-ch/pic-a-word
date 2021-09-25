@@ -22,9 +22,11 @@ class AddLanguageFragment : Fragment(R.layout.fragment_add_language) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.add_language_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        val adapter = AddLanguageAdapter(PicAWordApp.AVAILABLE_LANGUAGES)
+        val adapter = AddLanguageAdapter(PicAWordApp.AVAILABLE_LANGUAGES + PicAWordApp.SOON_LANGUAGES)
         adapter.onItemClick = { language ->
             gameViewModel.addNewLanguage(language)
+            // Save to SP
+            PicAWordApp.instance.saveToSP()
             val action = AddLanguageFragmentDirections.actionAddLanguageFragmentToUserAreaFragment()
             findNavController().navigate(action)
         }

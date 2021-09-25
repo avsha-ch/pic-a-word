@@ -93,5 +93,9 @@
     <string name="congratulations_you_re_done">Congratulations! You\'re done!</string>
     <string name="hello_username">Hello, %1$s !</string>
     <string name="share_app">Share App</string>
+    <string name="language_fr">French</string>
+    <string name="heb_tts_not_supported">Hearing is disabled for Hebrew!</string>
+    <string name="ok">OK</string>
+    <string name="category_finished_stay_tuned">Category is finished, stay tuned for more levels!</string>
 
 </resources>

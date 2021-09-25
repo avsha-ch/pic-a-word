@@ -72,5 +72,9 @@
     <string name="great_success">כל הכבוד!</string>
     <string name="congratulations_you_re_done">כל הכבוד, סיימתם!</string>
     <string name="hello_username">שלום, %1$s !</string>
-    <string name="share_app">שתפון אפליקציה</string>
+    <string name="share_app">שתפו!</string>
+    <string name="language_fr">צרפתית</string>
+    <string name="heb_tts_not_supported">לא ניתן להאזין בעברית!</string>
+    <string name="ok">טוב</string>
+    <string name="category_finished_stay_tuned">הקטגוריה הושלמה, שלבים חדשים בקרוב!</string>
 </resources>

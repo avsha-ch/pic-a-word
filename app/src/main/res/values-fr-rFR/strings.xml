@@ -1,3 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="level_sink">Évier</string>
+    <string name="level_chair">Chaise</string>
+    <string name="level_clock">L\'horloge</string>
+    <string name="level_cutlery">Coutellerie</string>
+    <string name="level_pillow">Oreiller</string>
+    <string name="level_mobile_phone">Téléphone portable</string>
+    <string name="level_bicycle">Bicyclette</string>
+    <string name="level_wheel">Roue</string>
+    <string name="level_van">Van</string>
+    <string name="level_skateboard">planche à roulette</string>
+    <string name="level_beard">Barbe</string>
+    <string name="level_smile">Le sourire</string>
+    <string name="level_mouth">Bouche</string>
+    <string name="level_ear">Oreille</string>
+    <string name="level_hair">Cheveux</string>
+    <string name="level_bird">Oiseau</string>
+    <string name="level_bear">Ours</string>
+    <string name="level_cat">Chat</string>
+    <string name="level_dog">Chien</string>
+    <string name="level_necklace">Collier</string>
+    <string name="level_dress">Robe</string>
+    <string name="level_hat">Robe</string>
+    <string name="level_jacket">Veste</string>
+    <string name="level_jersey">Jersey</string>
+    <string name="level_jewellery">Bijoux</string>
+    <string name="level_ring">Anneau</string>
+    <string name="level_jeans">jeans</string>
+    <string name="level_umbrella">Parapluie</string>
+    <string name="level_glasses">Lunettes</string>
+    <string name="level_bag">Sac</string>
 </resources>

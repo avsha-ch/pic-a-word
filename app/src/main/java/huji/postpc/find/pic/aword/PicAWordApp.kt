@@ -31,10 +31,6 @@ class PicAWordApp : Application() {
         sp = getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
         fbManager = FirestoreDatabaseManager()
 
-        // TODO for debug
-//        sp.edit().clear().apply()
-        // TODO
-
         // Load the saved data about onboarding and user, if exists
         onboardingDone = sp.getBoolean(SP_ONBOARDING_DONE_KEY, false)
         val userJson = sp.getString(SP_USER_KEY, "")
@@ -45,6 +41,7 @@ class PicAWordApp : Application() {
         configsContextMap = hashMapOf(
             R.string.language_en to createConfigContext(R.string.language_en),
             R.string.language_he to createConfigContext(R.string.language_he),
+            R.string.language_fr to createConfigContext(R.string.language_fr)
         )
     }
 
@@ -86,13 +83,15 @@ class PicAWordApp : Application() {
         val AVAILABLE_LANGUAGES: List<Language> = listOf(
             Language(R.string.language_en, R.drawable.ic_usa_flag),
             Language(R.string.language_he, R.drawable.ic_israel_flag),
+            Language(R.string.language_fr, R.drawable.ic_french_flag)
         )
         val SOON_LANGUAGES: List<Language> = listOf(
             Language(R.string.language_sp, R.drawable.ic_spain_flag)
         )
         val LANGUAGE_LOCAL_MAP: HashMap<Int, Locale> = hashMapOf(
             R.string.language_en to Locale("en"),
-            R.string.language_he to Locale("he")
+            R.string.language_he to Locale("he"),
+            R.string.language_fr to Locale("fr")
         )
 
 

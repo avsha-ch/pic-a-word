@@ -94,8 +94,8 @@ data class Category(
 
     private fun createAnimalsLevels(): List<Level> =
         listOf(
-            Level(R.string.level_bird, R.drawable.bird),
-            Level(R.string.level_bear, R.drawable.bear),
+//            Level(R.string.level_bird, R.drawable.bird),
+//            Level(R.string.level_bear, R.drawable.bear),
             Level(R.string.level_cat, R.drawable.cat),
             Level(R.string.level_dog, R.drawable.dog)
         )

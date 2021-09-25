@@ -26,8 +26,10 @@ import androidx.core.view.drawToBitmap
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.mlkit.vision.common.InputImage
 import huji.postpc.find.pic.aword.game.GameActivity
 import huji.postpc.find.pic.aword.game.GameViewModel
@@ -57,7 +59,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
     private var imageAnalyzer: ImageAnalysis? = null
 
     // Camera output
-    private lateinit var  outputDirectory: File
+    private lateinit var outputDirectory: File
 
 
     // camera provides access to CameraControl & CameraInfo
@@ -89,7 +91,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
     private var levelIdx: Int = 0
 
     // Word to display for this game-level
-    private var currLevel : Level? = null
+    private var currLevel: Level? = null
     private var word: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -148,14 +150,15 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
         }
 
         // Set swipe listeners for next and previous levels
-        wordImgView.setOnTouchListener(object : OnSwipeTouchListener(gameActivity){
-            override fun onSwipeLeft(){
+        wordImgView.setOnTouchListener(object : OnSwipeTouchListener(gameActivity) {
+            override fun onSwipeLeft() {
                 if (levelIdx < levels.size - 1) {
                     levelIdx++
                     updateDisplayLevel(Direction.NEXT)
                 }
             }
-            override fun onSwipeRight(){
+
+            override fun onSwipeRight() {
                 if (levelIdx > 0) {
                     levelIdx--
                     updateDisplayLevel(Direction.PREV)
@@ -163,28 +166,61 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
             }
         })
 
+        // If the current language learned is Hebrew, disable TTS option and show a message
+        if (gameViewModel.currLanguageResId == R.string.language_he) {
+            wordListenButton.setIconResource(R.drawable.ic_baseline_volume_off_24)
+            Snackbar.make(
+                wordListenButton, getString(R.string.heb_tts_not_supported), Snackbar.LENGTH_SHORT
+            )
+                .setAction(getString(R.string.ok)) {}
+                .show()
+
+        }
 
         // Set an observer for the labeler live data
         val labelObserver = Observer<Boolean?> { label ->
-            if (label == false){
+            if (label == false) {
                 // Wrong label found
                 appearDisappearView(tryAgainMsg, SUCCESS_FAIL_MSG_DURATION, ::disappearWaitForLabelerProgressBar)
-            }
-            else if (label == true){
+            } else if (label == true) {
                 // Else, found the correct label!
                 appearDisappearView(levelSuccessMsg, SUCCESS_FAIL_MSG_DURATION, ::disappearWaitForLabelerProgressBar)
                 // Set level completed if found a correct label
-                gameViewModel.setLevelCompleted()
+                onLevelSuccess()
             }
         }
         playViewModel.labelLiveData.observe(viewLifecycleOwner, labelObserver)
     }
 
-    private fun disappearWaitForLabelerProgressBar(){
+    private fun onLevelSuccess() {
+        appearDisappearView(levelSuccessMsg, SUCCESS_FAIL_MSG_DURATION, ::disappearWaitForLabelerProgressBar)
+        // Set level completed if found a correct label
+        gameViewModel.setLevelCompleted()
+        // Update levels and set curr level to the start
+        levels = gameViewModel.getCategoryNotCompletedLevels()
+        // Reset index to show the first level in the remaining levels
+        levelIdx = 0
+        updateDisplayLevel(Direction.NOMOVE)
+        if (levels.isEmpty()) {
+            // navigate back to CategoryFragment
+            onCategoryFinish()
+        }
+
+    }
+
+    private fun onCategoryFinish() {
+        val action = PlayFragmentDirections.actionPlayFragmentToCategoryFragment(
+            categoryNameResId = gameViewModel.currCategoryResId!!,
+            isCategoryFinished = true
+        )
+        findNavController().navigate(action)
+    }
+
+    private fun disappearWaitForLabelerProgressBar() {
         waitForLabelerProgressBar.visibility = View.GONE
     }
 
-    private fun changeLevelUi(currLevel : Level) {
+    private fun changeLevelUi(currLevel: Level) {
         word = PicAWordApp.instance.configsContextMap[gameViewModel.currLanguageResId]!!.getString(currLevel.nameResId)
         changeTextAnimation(wordListenButton, word)
         // Update image
@@ -193,40 +229,40 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
     }
 
 
-    private fun updateDisplayLevel(dir : Direction) {
+    private fun updateDisplayLevel(dir: Direction) {
         currLevel = levels.getOrNull(levelIdx)
-        if (currLevel != null) {
-            gameViewModel.currLevelResId = currLevel!!.nameResId
+        if (currLevel == null){
+            return
         }
-        if (currLevel != null) {
-            val translationDir = when (dir){
-                Direction.NEXT -> {resources.getDimension(R.dimen.translationTemplateOutIn)}
-                Direction.PREV -> {-resources.getDimension(R.dimen.translationTemplateOutIn)}
-                else -> {0f}
-            }
-            animateViewOutIn(wordImgView, translationDir, ::changeLevelUi, currLevel!!)
-
-            // Alternative way for animation - somewhat smoother but only animates the view in (not out and in)
-            /*
-            // old out
-            when (dir){
-                Direction.NEXT -> {wordImgView.startAnimation(outToLeftAnimation())}
-                Direction.PREV -> {wordImgView.startAnimation(outToRightAnimation())}
-                else -> {}
-            }
-            word = getString(currLevel.nameResId)
-            wordListenButton.text = word
-            // Update image
-            wordImgView.setImageResource(currLevel.imgResId)
-            // new in
-            when (dir){
-                Direction.NEXT -> {wordImgView.startAnimation(inFromRightAnimation())}
-                Direction.PREV -> {wordImgView.startAnimation(inFromLeftAnimation())}
-                else -> {}
-            }
-            */
+        gameViewModel.currLevelResId = currLevel!!.nameResId
+        val translationDir = when (dir) {
+            Direction.NEXT -> resources.getDimension(R.dimen.translationTemplateOutIn)
+            Direction.PREV -> -resources.getDimension(R.dimen.translationTemplateOutIn)
+            else -> 0f
         }
+        animateViewOutIn(wordImgView, translationDir, ::changeLevelUi, currLevel!!)
     }
+
+
+    // Alternative way for animation - somewhat smoother but only animates the view in (not out and in)
+    /*
+    // old out
+    when (dir){
+        Direction.NEXT -> {wordImgView.startAnimation(outToLeftAnimation())}
+        Direction.PREV -> {wordImgView.startAnimation(outToRightAnimation())}
+        else -> {}
+    }
+    word = getString(currLevel.nameResId)
+    wordListenButton.text = word
+    // Update image
+    wordImgView.setImageResource(currLevel.imgResId)
+    // new in
+    when (dir){
+        Direction.NEXT -> {wordImgView.startAnimation(inFromRightAnimation())}
+        Direction.PREV -> {wordImgView.startAnimation(inFromLeftAnimation())}
+        else -> {}
+    }
+    */
 
 
     private fun setUpCamera() {
@@ -274,7 +310,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
     }
 
     private fun captureImage() {
-        if (currLevel == null){
+        if (currLevel == null) {
             return
         }
         val photoFile = createFile(outputDirectory, FILENAME, PHOTO_EXTENSION)
@@ -359,7 +395,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
         PicAWordApp.instance.fbManager.uploadImageFromBitmap(bitmap, fileName)
     }
 
-    private fun contentValues() : ContentValues {
+    private fun contentValues(): ContentValues {
         val values = ContentValues()
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/png")
         values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000);
@@ -413,11 +449,14 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
 
         /** Helper function used to create a timestamped file */
         private fun createFile(baseFolder: File, format: String, extension: String) =
-            File(baseFolder, SimpleDateFormat(format, Locale.US)
-                .format(System.currentTimeMillis()) + extension)
+            File(
+                baseFolder, SimpleDateFormat(format, Locale.US)
+                    .format(System.currentTimeMillis()) + extension
+            )
 
 
     }
+
     enum class Direction {
         NEXT, PREV, NOMOVE
     }

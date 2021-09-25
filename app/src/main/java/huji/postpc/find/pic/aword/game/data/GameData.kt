@@ -62,26 +62,4 @@ class GameData(
     }
 
 
- // -------------- old to delete
-    var categoriesMap: HashMap<Int, Category> = loadGameData()
-//
-//    fun getAllCategories(): List<Category> = categoriesMap.values.toList()
-//
-//    fun getCategory(@StringRes categoryNameResId: Int): Category? = categoriesMap[categoryNameResId]
-//
-//    fun getCategoryProgress(@StringRes categoryNameResId: Int): Int {
-//        val category = getCategory(categoryNameResId) ?: return 0
-//        return category.progress
-//    }
-//
-//
-    private fun loadGameData(): HashMap<Int, Category> = hashMapOf(
-        R.string.category_house to Category(R.string.category_house),
-        R.string.category_food to Category(R.string.category_food),
-        R.string.category_vehicles to Category(R.string.category_vehicles),
-        R.string.category_body to Category(R.string.category_body),
-        R.string.category_animals to Category(R.string.category_animals),
-        R.string.category_clothing to Category(R.string.category_clothing),
-    )
-
 }

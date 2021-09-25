@@ -36,7 +36,7 @@ class ChooseCategoryAdapter(private val categories: List<Category>) : RecyclerVi
         val categoryColorResId = context.CATEGORY_COLOR_MAP[categoryNameResId]
         holder.button.backgroundTintList = categoryColorResId?.let { context.getColorStateList(it) }
         holder.button.setOnClickListener {
-            val action = ChooseCategoryFragmentDirections.actionChooseCategoryFragmentToCategoryFragment(categoryNameResId = categoryNameResId)
+            val action = ChooseCategoryFragmentDirections.actionChooseCategoryFragmentToCategoryFragment(categoryNameResId = categoryNameResId, isCategoryFinished = false)
             holder.view.findNavController().navigate(action)
         }
     }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import huji.postpc.find.pic.aword.PicAWordApp
 import huji.postpc.find.pic.aword.R
 import huji.postpc.find.pic.aword.game.models.Language
 
@@ -40,10 +41,11 @@ class AddLanguageAdapter(private val languages: List<Language>) : RecyclerView.A
         val language = languages[position]
         holder.textView.text = context.getString(language.nameResId)
         holder.imgView.setImageResource(language.iconResId)
-//        if (language.nameResId == R.string.language_sp) {
-//            // Grey out language not ready yet
-//            holder.textView.setTextColor(Color.parseColor("#a9a9a9"))
-//        }
+        if (language in PicAWordApp.SOON_LANGUAGES) {
+            // Grey out languages which are not ready yet
+            holder.textView.setTextColor(Color.parseColor("#a9a9a9"))
+        }
     }
+
 
 }

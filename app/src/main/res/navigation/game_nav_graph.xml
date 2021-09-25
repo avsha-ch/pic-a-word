@@ -37,9 +37,12 @@
         <argument
             android:name="categoryNameResId"
             app:argType="reference" />
+        <argument
+            android:name="isCategoryFinished"
+            app:argType="boolean" />
         <action
-            android:id="@+id/action_categoryFragment_to_gameFragment"
-            app:destination="@id/gameFragment"
+            android:id="@+id/action_categoryFragment_to_playFragment"
+            app:destination="@id/playFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
@@ -53,12 +56,17 @@
             app:popExitAnim="@anim/slide_out_down" />
     </fragment>
 
-    <!-- GameFragment, for playing the actual game -->
+    <!-- PlayFragment, for playing the actual game -->
     <fragment
-        android:id="@+id/gameFragment"
+        android:id="@+id/playFragment"
         android:name="huji.postpc.find.pic.aword.game.play.PlayFragment"
-        android:label="fragment_game"
-        tools:layout="@layout/fragment_play"/>
+        android:label="fragment_play"
+        tools:layout="@layout/fragment_play">
+        <action
+            android:id="@+id/action_playFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment"
+            />
+    </fragment>
 
     <!-- UserAreaFragment, displays the user's progress across all categories and
     links to all categories collection -->
@@ -84,7 +92,7 @@
         android:id="@+id/collectionChooseCategoryFragment"
         android:name="huji.postpc.find.pic.aword.game.userarea.CollectionChooseCategoryFragment"
         android:label="fragment_collection_choose_category"
-        tools:layout="@layout/fragment_collection_choose_category" >
+        tools:layout="@layout/fragment_collection_choose_category">
         <action
             android:id="@+id/action_collectionChooseCategoryFragment_to_collectionFragment"
             app:destination="@id/collectionFragment"
@@ -108,7 +116,7 @@
         android:id="@+id/addLanguageFragment"
         android:name="huji.postpc.find.pic.aword.game.userarea.AddLanguageFragment"
         android:label="fragment_add_language"
-        tools:layout="@layout/fragment_add_language" >
+        tools:layout="@layout/fragment_add_language">
         <action
             android:id="@+id/action_addLanguageFragment_to_userAreaFragment"
             app:destination="@id/userAreaFragment"

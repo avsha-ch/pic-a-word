@@ -20,7 +20,7 @@ class GameActivity : AppCompatActivity() {
 
     // Declare TTS objects
     private lateinit var ttsEn: TextToSpeech
-    private lateinit var ttsHe: TextToSpeech
+    private lateinit var ttsFr: TextToSpeech
 
     // Map between language name resource id to the language's TextToSpeech object
     private val languageTtsMap: HashMap<Int, TextToSpeech> = hashMapOf()
@@ -28,7 +28,7 @@ class GameActivity : AppCompatActivity() {
     // Map between language name resource id and the status of their initialization
     private val languageIsTtsInitMap: HashMap<Int, Boolean> = hashMapOf(
         R.string.language_en to false,
-        R.string.language_he to false
+        R.string.language_fr to false
     )
 
     private val gameViewModel: GameViewModel by viewModels()
@@ -49,7 +49,12 @@ class GameActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
+
+        // Init all TTS objects for available languages
         initializeEnTTS()
+        initializeFrTTS()
+
+        // Update status bar color
         updateStatusBarColor()
 
     }
@@ -69,20 +74,19 @@ class GameActivity : AppCompatActivity() {
         languageTtsMap[R.string.language_en] = ttsEn
     }
 
-    // TODO tts doesnt support hebrew change to another language for game
-    private fun initializeHeTTS() {
+    private fun initializeFrTTS() {
         // Initialize TTS object and update status when initialization is done
         val ttsOnInitListener = TextToSpeech.OnInitListener { status ->
             if (status == TextToSpeech.SUCCESS) {
-                languageIsTtsInitMap[R.string.language_he] = true
-                ttsHe.language = Locale.US
-                Log.d("TTS", "Hebrew TTS init succeeded!")
+                languageIsTtsInitMap[R.string.language_fr] = true
+                ttsFr.language = Locale.FRANCE
+                Log.d("TTS", "French TTS init succeeded!")
             } else {
-                Log.e("TTS", "Hebrew TTS init failed!")
+                Log.e("TTS", "French TTS init failed!")
             }
         }
-        ttsHe = TextToSpeech(applicationContext, ttsOnInitListener)
-        languageTtsMap[R.string.language_he] = ttsHe
+        ttsFr = TextToSpeech(applicationContext, ttsOnInitListener)
+        languageTtsMap[R.string.language_fr] = ttsFr
     }
 
     fun speak(text: String, @StringRes languageNameResId: Int) {
