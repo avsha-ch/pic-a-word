@@ -63,7 +63,7 @@
     <string name="what_subject_would_you_like_to_learn">איזה נושא תרצו ללמוד?</string>
     <string name="button_that_leads_to_user_area">כפתור שמוביל לאיזור האישי של המשתמש</string>
     <string name="user_captured_image">תמונה שצולמה</string>
-    <string name="not_done_yet_give_a_try">עוד לא שיחקתם בשלב הזה, מוכנים לנסות?</string>
+    <string name="not_done_yet_give_a_try">עוד לא שיחקתם בקטגוריה הזאת, מוכנים לנסות?</string>
     <string name="share_image_button">כפתור שיתוף</string>
     <string name="application_logo">לוגו של האפליקציה</string>
     <string name="look_around_you_and_find">הסתכלו מסביב וחפשו את:</string>
@@ -77,4 +77,5 @@
     <string name="heb_tts_not_supported">לא ניתן להאזין בעברית!</string>
     <string name="ok">טוב</string>
     <string name="category_finished_stay_tuned">הקטגוריה הושלמה, שלבים חדשים בקרוב!</string>
+    <string name="lets_go">קדימה למשחק!</string>
 </resources>

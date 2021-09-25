@@ -5,9 +5,11 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import huji.postpc.find.pic.aword.OnSwipeTouchListener
@@ -24,12 +26,11 @@ class CollectionFragment : Fragment(R.layout.fragment_collection) {
 
     // UI components
     private lateinit var collectionNameTextView : TextView
-    // TODO: decide on how this fragment works (show all levels of category? if yes - how to display level that are not completed?)
-    private lateinit var levelNotCompleteMsg : TextView
-    private lateinit var levelNotCompleteMsg2 : TextView
     private lateinit var wordListenButton : MaterialButton
+    private lateinit var playGameButton : MaterialButton
     private lateinit var wordImage : ImageView
     private lateinit var shareFab : FloatingActionButton
+    private lateinit var noLevelsCompleteTextView: TextView
 
     // All levels for this category by level resource id
     private lateinit var levels: List<Level>
@@ -59,20 +60,17 @@ class CollectionFragment : Fragment(R.layout.fragment_collection) {
 
         // Find all views
         collectionNameTextView = view.findViewById(R.id.my_collection_text_view)
-        levelNotCompleteMsg = view.findViewById(R.id.level_not_complete_msg)
-        levelNotCompleteMsg2 = view.findViewById(R.id.level_not_complete_msg_option2)
         wordListenButton = view.findViewById(R.id.word_listen_button)
         wordImage = view.findViewById(R.id.word_image_view)
         shareFab = view.findViewById(R.id.share_fab)
+        playGameButton = view.findViewById(R.id.play_game_button)
+        noLevelsCompleteTextView = view.findViewById(R.id.no_levels_complete_text)
 
         val currCategoryResId = gameViewModel.currCategoryResId
         if (currCategoryResId != null) {
-            val currCategory = gameViewModel.getCurrCategory()
-            if (currCategory != null){
-                levels = currCategory.levels
+            levels = gameViewModel.getCategoryCompletedLevels()
 
-                updateDisplayLevel(PlayFragment.Direction.NOMOVE)
-            }
+            updateDisplayLevel(PlayFragment.Direction.NOMOVE)
             collectionNameTextView.text = getString(currCategoryResId)
 
             val categoryColorResId = (activity as GameActivity).CATEGORY_COLOR_MAP[currCategoryResId]
@@ -105,47 +103,43 @@ class CollectionFragment : Fragment(R.layout.fragment_collection) {
             }
         })
 
-        levelNotCompleteMsg.setOnTouchListener(object : OnSwipeTouchListener(gameActivity){
-            override fun onSwipeLeft(){
-                if (levelIdx < levels.size - 1) {
-                    levelIdx++
-                    updateDisplayLevel(PlayFragment.Direction.NEXT)
-                }
-            }
-            override fun onSwipeRight(){
-                if (levelIdx > 0) {
-                    levelIdx--
-                    updateDisplayLevel(PlayFragment.Direction.PREV)
-                }
-            }
-        })
+        playGameButton.setOnClickListener {
+            val action  = CollectionFragmentDirections.actionCollectionFragmentToPlayFragment()
+            findNavController().navigate(action)
+        }
     }
 
     private fun changeLevelUi(currLevel : Level) {
+        // Update word text
         word = getString(currLevel.nameResId)
         changeTextAnimation(wordListenButton, word)
         // Update image
-        if (currLevel.isCompleted){
-//            imageUri = ??? // TODO - get uri to image for sharing it
-            shareFab.isClickable = true
-            invisibleToVisible(shareFab)
 
-            visibleToInvisible(levelNotCompleteMsg)
-            visibleToInvisible(levelNotCompleteMsg2)
-            // TODO: get user's image of this level and display it
-            wordImage.setImageResource(currLevel.imgResId)
-        }
-        else{
-            // level not completed
-            shareFab.isClickable = false
-            visibleToInvisible(shareFab)
+        // get user's image of this level and display it
+        imageUri = Uri.parse(currLevel.completedImgLocalPath)
+        wordImage.setImageURI(imageUri)
 
-            invisibleToVisible(levelNotCompleteMsg)
-            invisibleToVisible(levelNotCompleteMsg2)
-            // TODO: if we want to display template of level - uncomment next line
-//            wordImage.setImageResource(currLevel.imgResId)
-        }
-
+//        if (currLevel.isCompleted){
+//            shareFab.isClickable = true
+//            invisibleToVisible(shareFab)
+//
+//            visibleToInvisible(levelNotCompleteMsg)
+//            visibleToInvisible(levelNotCompleteMsg2)
+//            // TODO: get user's image of this level and display it
+//            imageUri = Uri.parse(currLevel.completedImgLocalPath)
+//            wordImage.setImageURI(imageUri)
+//        }
+//        else{
+//            // level not completed
+//            shareFab.isClickable = false
+//            visibleToInvisible(shareFab)
+//
+//            invisibleToVisible(levelNotCompleteMsg)
+//            invisibleToVisible(levelNotCompleteMsg2)
+//            // TODO: if we want to display template of level - uncomment next line
+////            wordImage.setImageResource(currLevel.imgResId)
+//            imageUri = null
+//        }
     }
 
     private fun updateDisplayLevel(dir : PlayFragment.Direction) {
@@ -158,6 +152,13 @@ class CollectionFragment : Fragment(R.layout.fragment_collection) {
                 else -> {0f}
             }
             animateViewOutIn(wordImage, translationDir, ::changeLevelUi, currLevel)
+        }
+        else{
+            // no completed levels
+            wordListenButton.visibility = View.GONE
+            visibleToInvisible(shareFab, 1L) { shareFab.isClickable = false }
+            playGameButton.visibility = View.VISIBLE
+            noLevelsCompleteTextView.visibility = View.VISIBLE
         }
     }
 

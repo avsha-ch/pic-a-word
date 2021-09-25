@@ -1,6 +1,5 @@
 package huji.postpc.find.pic.aword.game
 
-import android.util.Log
 import android.view.View
 import android.view.animation.*
 import android.widget.TextView
@@ -119,19 +118,29 @@ fun appearDisappearView(view: View, duration : Long, changeOtherView: () -> Unit
         .start()
 }
 
-fun invisibleToVisible(view: View){
+fun invisibleToVisible(view: View, duration: Long = 500L, withEnd: (() -> Unit)? = null){
     view.visibility = View.VISIBLE
     view.animate()
         .alpha(1f)
-        .setDuration(500L)
+        .setDuration(duration)
+        .withEndAction {
+            if (withEnd != null){
+                withEnd()
+            }
+        }
         .start()
 }
 
-fun visibleToInvisible(view: View){
+fun visibleToInvisible(view: View, duration: Long = 500L, withEnd: (() -> Unit)? = null){
     view.animate()
         .alpha(0f)
-        .setDuration(500L)
-        .withEndAction { view.visibility = View.INVISIBLE }
+        .setDuration(duration)
+        .withEndAction {
+            view.visibility = View.INVISIBLE
+            if (withEnd != null){
+                withEnd()
+            }
+        }
         .start()
 }
 

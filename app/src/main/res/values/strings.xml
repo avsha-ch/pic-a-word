@@ -82,7 +82,7 @@
     <string name="button_that_leads_to_user_area">Button that leads to user area</string>
     <string name="choose_language">Choose language</string>
     <string name="user_captured_image">User captured image</string>
-    <string name="not_done_yet_give_a_try">You haven\'t done this one yet\n\nWhy don\'t you go give it a try?</string>
+    <string name="not_done_yet_give_a_try">You haven\'t done any \nlevels in this \ncategory yet\n\nWhy don\'t you \ngo give it a try?</string>
     <string name="share_image_button">Share image button</string>
     <string name="my_collection">My Collection</string>
     <string name="application_logo">Application logo</string>
@@ -97,5 +97,6 @@
     <string name="heb_tts_not_supported">Hearing is disabled for Hebrew!</string>
     <string name="ok">OK</string>
     <string name="category_finished_stay_tuned">Category is finished, stay tuned for more levels!</string>
+    <string name="lets_go">Lets go!</string>
 
 </resources>

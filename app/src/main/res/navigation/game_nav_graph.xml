@@ -22,8 +22,6 @@
             android:id="@+id/action_chooseCategoryFragment_to_myAreaFragment"
             app:destination="@id/userAreaFragment"
             app:enterAnim="@anim/slide_in_down"
-            app:exitAnim="@anim/slide_out_up"
-            app:popEnterAnim="@anim/slide_in_up"
             app:popExitAnim="@anim/slide_out_down" />
     </fragment>
 
@@ -51,8 +49,6 @@
             android:id="@+id/action_categoryFragment_to_collectionFragment"
             app:destination="@id/collectionFragment"
             app:enterAnim="@anim/slide_in_down"
-            app:exitAnim="@anim/slide_out_up"
-            app:popEnterAnim="@anim/slide_in_up"
             app:popExitAnim="@anim/slide_out_down" />
     </fragment>
 
@@ -110,6 +106,10 @@
         <argument
             android:name="categoryNameResId"
             app:argType="reference" />
+        <action
+            android:id="@+id/action_collectionFragment_to_playFragment"
+            app:destination="@id/playFragment"
+            />
     </fragment>
 
     <fragment

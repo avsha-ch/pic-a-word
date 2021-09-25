@@ -145,8 +145,10 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
         }
         // Set click listener for capture picture button
         captureButton.setOnClickListener {
-            waitForLabelerProgressBar.visibility = View.VISIBLE
-            captureImage()
+            invisibleToVisible(waitForLabelerProgressBar, 1L) {
+                captureButton.isClickable = false
+                captureImage()
+            }
         }
 
         // Set swipe listeners for next and previous levels
@@ -184,8 +186,6 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
                 appearDisappearView(tryAgainMsg, SUCCESS_FAIL_MSG_DURATION, ::disappearWaitForLabelerProgressBar)
             } else if (label == true) {
                 // Else, found the correct label!
-                appearDisappearView(levelSuccessMsg, SUCCESS_FAIL_MSG_DURATION, ::disappearWaitForLabelerProgressBar)
-                // Set level completed if found a correct label
                 onLevelSuccess()
             }
         }
@@ -217,7 +217,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
     }
 
     private fun disappearWaitForLabelerProgressBar() {
-        waitForLabelerProgressBar.visibility = View.GONE
+        visibleToInvisible(waitForLabelerProgressBar, 1L) { captureButton.isClickable = true }
     }
 
     private fun changeLevelUi(currLevel: Level) {
@@ -321,12 +321,12 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
         // handle ML image recognition
         imageCapture?.takePicture(cameraExecutor, object : ImageCapture.OnImageCapturedCallback() {
             override fun onCaptureSuccess(imageProxy: ImageProxy) {
-                Log.e("ImageCapture", "Photo capture success: ${imageProxy.imageInfo.timestamp}")
+                Log.d("ImageCapture", "Photo capture success: ${imageProxy.imageInfo.timestamp}")
                 // unclear "error" on image - "This declaration is opt-in and its usage should be marked with". Does not cause code to crash.
                 val mediaImage = imageProxy.image
                 if (mediaImage != null) {
                     val inputImageForMLKIT = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
-                    Log.e("ImageCapture", "inputImage prepared: ${imageProxy.imageInfo.timestamp}")
+                    Log.d("ImageCapture", "inputImage prepared: ${imageProxy.imageInfo.timestamp}")
                     // Label image
                     // MLKit's labels are in English so send the english version of our word
                     val wordInEng = PicAWordApp.instance.configsContextMap[R.string.language_en]!!.getString(currLevel!!.nameResId)
@@ -338,7 +338,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
 
             override fun onError(exception: ImageCaptureException) {
                 super.onError(exception)
-                Log.e("CameraXBasic", "Photo capture failed: ${exception.message}", exception)
+                Log.d("CameraXBasic", "Photo capture failed: ${exception.message}", exception)
             }
         })
 
@@ -374,6 +374,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
 
             val uri: Uri? = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
             if (uri != null) {
+                currLevel?.completedImgLocalPath = uri.toString()
                 saveImageToStream(bitmap, context.contentResolver.openOutputStream(uri))
                 values.put(MediaStore.Images.Media.IS_PENDING, false)
                 context.contentResolver.update(uri, values, null, null)
