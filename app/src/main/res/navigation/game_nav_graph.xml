@@ -106,7 +106,7 @@
 
     <fragment
         android:id="@+id/addLanguageFragment"
-        android:name="huji.postpc.find.pic.aword.AddLanguageFragment"
+        android:name="huji.postpc.find.pic.aword.game.userarea.AddLanguageFragment"
         android:label="fragment_add_language"
         tools:layout="@layout/fragment_add_language" >
         <action

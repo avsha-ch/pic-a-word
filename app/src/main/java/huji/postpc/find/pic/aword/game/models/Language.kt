@@ -9,5 +9,6 @@ data class Language(
     @DrawableRes val iconResId: Int
 ) {
 
+    // Override toString to display the string and not the resource value
     override fun toString(): String = PicAWordApp.instance.getString(nameResId)
 }

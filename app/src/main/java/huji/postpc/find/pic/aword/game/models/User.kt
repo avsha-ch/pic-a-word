@@ -5,16 +5,17 @@ import java.util.*
 
 data class User(
     var username: String = "",
-    var currUserLanguage: Language
+    var initialUserLanguage: Language
 ) {
-    var userGameData: HashMap<Language, GameData> = hashMapOf()
-    val userId : String = UUID.randomUUID().toString()
-    init {
-        userGameData[currUserLanguage] = GameData()
-    }
+    //    var userGameData: HashMap<Language, GameData> = hashMapOf()
+    val userId: String = UUID.randomUUID().toString()
+    val gameData: GameData = GameData(initialUserLanguage)
+//    init {
+//        userGameData[currUserLanguage] = GameData()
+//    }
 
 
-    fun getCurrGameData(): GameData {
-        return userGameData[currUserLanguage]!!
-    }
+//    fun getCurrGameData(): GameData {
+//        return userGameData[currUserLanguage]!!
+//    }
 }

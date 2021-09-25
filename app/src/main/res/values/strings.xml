@@ -88,7 +88,7 @@
     <string name="application_logo">Application logo</string>
     <string name="look_around_you_and_find">Look around you and find the:</string>
     <string name="take_picture">Take picture</string>
-    <string name="not_correct_try_again">It doesn\'t look like correct…Try again!</string>
+    <string name="not_correct_try_again">It doesn\'t look like %1$s…Try again!</string>
     <string name="great_success">Great Success!</string>
     <string name="congratulations_you_re_done">Congratulations! You\'re done!</string>
     <string name="hello_username">Hello, %1$s !</string>

@@ -17,7 +17,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
@@ -90,6 +89,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
     private var levelIdx: Int = 0
 
     // Word to display for this game-level
+    private var currLevel : Level? = null
     private var word: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -126,12 +126,9 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
         val currCategoryResId = gameViewModel.currCategoryResId
         if (currCategoryResId != null) {
             // Get all levels
-            val currCategory = gameViewModel.getCurrCategory()
-            if (currCategory != null) {
-                levels = currCategory.levels
-                // Initialize current level to be the first one
-                updateDisplayLevel(Direction.NOMOVE)
-            }
+            levels = gameViewModel.getCategoryNotCompletedLevels()
+            // Update current level view
+            updateDisplayLevel(Direction.NOMOVE)
             // Update category information
             val categoryColorResId = (activity as GameActivity).CATEGORY_COLOR_MAP[currCategoryResId]
             if (categoryColorResId != null) {
@@ -142,7 +139,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
 
         // Set click listener for button
         wordListenButton.setOnClickListener {
-            gameActivity.speak(word)
+            gameActivity.speak(word, gameViewModel.currLanguageResId)
         }
         // Set click listener for capture picture button
         captureButton.setOnClickListener {
@@ -164,24 +161,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
                     updateDisplayLevel(Direction.PREV)
                 }
             }
-
         })
-        // TODO - choose on what view will the swipe listener be
-//        cameraViewFinder.setOnTouchListener(object : OnSwipeTouchListener(mainActivity){
-//            override fun onSwipeLeft(){
-//                if (levelIdx < levels.size - 1) {
-//                    levelIdx++
-//                    updateDisplayLevel()
-//                }
-//            }
-//            override fun onSwipeRight(){
-//                if (levelIdx > 0) {
-//                    levelIdx--
-//                    updateDisplayLevel()
-//                }
-//            }
-//
-//        })
 
 
         // Set an observer for the labeler live data
@@ -193,9 +173,8 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
             else if (label == true){
                 // Else, found the correct label!
                 appearDisappearView(levelSuccessMsg, SUCCESS_FAIL_MSG_DURATION, ::disappearWaitForLabelerProgressBar)
-                Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
                 // Set level completed if found a correct label
-//            mainViewModel.setCurrLevelCompleted()
+                gameViewModel.setLevelCompleted()
             }
         }
         playViewModel.labelLiveData.observe(viewLifecycleOwner, labelObserver)
@@ -206,24 +185,26 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
     }
 
     private fun changeLevelUi(currLevel : Level) {
-        word = gameViewModel.configContext.resources.getString(currLevel.nameResId)
+        word = PicAWordApp.instance.configsContextMap[gameViewModel.currLanguageResId]!!.getString(currLevel.nameResId)
         changeTextAnimation(wordListenButton, word)
         // Update image
         wordImgView.setImageResource(currLevel.imgResId)
-        tryAgainMsg.text = "It doesn't look like $word...Try again!"
+        tryAgainMsg.text = getString(R.string.not_correct_try_again, word)
     }
 
 
     private fun updateDisplayLevel(dir : Direction) {
-        val currLevel = levels.getOrNull(levelIdx)
-
+        currLevel = levels.getOrNull(levelIdx)
+        if (currLevel != null) {
+            gameViewModel.currLevelResId = currLevel!!.nameResId
+        }
         if (currLevel != null) {
             val translationDir = when (dir){
                 Direction.NEXT -> {resources.getDimension(R.dimen.translationTemplateOutIn)}
                 Direction.PREV -> {-resources.getDimension(R.dimen.translationTemplateOutIn)}
                 else -> {0f}
             }
-            animateViewOutIn(wordImgView, translationDir, ::changeLevelUi, currLevel)
+            animateViewOutIn(wordImgView, translationDir, ::changeLevelUi, currLevel!!)
 
             // Alternative way for animation - somewhat smoother but only animates the view in (not out and in)
             /*
@@ -293,6 +274,9 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
     }
 
     private fun captureImage() {
+        if (currLevel == null){
+            return
+        }
         val photoFile = createFile(outputDirectory, FILENAME, PHOTO_EXTENSION)
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile)
             // .setMetadata() TODO: setting metadata here is optional
@@ -308,7 +292,9 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
                     val inputImageForMLKIT = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
                     Log.e("ImageCapture", "inputImage prepared: ${imageProxy.imageInfo.timestamp}")
                     // Label image
-                    playViewModel.analyzeImage(inputImageForMLKIT, word)
+                    // MLKit's labels are in English so send the english version of our word
+                    val wordInEng = PicAWordApp.instance.configsContextMap[R.string.language_en]!!.getString(currLevel!!.nameResId)
+                    playViewModel.analyzeImage(inputImageForMLKIT, wordInEng)
                 }
                 // close image when done with it. after this nothing can be done with the captured image
                 imageProxy.close()

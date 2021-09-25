@@ -17,10 +17,10 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
 
     private val gameViewModel: GameViewModel by activityViewModels()
     private lateinit var categoryNameTextView: TextView
-    private lateinit var categoryProgressBar : ProgressBar
-    private lateinit var myCollectionButton : MaterialButton
-    private lateinit var goButton : MaterialButton
-    private lateinit var categoryProgressPercentage : TextView
+    private lateinit var categoryProgressBar: ProgressBar
+    private lateinit var myCollectionButton: MaterialButton
+    private lateinit var goButton: MaterialButton
+    private lateinit var categoryProgressPercentage: TextView
     private lateinit var gameActivity: GameActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +35,7 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         }
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -48,7 +49,7 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         if (currCategoryResId != null) {
             categoryNameTextView.text = getString(currCategoryResId)
             categoryProgressBar.progress = gameViewModel.getCurrCategoryProgress()
-            categoryProgressPercentage.text =  getString(R.string.progress_percentage_string, gameViewModel.getCurrCategoryProgress())
+            categoryProgressPercentage.text = getString(R.string.progress_percentage_string, gameViewModel.getCurrCategoryProgress())
             val categoryColorResId = gameActivity.CATEGORY_COLOR_MAP[currCategoryResId]
             if (categoryColorResId != null) {
                 categoryNameTextView.setBackgroundResource(categoryColorResId)
@@ -61,13 +62,22 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                 findNavController().navigate(action)
             }
         }
-
         // Set click listener to the 'GO' button for transitioning to the game itself
         goButton = view.findViewById(R.id.go_button)
         goButton.setOnClickListener {
             val action = CategoryFragmentDirections.actionCategoryFragmentToGameFragment()
             findNavController().navigate(action)
         }
-
     }
+
+    override fun onResume() {
+        super.onResume()
+        val currCategoryResId = gameViewModel.currCategoryResId
+        if (currCategoryResId != null) {
+            categoryNameTextView.text = getString(currCategoryResId)
+            categoryProgressBar.progress = gameViewModel.getCurrCategoryProgress()
+            categoryProgressPercentage.text = getString(R.string.progress_percentage_string, gameViewModel.getCurrCategoryProgress())
+        }
+    }
+
 }

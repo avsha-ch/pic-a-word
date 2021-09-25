@@ -40,11 +40,10 @@ class AddLanguageAdapter(private val languages: List<Language>) : RecyclerView.A
         val language = languages[position]
         holder.textView.text = context.getString(language.nameResId)
         holder.imgView.setImageResource(language.iconResId)
-        // todo create list in PicAWord of SOON languages
-        if (language.nameResId == R.string.language_sp) {
-            // Grey out language not ready yet
-            holder.textView.setTextColor(Color.parseColor("#a9a9a9"))
-        }
+//        if (language.nameResId == R.string.language_sp) {
+//            // Grey out language not ready yet
+//            holder.textView.setTextColor(Color.parseColor("#a9a9a9"))
+//        }
     }
 
 }

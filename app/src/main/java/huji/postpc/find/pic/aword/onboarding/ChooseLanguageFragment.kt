@@ -15,7 +15,6 @@ import huji.postpc.find.pic.aword.PicAWordApp
 
 class ChooseLanguageFragment : Fragment(R.layout.fragment_choose_language) {
 
-    // TODO implement menu for language, add to view model, application class
     private val onboardingViewModel: OnboardingViewModel by activityViewModels()
 
     private lateinit var finishOnBoardingButton: MaterialButton

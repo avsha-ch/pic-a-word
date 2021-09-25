@@ -1,4 +1,4 @@
-package huji.postpc.find.pic.aword
+package huji.postpc.find.pic.aword.game.userarea
 
 import android.os.Bundle
 import android.view.View
@@ -7,6 +7,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import huji.postpc.find.pic.aword.PicAWordApp
+import huji.postpc.find.pic.aword.R
 import huji.postpc.find.pic.aword.game.AddLanguageAdapter
 import huji.postpc.find.pic.aword.game.GameViewModel
 

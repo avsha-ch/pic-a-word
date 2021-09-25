@@ -58,7 +58,6 @@
         android:layout_marginEnd="40dp"
         android:alpha="0.8"
         android:contentDescription="@string/image_of_the_word_played"
-        android:src="@drawable/shoes_stencil"
         app:layout_constraintBottom_toBottomOf="@id/img_placeholder"
         app:layout_constraintTop_toTopOf="@id/img_placeholder" />
 

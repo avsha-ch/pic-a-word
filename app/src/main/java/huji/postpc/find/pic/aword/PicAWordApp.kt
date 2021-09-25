@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import androidx.annotation.StringRes
 import com.google.gson.GsonBuilder
 import huji.postpc.find.pic.aword.game.data.FirestoreDatabaseManager
 import huji.postpc.find.pic.aword.game.models.Language
@@ -21,6 +22,8 @@ class PicAWordApp : Application() {
     var user: User? = null
     var onboardingDone: Boolean = false
 
+    // Filled inside onCreate
+    var configsContextMap : HashMap<Int, Context> = hashMapOf()
 
     override fun onCreate() {
         super.onCreate()
@@ -32,21 +35,25 @@ class PicAWordApp : Application() {
 //        sp.edit().clear().apply()
         // TODO
 
-
         // Load the saved data about onboarding and user, if exists
         onboardingDone = sp.getBoolean(SP_ONBOARDING_DONE_KEY, false)
         val userJson = sp.getString(SP_USER_KEY, "")
         if (userJson != "") {
             user = gson.fromJson(userJson, User::class.java)
         }
+
+        configsContextMap = hashMapOf(
+            R.string.language_en to createConfigContext(R.string.language_en),
+            R.string.language_he to createConfigContext(R.string.language_he),
+        )
     }
 
 
-    fun completeOnboarding(newUsername: String, userInitialLanguage: Language) {
+    fun completeOnboarding(username: String, language: Language) {
         // Update the name and onboarding status
         onboardingDone = true
         // Create new user
-        user = User(newUsername, userInitialLanguage)
+        user = User(username, language)
         // Save user to SP
         val userJson = gson.toJson(user)
         sp.edit().putString(SP_USER_KEY, userJson).apply()
@@ -54,24 +61,41 @@ class PicAWordApp : Application() {
         sp.edit().putBoolean(SP_ONBOARDING_DONE_KEY, onboardingDone).apply()
     }
 
+    fun saveToSP() {
+        val userJson = gson.toJson(user)
+        sp.edit().putString(SP_USER_KEY, userJson).apply()
+    }
+
+    private fun createConfigContext(@StringRes languageNameResId: Int): Context {
+        val configuration = Configuration(resources.configuration)
+        configuration.setLocale(LANGUAGE_LOCAL_MAP[languageNameResId])
+        return createConfigurationContext(configuration)
+    }
+
 
     companion object {
         lateinit var instance: PicAWordApp private set
 
-        // List of all available languages in game
-        val AVAILABLE_LANGUAGES: List<Language> = listOf(
-            Language(R.string.language_he, R.drawable.ic_israel_flag),
-            Language(R.string.language_en, R.drawable.ic_usa_flag),
-            Language(R.string.language_sp, R.drawable.ic_spain_flag)
-        )
-        val LANGUAGE_LOCAL_MAP : HashMap<Language, Locale> = hashMapOf(
-            Language(R.string.language_he, R.drawable.ic_israel_flag) to Locale("he"),
-            Language(R.string.language_en, R.drawable.ic_usa_flag) to Locale("en")
-        )
         // SharedPreferences name and keys
         private const val SP_NAME = "sp_pic_a_word"
         private const val SP_ONBOARDING_DONE_KEY = "sp_key_onboarding_done"
         private const val SP_USER_KEY = "sp_key_user"
+
+
+        // List of all available languages in game
+        val AVAILABLE_LANGUAGES: List<Language> = listOf(
+            Language(R.string.language_en, R.drawable.ic_usa_flag),
+            Language(R.string.language_he, R.drawable.ic_israel_flag),
+        )
+        val SOON_LANGUAGES: List<Language> = listOf(
+            Language(R.string.language_sp, R.drawable.ic_spain_flag)
+        )
+        val LANGUAGE_LOCAL_MAP: HashMap<Int, Locale> = hashMapOf(
+            R.string.language_en to Locale("en"),
+            R.string.language_he to Locale("he")
+        )
+
+
     }
 }
 

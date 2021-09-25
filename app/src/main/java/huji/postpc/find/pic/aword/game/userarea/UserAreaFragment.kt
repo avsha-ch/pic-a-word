@@ -32,11 +32,11 @@ class UserAreaFragment : Fragment(R.layout.fragment_user_area) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.categories_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        recyclerView.adapter = UserAreaAdapter(gameViewModel.gameData.getAllCategories())
+        recyclerView.adapter = UserAreaAdapter(gameViewModel.getCategories())
 
         // Set hello message with username
         helloUserTextView = view.findViewById(R.id.my_area_msg_text_view)
-        helloUserTextView.text = getString(R.string.hello_username, gameViewModel.user?.username)
+        helloUserTextView.text = getString(R.string.hello_username, gameViewModel.user.username)
 
         myCollectionButton = view.findViewById(R.id.my_area_collection_button)
         myCollectionButton.setOnClickListener {
@@ -54,7 +54,7 @@ class UserAreaFragment : Fragment(R.layout.fragment_user_area) {
         // Create custom adapter for displaying language's country flag and name
         val adapter = LanguageAdapter(requireContext(), userLanguages)
         // Initialize default value to the current language
-        (languageMenuTextField.editText as? AutoCompleteTextView)?.setText(gameViewModel.user?.currUserLanguage?.let { getString(it.nameResId) })
+        (languageMenuTextField.editText as? AutoCompleteTextView)?.setText(getString(gameViewModel.currLanguageResId))
         (languageMenuTextField.editText as? AutoCompleteTextView)?.setAdapter(adapter)
         // Set onclick listener to get the chosen language
         (languageMenuTextField.editText as AutoCompleteTextView).onItemClickListener =
@@ -69,9 +69,9 @@ class UserAreaFragment : Fragment(R.layout.fragment_user_area) {
                 gameViewModel.switchLanguage(selectedLanguage)
                 // Refresh the progress adapter to see the new language progress
                 adapter.notifyDataSetChanged()
+                // Update progress views
+                recyclerView.adapter = UserAreaAdapter(gameViewModel.getCategories())
 
-                // todo add live data to curr language ,when changes update the game data and views
-                // do I still need this todo after calling notifyDataSetChanged() ??
             }
     }
 

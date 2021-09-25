@@ -1,6 +1,8 @@
 package huji.postpc.find.pic.aword.game.play
 
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.mlkit.vision.common.InputImage
@@ -8,13 +10,13 @@ import com.google.mlkit.vision.label.ImageLabel
 import com.google.mlkit.vision.label.ImageLabeler
 import com.google.mlkit.vision.label.ImageLabeling
 import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
+import huji.postpc.find.pic.aword.PicAWordApp
 import java.lang.Exception
 
 class PlayViewModel : ViewModel() {
 
     // MLKit image labeler
     private var labeler: ImageLabeler
-//    var labelLiveData = MutableLiveData<ImageLabel?>(null)
     var labelLiveData = MutableLiveData<Boolean?>(null)
 
     init {
@@ -64,5 +66,6 @@ class PlayViewModel : ViewModel() {
     companion object {
         private const val LABELER_THRESHOLD = 0.7f
         private const val LABELER_TAG = "Labeler"
+
     }
 }

@@ -83,7 +83,7 @@ class CollectionFragment : Fragment(R.layout.fragment_collection) {
 
         // Set click listener for button
         wordListenButton.setOnClickListener {
-            gameActivity.speak(word)
+            gameActivity.speak(word, gameViewModel.currLanguageResId)
         }
 
         shareFab.setOnClickListener {

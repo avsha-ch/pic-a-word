@@ -68,7 +68,7 @@
     <string name="application_logo">לוגו של האפליקציה</string>
     <string name="look_around_you_and_find">הסתכלו מסביב וחפשו את:</string>
     <string name="take_picture">צלמו</string>
-    <string name="not_correct_try_again">זה לא נראה נכון.. נסו שנית!</string>
+    <string name="not_correct_try_again">זה לא נכראה כמו %1$s.. נסו שנית!</string>
     <string name="great_success">כל הכבוד!</string>
     <string name="congratulations_you_re_done">כל הכבוד, סיימתם!</string>
     <string name="hello_username">שלום, %1$s !</string>
