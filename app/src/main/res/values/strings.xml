@@ -99,5 +99,6 @@
     <string name="category_finished_stay_tuned">Category is finished, stay tuned for more levels!</string>
     <string name="lets_go">Lets go!</string>
     <string name="language_not_ready_yet">Language not ready yet!</string>
+    <string name="no_image_msg">Sorry\nIt seem the image of\nthis level was\ndeleted</string>
 
 </resources>

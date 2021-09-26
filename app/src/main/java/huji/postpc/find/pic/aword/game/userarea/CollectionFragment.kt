@@ -3,6 +3,7 @@ package huji.postpc.find.pic.aword.game.userarea
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ImageView
@@ -11,11 +12,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import huji.postpc.find.pic.aword.PicAWordApp
 import huji.postpc.find.pic.aword.game.OnSwipeTouchListener
 import huji.postpc.find.pic.aword.R
 import huji.postpc.find.pic.aword.game.*
 import huji.postpc.find.pic.aword.game.models.Level
 import huji.postpc.find.pic.aword.game.play.PlayFragment
+import java.io.IOException
 
 
 class CollectionFragment : Fragment(R.layout.fragment_collection) {
@@ -30,6 +33,7 @@ class CollectionFragment : Fragment(R.layout.fragment_collection) {
     private lateinit var wordImage : ImageView
     private lateinit var shareFab : FloatingActionButton
     private lateinit var noLevelsCompleteTextView: TextView
+    private lateinit var imageDeletedTextView: TextView
 
     // All levels for this category by level resource id
     private lateinit var levels: List<Level>
@@ -41,7 +45,7 @@ class CollectionFragment : Fragment(R.layout.fragment_collection) {
     private var word: String = ""
 
     // uri to the image of the currently displayed level in the collection
-    private var imageUri: Uri? = null
+    private var imageUri: Uri = Uri.parse("")
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,6 +58,7 @@ class CollectionFragment : Fragment(R.layout.fragment_collection) {
         shareFab = view.findViewById(R.id.share_fab)
         playGameButton = view.findViewById(R.id.play_game_button)
         noLevelsCompleteTextView = view.findViewById(R.id.no_levels_complete_text)
+        imageDeletedTextView = view.findViewById(R.id.image_deleted_text_view)
 
         val currCategoryResId = gameViewModel.currCategoryResIdLiveData.value
         if (currCategoryResId != null) {
@@ -101,35 +106,27 @@ class CollectionFragment : Fragment(R.layout.fragment_collection) {
 
     private fun changeLevelUi(currLevel : Level) {
         // Update word text
-        word = getString(currLevel.nameResId)
+        word = PicAWordApp.instance.configsContextMap[gameViewModel.currLanguageResIdLiveData.value]!!.getString(currLevel.nameResId)
         changeTextAnimation(wordListenButton, word)
+
         // Update image
-
-        // get user's image of this level and display it
         imageUri = Uri.parse(currLevel.completedImgLocalPath)
-        wordImage.setImageURI(imageUri)
+        if (doesImageFileExists()){
+            wordImage.setImageURI(imageUri)
+            visibleToInvisible(imageDeletedTextView, 250L)
+            invisibleToVisible(shareFab, 250L)
+        }
+        else{
+            invisibleToVisible(imageDeletedTextView, 250L)
+            visibleToInvisible(shareFab, 250L)
+        }
+    }
 
-//        if (currLevel.isCompleted){
-//            shareFab.isClickable = true
-//            invisibleToVisible(shareFab)
-//
-//            visibleToInvisible(levelNotCompleteMsg)
-//            visibleToInvisible(levelNotCompleteMsg2)
-//            // TODO: get user's image of this level and display it
-//            imageUri = Uri.parse(currLevel.completedImgLocalPath)
-//            wordImage.setImageURI(imageUri)
-//        }
-//        else{
-//            // level not completed
-//            shareFab.isClickable = false
-//            visibleToInvisible(shareFab)
-//
-//            invisibleToVisible(levelNotCompleteMsg)
-//            invisibleToVisible(levelNotCompleteMsg2)
-//            // TODO: if we want to display template of level - uncomment next line
-////            wordImage.setImageResource(currLevel.imgResId)
-//            imageUri = null
-//        }
+    private fun doesImageFileExists() = try {
+        context?.contentResolver?.openInputStream(imageUri)?.use { }
+        true
+    } catch (e: IOException) {
+        false
     }
 
     private fun updateDisplayLevel(dir : PlayFragment.Direction) {

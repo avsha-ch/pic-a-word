@@ -73,6 +73,23 @@
         app:layout_constraintTop_toTopOf="@id/img_placeholder"
         tools:layout_editor_absoluteX="40dp" />
 
+    <TextView
+        android:id="@+id/image_deleted_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/white"
+        android:fontFamily="@font/assistant_extrabold"
+        android:gravity="center"
+        android:text="@string/no_image_msg"
+        android:textColor="@color/text_dark_gray"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/img_placeholder"
+        app:layout_constraintTop_toTopOf="@id/img_placeholder"
+        tools:layout_editor_absoluteX="40dp" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/play_game_button"
         style="@style/Widget.MaterialComponents.Button.Icon"
