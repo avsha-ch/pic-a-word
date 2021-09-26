@@ -33,7 +33,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.mlkit.vision.common.InputImage
 import huji.postpc.find.pic.aword.game.GameActivity
 import huji.postpc.find.pic.aword.game.GameViewModel
-import huji.postpc.find.pic.aword.OnSwipeTouchListener
+import huji.postpc.find.pic.aword.game.OnSwipeTouchListener
 import huji.postpc.find.pic.aword.PicAWordApp
 import huji.postpc.find.pic.aword.R
 import huji.postpc.find.pic.aword.game.models.Level
@@ -61,7 +61,6 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
     // Camera output
     private lateinit var outputDirectory: File
 
-
     // camera provides access to CameraControl & CameraInfo
     private var camera: Camera? = null
     private var cameraProvider: ProcessCameraProvider? = null
@@ -69,7 +68,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
     private lateinit var cameraViewFinder: PreviewView
 
     // UI components
-    private lateinit var captureButton: FloatingActionButton
+    private lateinit var captureFab: FloatingActionButton
     private lateinit var wordListenButton: MaterialButton
     private lateinit var wordImgView: ImageView
     private lateinit var tryAgainMsg: TextView
@@ -100,7 +99,6 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
         gameActivity = (activity as GameActivity)
         // Initialize our background executor, which is used for camera options that are blocking
         cameraExecutor = Executors.newSingleThreadExecutor()
-
         cameraViewFinder = view.findViewById(R.id.img_placeholder)
         // Request camera permissions if not already granted
         if (!allPermissionsGranted()) {
@@ -110,13 +108,12 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
         }
         // Wait for the views to be properly laid out and then set up camera and use cases
         cameraViewFinder.post { setUpCamera() }
-
         // set output directory
         outputDirectory = GameActivity.getOutputDirectory(requireContext())
 
         // Find all views
         wordListenButton = view.findViewById(R.id.word_listen_button)
-        captureButton = view.findViewById(R.id.capture_fab)
+        captureFab = view.findViewById(R.id.capture_fab)
         wordImgView = view.findViewById(R.id.word_image_view)
         tryAgainMsg = view.findViewById(R.id.try_again_message)
         levelSuccessMsg = view.findViewById(R.id.level_success_message)
@@ -125,14 +122,14 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
 
 
         // Get information from view model
-        val currCategoryResId = gameViewModel.currCategoryResId
+        val currCategoryResId = gameViewModel.currCategoryResIdLiveData.value
         if (currCategoryResId != null) {
             // Get all levels
             levels = gameViewModel.getCategoryNotCompletedLevels()
             // Update current level view
-            updateDisplayLevel(Direction.NOMOVE)
+            updateDisplayLevel(Direction.NO_MOVE)
             // Update category information
-            val categoryColorResId = (activity as GameActivity).CATEGORY_COLOR_MAP[currCategoryResId]
+            val categoryColorResId = GameActivity.CATEGORY_COLOR_MAP[currCategoryResId]
             if (categoryColorResId != null) {
                 wordListenButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
             }
@@ -141,12 +138,12 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
 
         // Set click listener for button
         wordListenButton.setOnClickListener {
-            gameActivity.speak(word, gameViewModel.currLanguageResId)
+            gameActivity.speak(word)
         }
         // Set click listener for capture picture button
-        captureButton.setOnClickListener {
+        captureFab.setOnClickListener {
+            captureFab.isEnabled = false
             invisibleToVisible(waitForLabelerProgressBar, 1L) {
-                captureButton.isClickable = false
                 captureImage()
             }
         }
@@ -169,14 +166,9 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
         })
 
         // If the current language learned is Hebrew, disable TTS option and show a message
-        if (gameViewModel.currLanguageResId == R.string.language_he) {
+        if (gameViewModel.currLanguageResIdLiveData.value == R.string.language_he) {
             wordListenButton.setIconResource(R.drawable.ic_baseline_volume_off_24)
-            Snackbar.make(
-                wordListenButton, getString(R.string.heb_tts_not_supported), Snackbar.LENGTH_SHORT
-            )
-                .setAction(getString(R.string.ok)) {}
-                .show()
-
+            Snackbar.make(wordListenButton, getString(R.string.heb_tts_not_supported), Snackbar.LENGTH_SHORT).setAction(getString(R.string.ok)) {}.show()
         }
 
         // Set an observer for the labeler live data
@@ -190,6 +182,21 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
             }
         }
         playViewModel.labelLiveData.observe(viewLifecycleOwner, labelObserver)
+
+    }
+
+    private fun updateDisplayLevel(dir: Direction) {
+        currLevel = levels.getOrNull(levelIdx)
+        if (currLevel == null) {
+            return
+        }
+        gameViewModel.currLevelResIdLiveData.value = currLevel!!.nameResId
+        val translationDir = when (dir) {
+            Direction.NEXT -> resources.getDimension(R.dimen.translationTemplateOutIn)
+            Direction.PREV -> -resources.getDimension(R.dimen.translationTemplateOutIn)
+            else -> 0f
+        }
+        animateViewOutIn(wordImgView, translationDir, ::changeLevelUi, currLevel!!)
     }
 
     private fun onLevelSuccess() {
@@ -200,28 +207,15 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
         levels = gameViewModel.getCategoryNotCompletedLevels()
         // Reset index to show the first level in the remaining levels
         levelIdx = 0
-        updateDisplayLevel(Direction.NOMOVE)
+        updateDisplayLevel(Direction.NO_MOVE)
         if (levels.isEmpty()) {
             // navigate back to CategoryFragment
             onCategoryFinish()
         }
-
-    }
-
-    private fun onCategoryFinish() {
-        val action = PlayFragmentDirections.actionPlayFragmentToCategoryFragment(
-            categoryNameResId = gameViewModel.currCategoryResId!!,
-            isCategoryFinished = true
-        )
-        findNavController().navigate(action)
-    }
-
-    private fun disappearWaitForLabelerProgressBar() {
-        visibleToInvisible(waitForLabelerProgressBar, 1L) { captureButton.isClickable = true }
     }
 
     private fun changeLevelUi(currLevel: Level) {
-        word = PicAWordApp.instance.configsContextMap[gameViewModel.currLanguageResId]!!.getString(currLevel.nameResId)
+        word = PicAWordApp.instance.configsContextMap[gameViewModel.currLanguageResIdLiveData.value]!!.getString(currLevel.nameResId)
         changeTextAnimation(wordListenButton, word)
         // Update image
         wordImgView.setImageResource(currLevel.imgResId)
@@ -229,40 +223,15 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
     }
 
 
-    private fun updateDisplayLevel(dir: Direction) {
-        currLevel = levels.getOrNull(levelIdx)
-        if (currLevel == null){
-            return
-        }
-        gameViewModel.currLevelResId = currLevel!!.nameResId
-        val translationDir = when (dir) {
-            Direction.NEXT -> resources.getDimension(R.dimen.translationTemplateOutIn)
-            Direction.PREV -> -resources.getDimension(R.dimen.translationTemplateOutIn)
-            else -> 0f
-        }
-        animateViewOutIn(wordImgView, translationDir, ::changeLevelUi, currLevel!!)
+    private fun onCategoryFinish() {
+        val action = PlayFragmentDirections.actionPlayFragmentToCategoryFragment()
+        findNavController().navigate(action)
     }
 
 
-    // Alternative way for animation - somewhat smoother but only animates the view in (not out and in)
-    /*
-    // old out
-    when (dir){
-        Direction.NEXT -> {wordImgView.startAnimation(outToLeftAnimation())}
-        Direction.PREV -> {wordImgView.startAnimation(outToRightAnimation())}
-        else -> {}
+    private fun disappearWaitForLabelerProgressBar() {
+        visibleToInvisible(waitForLabelerProgressBar, 1L) { captureFab.isEnabled = true }
     }
-    word = getString(currLevel.nameResId)
-    wordListenButton.text = word
-    // Update image
-    wordImgView.setImageResource(currLevel.imgResId)
-    // new in
-    when (dir){
-        Direction.NEXT -> {wordImgView.startAnimation(inFromRightAnimation())}
-        Direction.PREV -> {wordImgView.startAnimation(inFromLeftAnimation())}
-        else -> {}
-    }
-    */
 
 
     private fun setUpCamera() {
@@ -381,7 +350,6 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
             }
         } else {
             val directory = File(Environment.getExternalStorageDirectory().toString() + separator + folderName)
-            // getExternalStorageDirectory is deprecated in API 29
 
             if (!directory.exists()) {
                 directory.mkdirs()
@@ -399,8 +367,8 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
     private fun contentValues(): ContentValues {
         val values = ContentValues()
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/png")
-        values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000);
-        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+        values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000)
+        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
         return values
     }
 
@@ -424,21 +392,13 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
     private fun hasFrontCamera(): Boolean = cameraProvider?.hasCamera(CameraSelector.DEFAULT_FRONT_CAMERA) ?: false
 
 
-// TODO Ron: add camera switch button to the fragment layout
-//    private fun updateCameraSwitchButton() {
-//        // Enable or disable a button to switch cameras depending on the available cameras
-//        try {
-//            cameraSwitchButton?.isEnabled = hasBackCamera() && hasFrontCamera()
-//        } catch (exception: CameraInfoUnavailableException) {
-//            cameraSwitchButton?.isEnabled = false
-//        }
-//    }
-
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
     }
 
+
+    enum class Direction { NEXT, PREV, NO_MOVE }
 
     companion object {
         private const val CAMERA_X_TAG = "CameraX"
@@ -450,16 +410,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
 
         /** Helper function used to create a timestamped file */
         private fun createFile(baseFolder: File, format: String, extension: String) =
-            File(
-                baseFolder, SimpleDateFormat(format, Locale.US)
-                    .format(System.currentTimeMillis()) + extension
-            )
-
-
-    }
-
-    enum class Direction {
-        NEXT, PREV, NOMOVE
+            File(baseFolder, SimpleDateFormat(format, Locale.US).format(System.currentTimeMillis()) + extension)
     }
 
 }

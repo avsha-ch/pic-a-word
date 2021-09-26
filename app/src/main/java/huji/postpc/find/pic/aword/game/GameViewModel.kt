@@ -1,8 +1,8 @@
 package huji.postpc.find.pic.aword.game
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import huji.postpc.find.pic.aword.PicAWordApp
 import huji.postpc.find.pic.aword.game.data.GameData
 import huji.postpc.find.pic.aword.game.models.Category
@@ -16,9 +16,11 @@ class GameViewModel(app: Application) : AndroidViewModel(app) {
     // Get user current language and load the matching game data
     val user: User = PicAWordApp.instance.user!!
     private val gameData: GameData = user.gameData
-    var currLanguageResId : Int = gameData.currLanguage.nameResId
-    var currCategoryResId: Int? = null
-    var currLevelResId: Int? = null
+
+    val currLanguageResIdLiveData : MutableLiveData<Int> = MutableLiveData(gameData.currLanguage.nameResId)
+    val currCategoryResIdLiveData : MutableLiveData<Int?> = MutableLiveData(null)
+    val currLevelResIdLiveData : MutableLiveData<Int?> = MutableLiveData(null)
+
 
 
     fun getUserLanguages() : MutableList<Language> = gameData.getUserLanguages()
@@ -26,30 +28,35 @@ class GameViewModel(app: Application) : AndroidViewModel(app) {
     fun addNewLanguage(language : Language){
         gameData.addLanguage(language)
         // Update the new language to be the current one
-        currLanguageResId = language.nameResId
+        currLanguageResIdLiveData.value = language.nameResId
     }
 
     fun switchLanguage(language: Language) {
         gameData.switchLanguage(language)
-        currLanguageResId = language.nameResId
-    }
+        currLanguageResIdLiveData.value = language.nameResId
 
+    }
 
     fun getCategories() : List<Category> = gameData.getCategories()
 
     fun getCurrCategory(): Category? {
-        return currCategoryResId?.let { gameData.getCategory(it) }
+        return currCategoryResIdLiveData.value?.let { gameData.getCategory(it) }
     }
 
     fun getCurrCategoryProgress(): Int {
-        return gameData.getCategory(currCategoryResId!!).progress
+        return gameData.getCategory(currCategoryResIdLiveData.value!!).progress
+    }
+
+    fun isCurrCategoryFinished(): Boolean {
+        return (getCurrCategoryProgress() == 100) || (getCurrCategory()?.levels?.isEmpty() == true)
     }
 
     fun setLevelCompleted() {
-        gameData.setLevelCompleted(currCategoryResId!!, currLevelResId!!)
+        gameData.setLevelCompleted(currCategoryResIdLiveData.value!!, currLevelResIdLiveData.value!!)
         // Save to SP
         PicAWordApp.instance.saveToSP()
     }
+
 
     fun getCategoryCompletedLevels() : List<Level> = getCurrCategory()!!.getCompletedLevels()
 

@@ -1,4 +1,4 @@
-package huji.postpc.find.pic.aword
+package huji.postpc.find.pic.aword.game
 
 import android.content.Context
 import android.view.View.OnTouchListener
@@ -6,7 +6,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.View
-import huji.postpc.find.pic.aword.OnSwipeTouchListener.GestureListener
+import kotlin.math.abs
 
 /**
  * Detects left and right swipes across a view.
@@ -24,18 +24,10 @@ internal open class OnSwipeTouchListener(context: Context?) : OnTouchListener {
             return true
         }
 
-        override fun onFling(
-            e1: MotionEvent,
-            e2: MotionEvent,
-            velocityX: Float,
-            velocityY: Float
-        ): Boolean {
+        override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
             val distanceX = e2.x - e1.x
             val distanceY = e2.y - e1.y
-            if (Math.abs(distanceX) > Math.abs(distanceY) && Math.abs(distanceX) > Companion.SWIPE_DISTANCE_THRESHOLD && Math.abs(
-                    velocityX
-                ) > Companion.SWIPE_VELOCITY_THRESHOLD
-            ) {
+            if (abs(distanceX) > abs(distanceY) && abs(distanceX) > SWIPE_DISTANCE_THRESHOLD && abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                 if (distanceX > 0) onSwipeRight() else onSwipeLeft()
                 return true
             }

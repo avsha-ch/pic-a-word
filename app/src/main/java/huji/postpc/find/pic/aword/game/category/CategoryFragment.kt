@@ -10,12 +10,13 @@ import huji.postpc.find.pic.aword.R
 import android.view.*
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 
-import nl.dionsegijn.konfetti.KonfettiView;
-import nl.dionsegijn.konfetti.models.Shape;
-import nl.dionsegijn.konfetti.models.Size;
+import nl.dionsegijn.konfetti.KonfettiView
+import nl.dionsegijn.konfetti.models.Shape
+import nl.dionsegijn.konfetti.models.Size
 
 
 class CategoryFragment : Fragment(R.layout.fragment_category) {
@@ -27,24 +28,12 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
     private lateinit var goButton: MaterialButton
     private lateinit var categoryProgressPercentage: TextView
     private lateinit var gameActivity: GameActivity
-    private var isCategoryFinished = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        gameActivity = (activity as GameActivity)
-        // Get the category name resource-id argument
-        arguments?.let {
-            val categoryNameResId = it.get("categoryNameResId") as Int
-            // Update the view model
-            gameViewModel.currCategoryResId = categoryNameResId
-            gameActivity.updateStatusBarColor()
-            isCategoryFinished = it.get("isCategoryFinished") as Boolean
-        }
-    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        gameActivity = (activity as GameActivity)
 
         // Find the all the views in the fragment
         categoryNameTextView = view.findViewById(R.id.category_name_text_view)
@@ -55,35 +44,40 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
 
 
         // If the progress is 100% or we received through arguments
-        isCategoryFinished = isCategoryFinished || (gameViewModel.getCurrCategoryProgress() == 100) || (gameViewModel.getCurrCategory()?.levels?.isEmpty() == true)
+        val isCategoryFinished = gameViewModel.isCurrCategoryFinished()
         // Show confetti to congratulate user
         if (isCategoryFinished) {
             goButton.isEnabled = false
             goButton.backgroundTintList = gameActivity.getColorStateList(R.color.background_bright_gray)
-            val categoryFinishedTextView : TextView = view.findViewById(R.id.category_finished_text_view)
+            val categoryFinishedTextView: TextView = view.findViewById(R.id.category_finished_text_view)
             categoryFinishedTextView.text = getString(R.string.category_finished_stay_tuned)
             showConfetti(view)
         }
 
-
-        // Get current category resource id to update the texts and colors of the views
-        val currCategoryResId = gameViewModel.currCategoryResId
-        if (currCategoryResId != null) {
+        // Observe current category to update changes in the UI
+        val currCategoryResIdObserver: Observer<Int?> = Observer { currCategoryResId ->
+            if (currCategoryResId == null) {
+                return@Observer
+            }
+            // Update views
             categoryNameTextView.text = getString(currCategoryResId)
             categoryProgressBar.progress = gameViewModel.getCurrCategoryProgress()
             categoryProgressPercentage.text = getString(R.string.progress_percentage_string, gameViewModel.getCurrCategoryProgress())
-            val categoryColorResId = gameActivity.CATEGORY_COLOR_MAP[currCategoryResId]
+            val categoryColorResId = GameActivity.CATEGORY_COLOR_MAP[currCategoryResId]
             if (categoryColorResId != null) {
                 categoryNameTextView.setBackgroundResource(categoryColorResId)
                 categoryProgressBar.progressTintList = gameActivity.getColorStateList(categoryColorResId)
                 myCollectionButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
             }
-            // Set click listener to the 'My Collection' button for transitioning to collection
-            myCollectionButton.setOnClickListener {
-                val action = CategoryFragmentDirections.actionCategoryFragmentToCollectionFragment(categoryNameResId = currCategoryResId)
-                findNavController().navigate(action)
-            }
         }
+        gameViewModel.currCategoryResIdLiveData.observe(viewLifecycleOwner, currCategoryResIdObserver)
+
+        // Set click listener to the 'My Collection' button for transitioning to collection
+        myCollectionButton.setOnClickListener {
+            val action =  CategoryFragmentDirections.actionCategoryFragmentToCollectionFragment()
+            findNavController().navigate(action)
+        }
+
         // Set click listener to the 'GO' button for transitioning to the game itself
         goButton.setOnClickListener {
             val action = CategoryFragmentDirections.actionCategoryFragmentToPlayFragment()
@@ -91,15 +85,6 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        val currCategoryResId = gameViewModel.currCategoryResId
-        if (currCategoryResId != null) {
-            categoryNameTextView.text = getString(currCategoryResId)
-            categoryProgressBar.progress = gameViewModel.getCurrCategoryProgress()
-            categoryProgressPercentage.text = getString(R.string.progress_percentage_string, gameViewModel.getCurrCategoryProgress())
-        }
-    }
 
     private fun showConfetti(view: View) {
         val viewKonfetti = view.findViewById<KonfettiView>(R.id.viewKonfetti)

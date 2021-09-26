@@ -5,14 +5,13 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import huji.postpc.find.pic.aword.OnSwipeTouchListener
+import huji.postpc.find.pic.aword.game.OnSwipeTouchListener
 import huji.postpc.find.pic.aword.R
 import huji.postpc.find.pic.aword.game.*
 import huji.postpc.find.pic.aword.game.models.Level
@@ -44,19 +43,9 @@ class CollectionFragment : Fragment(R.layout.fragment_collection) {
     // uri to the image of the currently displayed level in the collection
     private var imageUri: Uri? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        gameActivity = (activity as GameActivity)
-        // Get the category name resource-id argument
-        arguments?.let {
-            val categoryNameResId = it.get("categoryNameResId") as Int
-            // Update the view model
-            gameViewModel.currCategoryResId = categoryNameResId
-            gameActivity.updateStatusBarColor()
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        gameActivity = (activity as GameActivity)
 
         // Find all views
         collectionNameTextView = view.findViewById(R.id.my_collection_text_view)
@@ -66,14 +55,15 @@ class CollectionFragment : Fragment(R.layout.fragment_collection) {
         playGameButton = view.findViewById(R.id.play_game_button)
         noLevelsCompleteTextView = view.findViewById(R.id.no_levels_complete_text)
 
-        val currCategoryResId = gameViewModel.currCategoryResId
+        val currCategoryResId = gameViewModel.currCategoryResIdLiveData.value
         if (currCategoryResId != null) {
             levels = gameViewModel.getCategoryCompletedLevels()
 
-            updateDisplayLevel(PlayFragment.Direction.NOMOVE)
+
+            updateDisplayLevel(PlayFragment.Direction.NO_MOVE)
             collectionNameTextView.text = getString(currCategoryResId)
 
-            val categoryColorResId = (activity as GameActivity).CATEGORY_COLOR_MAP[currCategoryResId]
+            val categoryColorResId = GameActivity.CATEGORY_COLOR_MAP[currCategoryResId]
             if (categoryColorResId != null) {
                 wordListenButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
             }
@@ -81,7 +71,7 @@ class CollectionFragment : Fragment(R.layout.fragment_collection) {
 
         // Set click listener for button
         wordListenButton.setOnClickListener {
-            gameActivity.speak(word, gameViewModel.currLanguageResId)
+            gameActivity.speak(word)
         }
 
         shareFab.setOnClickListener {
@@ -104,7 +94,7 @@ class CollectionFragment : Fragment(R.layout.fragment_collection) {
         })
 
         playGameButton.setOnClickListener {
-            val action  = CollectionFragmentDirections.actionCollectionFragmentToPlayFragment()
+            val action  = CollectionFragmentDirections.actionCollectionFragmentToCategoryFragment()
             findNavController().navigate(action)
         }
     }

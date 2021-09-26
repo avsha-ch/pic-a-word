@@ -9,6 +9,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
@@ -54,7 +55,7 @@ class UserAreaFragment : Fragment(R.layout.fragment_user_area) {
         // Create custom adapter for displaying language's country flag and name
         val adapter = LanguageAdapter(requireContext(), userLanguages)
         // Initialize default value to the current language
-        (languageMenuTextField.editText as? AutoCompleteTextView)?.setText(getString(gameViewModel.currLanguageResId))
+        (languageMenuTextField.editText as? AutoCompleteTextView)?.setText(gameViewModel.currLanguageResIdLiveData.value?.let { getString(it) })
         (languageMenuTextField.editText as? AutoCompleteTextView)?.setAdapter(adapter)
         // Set onclick listener to get the chosen language
         (languageMenuTextField.editText as AutoCompleteTextView).onItemClickListener =
@@ -64,15 +65,22 @@ class UserAreaFragment : Fragment(R.layout.fragment_user_area) {
                 if (selectedLanguage.nameResId == R.string.add_language){
                     val action = UserAreaFragmentDirections.actionUserAreaFragmentToAddLanguageFragment()
                     findNavController().navigate(action)
+                    return@OnItemClickListener
                 }
-                // Else, update the user current language
-                gameViewModel.switchLanguage(selectedLanguage)
-                // Refresh the progress adapter to see the new language progress
+                // Refresh the languages adapter
                 adapter.notifyDataSetChanged()
-                // Update progress views
-                recyclerView.adapter = UserAreaAdapter(gameViewModel.getCategories())
-
+                // Update the user current language
+                gameViewModel.switchLanguage(selectedLanguage)
             }
+
+        val currLanguageResIdObserver : Observer<Int> = Observer{ currLanguageResId ->
+            if (currLanguageResId == null){
+                return@Observer
+            }
+            // Update adapter to show the current categories for chosen language
+            recyclerView.adapter = UserAreaAdapter(gameViewModel.getCategories())
+        }
+        gameViewModel.currLanguageResIdLiveData.observe(viewLifecycleOwner, currLanguageResIdObserver)
     }
 
 

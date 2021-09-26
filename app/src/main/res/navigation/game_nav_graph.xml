@@ -22,6 +22,8 @@
             android:id="@+id/action_chooseCategoryFragment_to_myAreaFragment"
             app:destination="@id/userAreaFragment"
             app:enterAnim="@anim/slide_in_down"
+            app:exitAnim="@anim/slide_in_up"
+            app:popEnterAnim="@anim/slide_in_up"
             app:popExitAnim="@anim/slide_out_down" />
     </fragment>
 
@@ -32,12 +34,6 @@
         android:name="huji.postpc.find.pic.aword.game.category.CategoryFragment"
         android:label="fragment_category"
         tools:layout="@layout/fragment_category">
-        <argument
-            android:name="categoryNameResId"
-            app:argType="reference" />
-        <argument
-            android:name="isCategoryFinished"
-            app:argType="boolean" />
         <action
             android:id="@+id/action_categoryFragment_to_playFragment"
             app:destination="@id/playFragment"
@@ -60,8 +56,7 @@
         tools:layout="@layout/fragment_play">
         <action
             android:id="@+id/action_playFragment_to_categoryFragment"
-            app:destination="@id/categoryFragment"
-            />
+            app:destination="@id/categoryFragment" />
     </fragment>
 
     <!-- UserAreaFragment, displays the user's progress across all categories and
@@ -81,7 +76,11 @@
 
         <action
             android:id="@+id/action_userAreaFragment_to_addLanguageFragment"
-            app:destination="@id/addLanguageFragment" />
+            app:destination="@id/addLanguageFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
 
     </fragment>
     <fragment
@@ -103,13 +102,13 @@
         android:name="huji.postpc.find.pic.aword.game.userarea.CollectionFragment"
         android:label="fragment_collection"
         tools:layout="@layout/fragment_collection">
-        <argument
-            android:name="categoryNameResId"
-            app:argType="reference" />
         <action
-            android:id="@+id/action_collectionFragment_to_playFragment"
-            app:destination="@id/playFragment"
-            />
+            android:id="@+id/action_collectionFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment"
+            app:enterAnim="@anim/slide_in_down"
+            app:exitAnim="@anim/slide_in_down"
+            app:popEnterAnim="@anim/slide_in_up"
+            app:popExitAnim="@anim/slide_out_down"/>
     </fragment>
 
     <fragment
@@ -120,6 +119,10 @@
         <action
             android:id="@+id/action_addLanguageFragment_to_userAreaFragment"
             app:destination="@id/userAreaFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/userAreaFragment"
             app:popUpToInclusive="true" />
     </fragment>

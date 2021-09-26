@@ -14,20 +14,27 @@ import kotlin.collections.HashMap
 
 class PicAWordApp : Application() {
 
-    // This enable us to de/serialize complex key in maps, e.g. custom classes
+    // Custom GSON enable us to de/serialize complex key in maps, e.g. custom classes
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
+    // All user progress is saved on SP
     private lateinit var sp: SharedPreferences
+    // Firebase for storing user's captured images
     lateinit var fbManager: FirestoreDatabaseManager
 
+    // Class containing information about the user and the data of the game
     var user: User? = null
+    // Indicator on whether to start the onboarding process or the game
     var onboardingDone: Boolean = false
 
     // Filled inside onCreate
     var configsContextMap : HashMap<Int, Context> = hashMapOf()
 
+
     override fun onCreate() {
         super.onCreate()
+        // Private setter to make Application class a singleton
         instance = this
+
         sp = getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
         fbManager = FirestoreDatabaseManager()
 
@@ -38,6 +45,7 @@ class PicAWordApp : Application() {
             user = gson.fromJson(userJson, User::class.java)
         }
 
+        // Create contexts for showing string resources in different languages
         configsContextMap = hashMapOf(
             R.string.language_en to createConfigContext(R.string.language_en),
             R.string.language_he to createConfigContext(R.string.language_he),
@@ -59,11 +67,13 @@ class PicAWordApp : Application() {
     }
 
     fun saveToSP() {
+        // Save all user data to SP
         val userJson = gson.toJson(user)
         sp.edit().putString(SP_USER_KEY, userJson).apply()
     }
 
     private fun createConfigContext(@StringRes languageNameResId: Int): Context {
+        // Create a configuration context with a Locale of the given language name to show localized string resources
         val configuration = Configuration(resources.configuration)
         configuration.setLocale(LANGUAGE_LOCAL_MAP[languageNameResId])
         return createConfigurationContext(configuration)
@@ -71,6 +81,7 @@ class PicAWordApp : Application() {
 
 
     companion object {
+        // Application-wide singleton
         lateinit var instance: PicAWordApp private set
 
         // SharedPreferences name and keys
@@ -85,6 +96,7 @@ class PicAWordApp : Application() {
             Language(R.string.language_he, R.drawable.ic_israel_flag),
             Language(R.string.language_fr, R.drawable.ic_french_flag)
         )
+        // List of all languages that will be supported in the future
         val SOON_LANGUAGES: List<Language> = listOf(
             Language(R.string.language_sp, R.drawable.ic_spain_flag)
         )

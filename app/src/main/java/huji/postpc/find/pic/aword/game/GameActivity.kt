@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import huji.postpc.find.pic.aword.R
 import java.io.File
 import java.util.*
@@ -16,10 +17,11 @@ import kotlin.collections.HashMap
 
 
 class GameActivity : AppCompatActivity() {
-
+    private val gameViewModel: GameViewModel by viewModels()
 
     // Declare TTS objects
     private lateinit var ttsEn: TextToSpeech
+
     private lateinit var ttsFr: TextToSpeech
 
     // Map between language name resource id to the language's TextToSpeech object
@@ -31,18 +33,6 @@ class GameActivity : AppCompatActivity() {
         R.string.language_fr to false
     )
 
-    private val gameViewModel: GameViewModel by viewModels()
-
-    // A mapping from category to color, used to display a consistent color throughout the entire app
-    // The mapping is from a string resource id to the color resource id
-    val CATEGORY_COLOR_MAP: HashMap<Int, Int> = hashMapOf(
-        R.string.category_house to R.color.around_the_house_yellow,
-        R.string.category_food to R.color.food_green,
-        R.string.category_vehicles to R.color.vehicles_purple,
-        R.string.category_body to R.color.human_body_pink,
-        R.string.category_animals to R.color.animals_blue,
-        R.string.category_clothing to R.color.clothes_blue,
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Picaword)
@@ -54,10 +44,11 @@ class GameActivity : AppCompatActivity() {
         initializeEnTTS()
         initializeFrTTS()
 
-        // Update status bar color
-        updateStatusBarColor()
-
+        // Observe live data of current category for changing status bar color
+        val currCategoryResIdObserver: Observer<Int?> = Observer { currCategoryResId -> updateStatusBarColor(currCategoryResId) }
+        gameViewModel.currCategoryResIdLiveData.observe(this, currCategoryResIdObserver)
     }
+
 
     private fun initializeEnTTS() {
         // Initialize TTS object and update status when initialization is done
@@ -89,27 +80,32 @@ class GameActivity : AppCompatActivity() {
         languageTtsMap[R.string.language_fr] = ttsFr
     }
 
-    fun speak(text: String, @StringRes languageNameResId: Int) {
-        val tts = languageTtsMap[languageNameResId] ?: return
-        val ttsIsInit = languageIsTtsInitMap[languageNameResId] ?: return
-        if (!ttsIsInit) {
-            Toast.makeText(applicationContext, "TTS not ready yet!", Toast.LENGTH_SHORT).show()
-            return
+    fun speak(text: String) {
+        // Speak the given text in the current language
+        val currLanguageResId = gameViewModel.currLanguageResIdLiveData.value
+        if (currLanguageResId != null) {
+            val tts = languageTtsMap[currLanguageResId] ?: return
+            val ttsIsInit = languageIsTtsInitMap[currLanguageResId] ?: return
+            if (!ttsIsInit) {
+                Toast.makeText(applicationContext, "TTS not ready yet!", Toast.LENGTH_SHORT).show()
+                return
+            }
+            // else, use the TTS object to speak the given text
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
         }
-        // else, use the TTS object to speak the given text
-        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
     }
 
-    fun updateStatusBarColor() {
+    private fun updateStatusBarColor(currCategoryResId: Int?) {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        val categoryColorResId = if (gameViewModel.currCategoryResId != null) CATEGORY_COLOR_MAP[gameViewModel.currCategoryResId] else R.color.black
+        // Determine status bar update, and update with the color found
+        val categoryColorResId = if (currCategoryResId != null) CATEGORY_COLOR_MAP[currCategoryResId] else R.color.black
         if (categoryColorResId != null) {
             window.statusBarColor = getColor(categoryColorResId)
         }
-
     }
 
     companion object {
+        // A mapping from category resource id to color resource id, used to display a consistent color throughout the entire app
         val CATEGORY_COLOR_MAP: HashMap<Int, Int> = hashMapOf(
             R.string.category_house to R.color.around_the_house_yellow,
             R.string.category_food to R.color.food_green,
@@ -119,7 +115,7 @@ class GameActivity : AppCompatActivity() {
             R.string.category_clothing to R.color.clothes_blue,
         )
 
-        /** Use external media if it is available, our app's file directory otherwise */
+        /** Use externalmedia if it is available, our app's file directory otherwise */
         fun getOutputDirectory(context: Context): File {
             val appContext = context.applicationContext
             val mediaDir = context.externalMediaDirs.firstOrNull()?.let {

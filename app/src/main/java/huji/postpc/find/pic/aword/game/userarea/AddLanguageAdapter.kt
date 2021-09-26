@@ -1,4 +1,4 @@
-package huji.postpc.find.pic.aword.game
+package huji.postpc.find.pic.aword.game.userarea
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import huji.postpc.find.pic.aword.PicAWordApp
 import huji.postpc.find.pic.aword.R
+import huji.postpc.find.pic.aword.game.GameActivity
 import huji.postpc.find.pic.aword.game.models.Language
 
 
@@ -29,7 +30,7 @@ class AddLanguageAdapter(private val languages: List<Language>) : RecyclerView.A
     override fun getItemCount(): Int = languages.size
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddLanguageAdapter.LanguageViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LanguageViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.add_language_item_view, parent, false)
         return LanguageViewHolder(view)
     }

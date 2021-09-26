@@ -2,7 +2,6 @@ package huji.postpc.find.pic.aword.onboarding
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import huji.postpc.find.pic.aword.game.data.GameData
 import huji.postpc.find.pic.aword.game.models.Language
 
 class OnboardingViewModel : ViewModel() {
@@ -20,12 +19,8 @@ class OnboardingViewModel : ViewModel() {
     }
 
 
-
-
-
     companion object {
         private const val USERNAME_MIN_LENGTH = 3
         private const val USERNAME_MAX_LENGTH = 10
-        private const val UUID_LEN = 12
     }
 }

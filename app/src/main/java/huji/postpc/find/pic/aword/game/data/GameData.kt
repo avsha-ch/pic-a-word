@@ -4,10 +4,9 @@ import androidx.annotation.StringRes
 import huji.postpc.find.pic.aword.R
 import huji.postpc.find.pic.aword.game.models.Category
 import huji.postpc.find.pic.aword.game.models.Language
-import huji.postpc.find.pic.aword.game.models.Level
 
 class GameData(
-    var initialLanguage: Language
+    initialLanguage: Language
 ) {
     // For each language we have a a separate set of categories
     // Each language is mapped to another map between category identifier and the category itself

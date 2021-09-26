@@ -22,7 +22,7 @@ data class Category(
                 level.isCompleted = true
                 levelsCompletedNum++
                 updateProgress()
-                updateLevelIsCompleted()
+                updateIsCompleted()
                 return
             }
         }
@@ -36,7 +36,7 @@ data class Category(
         progress = if (levelsNum == 0) 0 else ((levelsCompletedNum.toFloat() / levelsNum.toFloat()) * 100 ).toInt()
     }
 
-    private fun updateLevelIsCompleted() {
+    private fun updateIsCompleted() {
         isCompleted = (levelsCompletedNum == levelsNum)
     }
 

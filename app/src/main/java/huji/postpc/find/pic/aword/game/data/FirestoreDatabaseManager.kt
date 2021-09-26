@@ -1,6 +1,5 @@
 package huji.postpc.find.pic.aword.game.data
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log

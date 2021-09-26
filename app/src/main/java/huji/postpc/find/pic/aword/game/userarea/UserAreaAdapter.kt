@@ -38,7 +38,7 @@ class UserAreaAdapter(private val categories: List<Category>) : RecyclerView.Ada
         holder.categoryProgressBar.progress = category.progress
         holder.categoryProgressPercentage.text = context.getString(R.string.progress_percentage_string, category.progress)
         // Get the color matching this category and set progress bar color
-        val categoryColorResId = context.CATEGORY_COLOR_MAP[categoryNameResId]
+        val categoryColorResId = GameActivity.CATEGORY_COLOR_MAP[categoryNameResId]
         holder.categoryProgressBar.progressTintList = categoryColorResId?.let { context.getColorStateList(it) }
 
     }
