@@ -66,6 +66,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
     private var cameraProvider: ProcessCameraProvider? = null
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var cameraViewFinder: PreviewView
+    private var capturedImageBitmap: Bitmap? = null
 
     // UI components
     private lateinit var captureFab: FloatingActionButton
@@ -201,6 +202,12 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
 
     private fun onLevelSuccess() {
         appearDisappearView(levelSuccessMsg, SUCCESS_FAIL_MSG_DURATION, ::disappearWaitForLabelerProgressBar)
+
+        // save image with template to device
+        val templateImageBitmap = wordImgView.drawToBitmap()
+        val mergedImageBitmap = capturedImageBitmap!!.with(templateImageBitmap)
+        saveImage(mergedImageBitmap, requireContext(), "PicAWord")
+
         // Set level completed if found a correct label
         gameViewModel.setLevelCompleted()
         // Update levels and set curr level to the start
@@ -311,12 +318,12 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
             }
         })
 
-        // handle saving image
-        val capturedImageBitmap = cameraViewFinder.bitmap
-        val templateImageBitmap = wordImgView.drawToBitmap()
-        val mergedImageBitmap = capturedImageBitmap!!.with(templateImageBitmap)
-
-        saveImage(mergedImageBitmap, requireContext(), "PicAWord")
+        // save captured image to DB
+        capturedImageBitmap = cameraViewFinder.bitmap
+        if (capturedImageBitmap != null) {
+            val fileName = System.currentTimeMillis().toString() + ".png"
+            PicAWordApp.instance.fbManager.uploadImageFromBitmap(capturedImageBitmap!!, fileName)
+        }
     }
 
     private fun Bitmap.with(bmp: Bitmap): Bitmap {
@@ -361,7 +368,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
             // .DATA is deprecated in API 29
             context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
         }
-        PicAWordApp.instance.fbManager.uploadImageFromBitmap(bitmap, fileName)
+//        PicAWordApp.instance.fbManager.uploadImageFromBitmap(bitmap, fileName)
     }
 
     private fun contentValues(): ContentValues {
