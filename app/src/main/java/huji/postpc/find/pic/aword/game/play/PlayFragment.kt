@@ -12,16 +12,18 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.MotionEvent
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.drawToBitmap
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -76,6 +78,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
     private lateinit var levelSuccessMsg: TextView
     private lateinit var categoryCompleteMsg: TextView
     private lateinit var waitForLabelerProgressBar: ProgressBar
+    private lateinit var infoButton: MaterialButton
 
     // Activity for getColorStateList
     private lateinit var gameActivity: GameActivity
@@ -119,6 +122,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
         levelSuccessMsg = view.findViewById(R.id.level_success_message)
         categoryCompleteMsg = view.findViewById(R.id.category_complete_message)
         waitForLabelerProgressBar = view.findViewById(R.id.wait_for_labeler)
+        infoButton = view.findViewById(R.id.info_button)
 
 
         // Get information from view model
@@ -132,6 +136,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
             val categoryColorResId = GameActivity.CATEGORY_COLOR_MAP[currCategoryResId]
             if (categoryColorResId != null) {
                 wordListenButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
+                infoButton.backgroundTintList = gameActivity.getColorStateList(categoryColorResId)
             }
         }
 
@@ -149,6 +154,10 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
             invisibleToVisible(waitForLabelerProgressBar, 1L) { captureImage() }
         }
 
+        // set info button to open game info
+        infoButton.setOnClickListener {
+            onInfoButtonClicked()
+        }
         // Set swipe listeners for next and previous levels
         wordImgView.setOnTouchListener(object : OnSwipeTouchListener(gameActivity) {
             override fun onSwipeLeft() {
@@ -182,6 +191,27 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
             }
         }
         playViewModel.labelLiveData.observe(viewLifecycleOwner, labelObserver)
+    }
+
+    private fun onInfoButtonClicked() {
+        val inflater = this.layoutInflater
+        val infoLayout = inflater.inflate(R.layout.play_info_layout, null)
+
+        val width = LinearLayout.LayoutParams.WRAP_CONTENT
+        val height = LinearLayout.LayoutParams.WRAP_CONTENT
+        val infoPopupWindow = PopupWindow(infoLayout, width, height, true)
+
+        // show the popup window
+        infoPopupWindow.showAtLocation(infoLayout, Gravity.CENTER, 0, 0)
+
+        // dismiss the popup window when touched
+        infoLayout.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                infoPopupWindow.dismiss()
+                return true
+            }
+
+        })
     }
 
     private fun updateDisplayLevel(dir: Direction) {
