@@ -16,13 +16,13 @@
             app:destination="@id/categoryFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_chooseCategoryFragment_to_myAreaFragment"
             app:destination="@id/userAreaFragment"
             app:enterAnim="@anim/slide_in_down"
-            app:exitAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/slide_out_up"
             app:popEnterAnim="@anim/slide_in_up"
             app:popExitAnim="@anim/slide_out_down" />
     </fragment>
@@ -39,13 +39,15 @@
             app:destination="@id/playFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_categoryFragment_to_collectionFragment"
             app:destination="@id/collectionFragment"
             app:enterAnim="@anim/slide_in_down"
-            app:popExitAnim="@anim/slide_out_down" />
+            app:exitAnim="@anim/slide_out_up"
+            app:popEnterAnim="@anim/slide_in_up"
+            app:popExitAnim="@anim/slide_out_down"/>
     </fragment>
 
     <!-- PlayFragment, for playing the actual game -->
@@ -56,7 +58,13 @@
         tools:layout="@layout/fragment_play">
         <action
             android:id="@+id/action_playFragment_to_categoryFragment"
-            app:destination="@id/categoryFragment" />
+            app:destination="@id/categoryFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/categoryFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <!-- UserAreaFragment, displays the user's progress across all categories and
@@ -94,7 +102,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <!-- CollectionFragment, displays a single category's collection -->
     <fragment
@@ -105,10 +113,11 @@
         <action
             android:id="@+id/action_collectionFragment_to_categoryFragment"
             app:destination="@id/categoryFragment"
-            app:enterAnim="@anim/slide_in_down"
-            app:exitAnim="@anim/slide_in_down"
-            app:popEnterAnim="@anim/slide_in_up"
-            app:popExitAnim="@anim/slide_out_down"/>
+            app:enterAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/slide_out_down"
+            app:popEnterAnim="@anim/slide_in_down"
+            app:popExitAnim="@anim/slide_out_up"
+            />
     </fragment>
 
     <fragment
@@ -119,8 +128,8 @@
         <action
             android:id="@+id/action_addLanguageFragment_to_userAreaFragment"
             app:destination="@id/userAreaFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/userAreaFragment"

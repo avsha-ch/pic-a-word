@@ -100,5 +100,8 @@
     <string name="lets_go">Lets go!</string>
     <string name="language_not_ready_yet">Language not ready yet!</string>
     <string name="no_image_msg">Sorry,\nIt seem the image of\nthis level was\ndeleted</string>
+    <string name="need_permissions">Need permissions to continue!</string>
+    <string name="picaword_invite">Invite to PicAWord</string>
+    <string name="picaword_invite_body">Come learn languages interactively with PicAWord\\n https://play.google.com/store/apps/details?id=huji.postpc.find.pic.aword</string>
 
 </resources>

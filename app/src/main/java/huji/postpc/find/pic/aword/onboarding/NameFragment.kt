@@ -28,8 +28,8 @@ class NameFragment : Fragment(R.layout.fragment_name) {
         // Update username text field based on previous value, if exists
         usernameTextField.editText?.setText(onboardingViewModel.username)
 
-        // Disable button until we have a valid username
-        signUpButton.isEnabled = false
+        // Enable/disable button until we have a valid username
+        signUpButton.isEnabled = onboardingViewModel.isUsernameValid(onboardingViewModel.username)
 
         // Set an observer for the username text field
         usernameTextField.editText?.doOnTextChanged { text, _, _, _ ->
@@ -62,6 +62,12 @@ class NameFragment : Fragment(R.layout.fragment_name) {
     private fun hideSoftKeyboard(view: View) {
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         imm!!.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        signUpButton.isEnabled = onboardingViewModel.isUsernameValid(onboardingViewModel.username)
+
     }
 
 

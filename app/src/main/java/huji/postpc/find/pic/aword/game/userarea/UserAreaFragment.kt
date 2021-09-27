@@ -87,11 +87,11 @@ class UserAreaFragment : Fragment(R.layout.fragment_user_area) {
     private fun shareAppLink() {
         val sendIntent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_SUBJECT, "Invite to Pic a Word")
+            putExtra(Intent.EXTRA_SUBJECT, getString(R.string.picaword_invite))
             putExtra(
                 Intent.EXTRA_TEXT,
-                "Come learn languages interactively with Pic A Word\n https://play.google.com/store/apps/details?id=com.tutorial.personal.androidstudiopro "
-            )   // TODO: put link to app store
+                getString(R.string.picaword_invite_body)
+            )
             type = "text/plain"
         }
         val shareIntent = Intent.createChooser(sendIntent, null)

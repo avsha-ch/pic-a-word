@@ -14,6 +14,11 @@ data class Category(
     private var levelsNum: Int = levels.size
     var progress: Int = 0
 
+    init {
+        updateProgress()
+        updateIsCompleted()
+    }
+
 
     fun setLevelCompleted(@StringRes levelResId: Int) {
         for (level in levels) {
@@ -33,7 +38,8 @@ data class Category(
     fun getNotCompletedLevels() : List<Level> = levels.filter { level -> !level.isCompleted }
 
     private fun updateProgress() {
-        progress = if (levelsNum == 0) 0 else ((levelsCompletedNum.toFloat() / levelsNum.toFloat()) * 100 ).toInt()
+        // Empty categories are considered finished
+        progress = if (levelsNum == 0) 100 else ((levelsCompletedNum.toFloat() / levelsNum.toFloat()) * 100 ).toInt()
     }
 
     private fun updateIsCompleted() {
@@ -94,8 +100,8 @@ data class Category(
 
     private fun createAnimalsLevels(): List<Level> =
         listOf(
-            Level(R.string.level_bird, R.drawable.bird),
-            Level(R.string.level_bear, R.drawable.bear),
+//            Level(R.string.level_bird, R.drawable.bird),
+//            Level(R.string.level_bear, R.drawable.bear),
             Level(R.string.level_cat, R.drawable.cat),
             Level(R.string.level_dog, R.drawable.dog)
         )

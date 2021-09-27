@@ -12,6 +12,7 @@ import huji.postpc.find.pic.aword.game.models.Language
 
 class LanguageAdapter(private val adapterContext: Context, private val languages: List<Language>) : ArrayAdapter<Language>(adapterContext, R.layout.language_item_view, languages) {
 
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
         var languageItemView = convertView

@@ -5,11 +5,10 @@ import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import huji.postpc.find.pic.aword.R
 import java.io.File
 import java.util.*
@@ -82,18 +81,21 @@ class GameActivity : AppCompatActivity() {
 
     fun speak(text: String) {
         // Speak the given text in the current language
-        val currLanguageResId = gameViewModel.currLanguageResIdLiveData.value
-        if (currLanguageResId != null) {
-            val tts = languageTtsMap[currLanguageResId] ?: return
-            val ttsIsInit = languageIsTtsInitMap[currLanguageResId] ?: return
-            if (!ttsIsInit) {
-                Toast.makeText(applicationContext, "TTS not ready yet!", Toast.LENGTH_SHORT).show()
-                return
-            }
-            // else, use the TTS object to speak the given text
-            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
+        val currLanguageResId = gameViewModel.currLanguageResIdLiveData.value ?: return
+        if (currLanguageResId == R.string.language_he) {
+            // TTS is disabled for Hebrew
+            return
         }
+        val tts = languageTtsMap[currLanguageResId] ?: return
+        val ttsIsInit = languageIsTtsInitMap[currLanguageResId] ?: return
+        if (!ttsIsInit) {
+            Snackbar.make(findViewById(R.id.content), "TTS not ready yet!", Snackbar.LENGTH_SHORT).setAction(getString(R.string.ok)) {}.show()
+            return
+        }
+        // else, use the TTS object to speak the given text
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
     }
+
 
     private fun updateStatusBarColor(currCategoryResId: Int?) {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)

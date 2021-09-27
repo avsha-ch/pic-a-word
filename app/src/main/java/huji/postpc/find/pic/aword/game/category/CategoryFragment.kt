@@ -1,5 +1,7 @@
 package huji.postpc.find.pic.aword.game.category
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,9 +12,15 @@ import huji.postpc.find.pic.aword.R
 import android.view.*
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
+import huji.postpc.find.pic.aword.game.play.PlayFragment
 
 import nl.dionsegijn.konfetti.KonfettiView
 import nl.dionsegijn.konfetti.models.Shape
@@ -29,7 +37,21 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
     private lateinit var categoryProgressPercentage: TextView
     private lateinit var gameActivity: GameActivity
 
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Register the permissions callback, which handles the user's response to the
+        // system permissions dialog. Save the return value, an instance of ActivityResultLauncher
+        requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                val action = CategoryFragmentDirections.actionCategoryFragmentToPlayFragment()
+                findNavController().navigate(action)
+            } else {
+                Snackbar.make(goButton, getString(R.string.need_permissions), Snackbar.LENGTH_SHORT).setAction(getString(R.string.ok)) {}.show()
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,14 +96,19 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
 
         // Set click listener to the 'My Collection' button for transitioning to collection
         myCollectionButton.setOnClickListener {
-            val action =  CategoryFragmentDirections.actionCategoryFragmentToCollectionFragment()
+            val action = CategoryFragmentDirections.actionCategoryFragmentToCollectionFragment()
             findNavController().navigate(action)
         }
 
         // Set click listener to the 'GO' button for transitioning to the game itself
         goButton.setOnClickListener {
-            val action = CategoryFragmentDirections.actionCategoryFragmentToPlayFragment()
-            findNavController().navigate(action)
+            if (allPermissionsGranted()) {
+                val action = CategoryFragmentDirections.actionCategoryFragmentToPlayFragment()
+                findNavController().navigate(action)
+            } else {
+                //  Directly ask for the permission - the registered ActivityResultCallback gets the result of this request.
+                requestPermissionLauncher.launch(REQUIRED_PERMISSION)
+            }
         }
     }
 
@@ -98,6 +125,14 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
             .addSizes(Size(12))
             .setPosition(-50f, viewKonfetti.width + 50f, -50f, -50f)
             .streamFor(300, 2000L)
+    }
+
+
+    private fun allPermissionsGranted() = ContextCompat.checkSelfPermission(requireContext(), REQUIRED_PERMISSION) == PackageManager.PERMISSION_GRANTED
+
+    companion object {
+        private const val REQUEST_CODE_PERMISSIONS = 10
+        private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
     }
 
 }

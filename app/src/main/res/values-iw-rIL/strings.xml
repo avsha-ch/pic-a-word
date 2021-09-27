@@ -7,7 +7,7 @@
     <string name="category_animals">בעלי חיים</string>
     <string name="category_clothing">לבוש</string>
     <string name="category_misc">שונות</string>
-    <string name="go_button">התחלה!</string>
+    <string name="go_button">התחלה</string>
     <string name="login_header">שלום!</string>
     <string name="login_small_header">ברוכים הבאים.</string>
     <string name="login_username_placeholder">"שם "</string>
@@ -80,4 +80,7 @@
     <string name="lets_go">קדימה למשחק!</string>
     <string name="language_not_ready_yet">השפה עוד לא מוכנה!</string>
     <string name="no_image_msg">מצטערים, התמונה נמחקה מהמכשיר</string>
+    <string name="need_permissions">נדרשות הרשאות כדי להמשיך!</string>
+    <string name="picaword_invite">הזמנה ל-PicAWord</string>
+    <string name="picaword_invite_body">בואו ללמוד שפות איתנו!\\n https://play.google.com/store/apps/details?id=huji.postpc.find.pic.aword</string>
 </resources>

@@ -102,11 +102,10 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
         cameraExecutor = Executors.newSingleThreadExecutor()
         cameraViewFinder = view.findViewById(R.id.img_placeholder)
         // Request camera permissions if not already granted
-        if (!allPermissionsGranted()) {
-            activity?.let {
-                ActivityCompat.requestPermissions(it, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
-            }
-        }
+//        if (!allPermissionsGranted()) {
+//            activity?.let { ActivityCompat.requestPermissions(it, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS) }
+//        }
+
         // Wait for the views to be properly laid out and then set up camera and use cases
         cameraViewFinder.post { setUpCamera() }
         // set output directory
@@ -139,14 +138,15 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
 
         // Set click listener for button
         wordListenButton.setOnClickListener {
+            if (gameViewModel.currLanguageResIdLiveData.value == R.string.language_he) {
+                Snackbar.make(wordListenButton, getString(R.string.heb_tts_not_supported), Snackbar.LENGTH_SHORT).setAction(getString(R.string.ok)) {}.show()
+            }
             gameActivity.speak(word)
         }
         // Set click listener for capture picture button
         captureFab.setOnClickListener {
             captureFab.isEnabled = false
-            invisibleToVisible(waitForLabelerProgressBar, 1L) {
-                captureImage()
-            }
+            invisibleToVisible(waitForLabelerProgressBar, 1L) { captureImage() }
         }
 
         // Set swipe listeners for next and previous levels
@@ -169,7 +169,6 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
         // If the current language learned is Hebrew, disable TTS option and show a message
         if (gameViewModel.currLanguageResIdLiveData.value == R.string.language_he) {
             wordListenButton.setIconResource(R.drawable.ic_baseline_volume_off_24)
-            Snackbar.make(wordListenButton, getString(R.string.heb_tts_not_supported), Snackbar.LENGTH_SHORT).setAction(getString(R.string.ok)) {}.show()
         }
 
         // Set an observer for the labeler live data
@@ -183,7 +182,6 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
             }
         }
         playViewModel.labelLiveData.observe(viewLifecycleOwner, labelObserver)
-
     }
 
     private fun updateDisplayLevel(dir: Direction) {
@@ -290,9 +288,7 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
             return
         }
         val photoFile = createFile(outputDirectory, FILENAME, PHOTO_EXTENSION)
-        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile)
-            // .setMetadata() TODO: setting metadata here is optional
-            .build()
+        ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
         // handle ML image recognition
         imageCapture?.takePicture(cameraExecutor, object : ImageCapture.OnImageCapturedCallback() {
@@ -339,14 +335,12 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
         return newBitmap
     }
 
-    /// @param folderName can be your app's name
     private fun saveImage(bitmap: Bitmap, context: Context, folderName: String) {
         val fileName = System.currentTimeMillis().toString() + ".png"
         if (android.os.Build.VERSION.SDK_INT >= 29) {
             val values = contentValues()
             values.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/$folderName")
             values.put(MediaStore.Images.Media.IS_PENDING, true)
-            // RELATIVE_PATH and IS_PENDING are introduced in API 29.
 
             val uri: Uri? = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
             if (uri != null) {
@@ -368,7 +362,6 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
             // .DATA is deprecated in API 29
             context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
         }
-//        PicAWordApp.instance.fbManager.uploadImageFromBitmap(bitmap, fileName)
     }
 
     private fun contentValues(): ContentValues {
@@ -390,9 +383,8 @@ class PlayFragment : Fragment(R.layout.fragment_play) {
         }
     }
 
-    private fun allPermissionsGranted() =
-        REQUIRED_PERMISSIONS.all { ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED }
-
+//    private fun allPermissionsGranted() =
+//        REQUIRED_PERMISSIONS.all { ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED }
 
     private fun hasBackCamera(): Boolean = cameraProvider?.hasCamera(CameraSelector.DEFAULT_BACK_CAMERA) ?: false
 
