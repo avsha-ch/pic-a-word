@@ -103,5 +103,24 @@
     <string name="need_permissions">Need permissions to continue!</string>
     <string name="picaword_invite">Invite to PicAWord</string>
     <string name="picaword_invite_body">Come learn languages interactively with PicAWord\\n https://play.google.com/store/apps/details?id=huji.postpc.find.pic.aword</string>
+    <string name="info_play_game_text"><b><u>How To Play\n\n</u></b>
+
+                                        On each level look around\n
+                                        you for the object in the\n
+                                        prompt.\n
+                                        Place it in the blank area\n
+                                        of the picture and capture\n
+                                        the photo. Wait and see if\n
+                                        you got it right!\n\n
+
+                                        Swipe right and left to move\n
+                                        between levels.\n\n
+
+                                        See and share the pictures\n
+                                        from successful levels in\n
+                                        Collection area.\n\n
+
+                                        Enjoy! (click anywhere to return to game)
+                                        </string>
 
 </resources>
