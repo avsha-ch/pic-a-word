@@ -2,41 +2,24 @@
 
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/info_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:color="@color/dark_gray"
-    android:alpha="0.9"
     android:layout_margin="15dp"
-    >
+    android:alpha="0.9"
+    android:color="@color/dark_gray">
 
     <TextView
         android:id="@+id/info_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_margin="25dp"
+        android:background="@drawable/round_corner_view"
         android:gravity="center"
         android:text="@string/info_play_game_text"
         android:textColor="@color/white"
-        android:textSize="20sp"
-        android:layout_margin="25dp"
-        android:background="@drawable/round_corner_view"
-        />
+        android:textSize="20sp" />
 
-<!--    <com.google.android.material.button.MaterialButton-->
-<!--    android:id="@+id/info_text"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:layout_centerInParent="true"-->
-<!--    android:gravity="center"-->
-<!--    android:text="@string/info_play_game_text"-->
-<!--    android:textColor="@color/white"-->
-<!--    android:textSize="20sp"-->
-<!--    android:layout_margin="25dp"-->
-<!--    android:color="@color/dark_gray"-->
-<!--    android:textAllCaps="false"-->
-<!--    app:cornerRadius="50dp"-->
-<!--    />-->
 
 </RelativeLayout>

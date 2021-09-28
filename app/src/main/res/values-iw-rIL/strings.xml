@@ -83,4 +83,22 @@
     <string name="need_permissions">נדרשות הרשאות כדי להמשיך!</string>
     <string name="picaword_invite">הזמנה ל-PicAWord</string>
     <string name="picaword_invite_body">בואו ללמוד שפות איתנו!\\n https://play.google.com/store/apps/details?id=huji.postpc.find.pic.aword</string>
+    <string name="info_play_game_text"><b><u>איך לשחק\n\n</u></b>
+
+                                        בכל שלב, הסתכלו מסביבכם\n
+                                        וחפשו את האובייקט שמופיע\n
+                                        מקמו אותו על החלק הריק\n
+                                        שמופיע בתוך התמונה\n
+                                        צלמו וחכו לראות האם\n
+                                        הצלחתם!\n\n
+
+                                        החליקו את המסך ימינה ושמאלה\n
+                                        כדי לעבור בין רמות שונות.\n\n
+
+                                        ניתן לראות ולשתף את התוצאות\n
+                                        של רמות בהם הצלחתם\n
+                                        באוסף שלכם.\n\n
+
+                                        תהנו! (לחצו בכל מקום כדי לחזור למסך)
+                                        </string>
 </resources>
